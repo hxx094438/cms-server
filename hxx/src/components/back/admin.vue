@@ -27,6 +27,7 @@
 <script>
 import {mapMutations, mapState}       from 'vuex'
 export default {
+
     computed: {
         ...mapState(['user']),
         time () {
@@ -50,7 +51,7 @@ export default {
         logout () {
             this.unset_user()
             this.$router.go({name: 'login'})
-        }
+        },
     }
 }
 

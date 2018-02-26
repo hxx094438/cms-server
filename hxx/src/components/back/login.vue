@@ -32,7 +32,7 @@ export default {
       confirm (name, password) {
         this.login({name: name, password: password}).then((res) => {
           this.info = '正在登录中...'
-          this.set_user(res.data)
+          this.set_user(res.data)                //保存到localStorage中
           this.$router.push({name:'posts'})
         }).catch((err) => {
           console.log(err)
