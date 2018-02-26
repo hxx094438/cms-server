@@ -90,7 +90,7 @@ table {
         color: darkturquoise;
     }
     tbody {
-        color: #ffffff;
+        color: #666;
     }
     tr {
         height: 2.5rem;

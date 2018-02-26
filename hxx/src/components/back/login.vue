@@ -107,7 +107,7 @@ export default {
 }
 
 p {
-    color: #ffffff;
+    color: #666;
     width: 100%;
     height: 1.25rem;
 }

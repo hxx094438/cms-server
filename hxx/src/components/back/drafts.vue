@@ -1,21 +1,20 @@
 <template>
-    <div class="wrapper">
-        <p>所有文章</p>
+    <div class="container">
+        <p>所有草稿</p>
         <article-content v-on:addPage="nextPage" v-on:dropPage="prePage"></article-content>
         <router-link
                 :to="{name: 'editor'}"
                 class="addPost" tag="button"
-        ><span>添加文章</span></router-link>
+        ><span>添加草稿</span></router-link>
     </div>
 </template>
 
 <script>
 import {mapActions, mapState}   from 'vuex'
 import ArticleContent           from './component/ArticleContent'
-
 export default {
     created () {
-        this.getAllArticles({page: this.page, limit: 8})
+        this.getAllDrafts({page: this.page, limit: 8})
     },
     data () {
         return {
@@ -23,14 +22,18 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getAllArticles']),
+        ...mapActions(['getAllDrafts']),
         nextPage () {
             this.page++
-            this.getAllArticles({page: this.page, limit: 8})
+            this.getAllDrafts({page: this.page, limit: 8})
         },
         prePage () {
-            this.page--
-            this.getAllArticles({page: this.page, limit: 8})
+            if (!(this.page - 1)) {
+                alert('已经到第一页咯')
+            } else {
+                this.page--
+                this.getAllDrafts({page: this.page, limit: 8})
+            }
         }
     },
     computed: {
@@ -44,12 +47,11 @@ export default {
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
-.wrapper {
-    position: relative;
+.container {
     padding-top: 0.625rem;
-    /*height: 35.625rem;*/
-    color: #666;
-    p {
+    color: #ffffff;
+    position: relative;
+    P {
         border-bottom: 0.1875rem double rgb(129, 216, 208);
         width: 12.5rem;
         font-size: 1.875rem;
@@ -58,18 +60,18 @@ export default {
         text-align: center;
     }
     .addPost {
-        position: fixed;
-        bottom: 1.25rem;
-        right: 1.25rem;
-    }
+         position: fixed;
+         bottom: 1.25rem;
+         right: 1.25rem;
+     }
 }
 @media screen and (max-width: 440px) {
-    .wrapper {
+    .container {
         padding-top: 2rem !important;
-        margin-bottom: 4rem;
+        margin-bottom: 3rem;
         .addPost {
-            position: absolute !important;
-            bottom: -3rem !important;
+            position: absolute;
+            bottom: -3rem;
         }
     }
 }

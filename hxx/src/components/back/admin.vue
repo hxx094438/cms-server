@@ -64,7 +64,7 @@ export default {
         width: 100%;
         height: 3.125rem;
         line-height: 3.125rem;
-        color: #fff;
+        color: #666;
         font-size: 1.125rem;
         display: flex;
         justify-content: space-between;
@@ -95,7 +95,7 @@ export default {
         float: left;
         display: inline-block;
         position: relative;
-        color: #fff;
+        color: #666;
         margin-top: 13.75rem;
         width: 6.25rem;
         ul {
