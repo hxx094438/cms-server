@@ -160,7 +160,7 @@ export default {
         border-bottom: 0.125rem solid rgb(129, 216, 208);
         outline: none;
         background: transparent;
-        color: #ffffff;
+        color: #333;
         margin-bottom: 0.625rem;
         text-align: center;
     }
@@ -182,7 +182,7 @@ export default {
         position: relative;
         height: 29.375rem;
         .right {
-            color: #ffffff;
+            color: #333;
             position: absolute;
             right: -0.125rem;
             top: -2rem;
@@ -212,13 +212,13 @@ export default {
             overflow-y: auto;
             white-space: pre-wrap;
             font-family: Georgia, "Times New Roman", "Microsoft YaHei", "微软雅黑",  STXihei, "华文细黑",  serif;
-            color: #E5E9F2;
+            color: #333;
         }
         .preview {
             font-family: Georgia, "Times New Roman", "Microsoft YaHei", "微软雅黑",  STXihei, "华文细黑",  serif;
             display: block;
             height: 26.875rem;
-            color: #ffffff;
+            color: #333;
             font-size: 1rem;
             overflow-y: auto;
             padding: 1.25rem 1.25rem;

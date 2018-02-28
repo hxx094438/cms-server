@@ -53,6 +53,31 @@ export default {
                 console.log(err)
             })
     },
+    delArticle({dispatch}, payload) {
+
+    },
+    saveArticle({commit, state}, aid) {
+        commit('isSaving_toggle', false)
+        if (aid) {
+            return Vue.http.patch('/api/article/' + aid, state.article)
+                .then(() => {
+                    commit('.isSaving_toggle', true)
+                    router.push({name:'posts'})
+                }, () => {alert('1保存失败') }).catch((err) => {console.log(err)})
+        }else {
+            return Vue.http.post('/api/article/', state.article)
+                .then(() => {
+                    commit('.isSaving_toggle', true)
+                    router.push({name:'posts'})
+                }, () => {alert('2保存失败') }).catch((err) => {console.log(err)})
+        }
+    },
+
+
+
+
+
+
 
 
 }

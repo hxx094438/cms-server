@@ -49,7 +49,7 @@ export default {
 <style lang="scss" rel="stylesheet/scss" scoped>
 .container {
     padding-top: 0.625rem;
-    color: #ffffff;
+    color: #333;
     position: relative;
     P {
         border-bottom: 0.1875rem double rgb(129, 216, 208);

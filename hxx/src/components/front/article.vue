@@ -148,7 +148,7 @@ export default {
             }
             a.commentCount {
                 display: inline-block;
-                color: #ffffff;
+                color: #333;
                 cursor: pointer;
                 margin-left: 0.625rem;
                 &:hover {

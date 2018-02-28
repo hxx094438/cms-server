@@ -9,15 +9,15 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="article in articles">
-            <router-link :to="{name: 'editor', query: {aid: article.aid}}" tag="td" class="title">{{article.title}}</router-link>
-            <td>{{article.tags | toTag}}</td>
-            <td>{{article.date | toDate}}</td>
-            <td>
-                <router-link :to="{name: 'editor', query: {aid: article.aid}}" class="iconfont icon-biji-copy" tag="i"></router-link>
-                <i class="iconfont icon-shanchu" @click="deleteConfirm(article.aid)"></i>
-            </td>
-        </tr>
+            <tr v-for="article in articles">
+                <router-link :to="{name:'editor', query: {aid: article.aid}}" tag="td" class="title">{{article.title}}</router-link>
+                <td>{{article.tags | toTag}}</td>
+                <td>{{article.date | toDate}}</td>
+                <td>
+                    <router-link :to="{name:'editor', query: {aid: article.aid}}" class="iconfont icon-biji-copy" tag="i"></router-link>
+                    <i class="iconfont icon-shanchu" @click="deleteConfirm(article.aid)"></i>
+                </td>
+            </tr>
         </tbody>
         <tfoot>
         <tr>
