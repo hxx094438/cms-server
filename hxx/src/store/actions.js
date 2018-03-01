@@ -53,24 +53,38 @@ export default {
                 console.log(err)
             })
     },
-    delArticle({dispatch}, payload) {
 
-    },
-    saveArticle({commit, state}, aid) {
+    //  article的http请求
+    saveArticle ({state, commit}, aid) {
         commit('isSaving_toggle', false)
         if (aid) {
             return Vue.http.patch('/api/article/' + aid, state.article)
                 .then(() => {
-                    commit('.isSaving_toggle', true)
-                    router.push({name:'posts'})
-                }, () => {alert('1保存失败') }).catch((err) => {console.log(err)})
-        }else {
-            return Vue.http.post('/api/article/', state.article)
+                    commit('isSaving_toggle', true)
+                    router.push({name: 'posts'})
+                }, () => { alert('保存失败') }).catch((err) => { console.log(err) })
+        } else {
+            return Vue.http.post('/api/article', state.article)
                 .then(() => {
-                    commit('.isSaving_toggle', true)
-                    router.push({name:'posts'})
-                }, () => {alert('2保存失败') }).catch((err) => {console.log(err)})
+                    commit('isSaving_toggle', true)
+                    router.push({name: 'posts'})
+                }, () => { alert('保存失败2') }).catch((err) => { console.log(err) })
         }
+    },
+
+    getArticle({commit,state}, aid){
+        const startTime = beginLoading(commit,false);
+        if (router.currentRoute.hash){
+            commit('isLoading_toggle',false)
+        }
+        document.title = '加载中...'
+        return Vue.http.get('/api/article/' + aid)
+            .then(response => {
+                commit('set_article',response.data)
+                commit('set_headline', {content: state.article.title, animation:'animated rotateIn'})
+                document.title = state.article.title
+                endLoading(commit, startTime, 'isLoading_toggle')
+        }).catch((err) => { console.log(err) })
     },
 
 
@@ -79,5 +93,17 @@ export default {
 
 
 
+
+
+
+
+    delArticle ({dispatch}, payload) {
+        return Vue.http.delete('/api/article/' + payload.aid)
+            .then(() => {
+                if (payload.route.name === 'posts') dispatch('getAllArticles', {page: payload.page, limit: 4})
+                if (payload.route.name === 'drafts') dispatch('getAllDrafts', {page: payload.page, limit: 4})
+                if (payload.route.name === 'search') router.push({name: 'posts'})
+            }).catch((err) => { console.log(err) })
+    }
 
 }
