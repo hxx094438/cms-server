@@ -43,7 +43,6 @@ router.delete('/api/article/:aid', confirmToken, (req, res) => {
             })
         }
     })
-
 })
 
 // 更新文章

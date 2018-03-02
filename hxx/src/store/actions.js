@@ -84,8 +84,43 @@ export default {
                 commit('set_headline', {content: state.article.title, animation:'animated rotateIn'})
                 document.title = state.article.title
                 endLoading(commit, startTime, 'isLoading_toggle')
-        }).catch((err) => { console.log(err) })
+            }).catch((err) => { console.log(err) })
     },
+
+    delArticle({dispatch}, payload){
+        return Vue.http.delete('/api/article/' + payload.aid)
+            .then(() => {
+                if (payload.route.name === 'posts') dispatch('getAllArticles', {page:payload.page, limit: 8})
+                if (payload.route.name === 'drafts') dispatch('getAllDrafts', {page:payload.page, limit: 8})
+                if (payload.route.name === 'search') router.push({name:'posts'})
+            }).catch((err) => {console.log(err) })
+    },
+
+    //draft
+    saveDraft({state, commit}, aid){
+        if(aid){
+            return Vue.http.patch('/api/draft/' + aid, state.article)
+                .then(() => {
+                    commit('isSaving_toggle',true)
+                    router.push({name:'drafts'})
+                }, () => {alert ('保存失败')}).catch((err) => {console.log(err)})
+        }else{
+            return Vue.http.post('/api/draft/', state.article)
+                .then(() => {
+                    commit('isSaving_toggle',true)
+                    router.push({name:'drafts'})
+                }, () => {alert ('保存失败')}).catch((err) => {console.log(err)})
+        }
+    },
+    getAllDrafts ({commit}, payload) {
+        return Vue.http.get('/api/drafts', {params: {payload}})
+            .then(response => response.json())
+            .then(articles => {
+                commit('set_all_articles', articles)
+            }).catch((err) => { console.log(err) })
+    },
+
+
 
 
 
