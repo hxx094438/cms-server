@@ -57,19 +57,24 @@ export default {
     //  article的http请求
     saveArticle ({state, commit}, aid) {
         commit('isSaving_toggle', false)
-        if (aid) {
-            return Vue.http.patch('/api/article/' + aid, state.article)
-                .then(() => {
-                    commit('isSaving_toggle', true)
-                    router.push({name: 'posts'})
-                }, () => { alert('保存失败') }).catch((err) => { console.log(err) })
-        } else {
-            return Vue.http.post('/api/article', state.article)
-                .then(() => {
-                    commit('isSaving_toggle', true)
-                    router.push({name: 'posts'})
-                }, () => { alert('保存失败2') }).catch((err) => { console.log(err) })
+        if(!state.isSend){
+            if (aid) {
+                return Vue.http.patch('/api/article/' + aid, state.article)
+                    .then(() => {
+                        commit('isSaving_toggle', true)
+                        commit('isSend_toggle', true)
+                        router.push({name: 'posts'})
+                    }, () => {  alert('保存失败') }).catch((err) => { console.log(err) })
+            } else {
+                return Vue.http.post('/api/article', state.article)
+                    .then(() => {
+                        commit('isSaving_toggle', true)
+                        router.push({name: 'posts'})
+                    }, () => { alert('保存失败2') }).catch((err) => { console.log(err) })
+            }
         }
+
+
     },
 
     getArticle({commit,state}, aid){
@@ -90,47 +95,47 @@ export default {
     delArticle({dispatch}, payload){
         return Vue.http.delete('/api/article/' + payload.aid)
             .then(() => {
-                if (payload.route.name === 'posts') dispatch('getAllArticles', {page:payload.page, limit: 8})
-                if (payload.route.name === 'drafts') dispatch('getAllDrafts', {page:payload.page, limit: 8})
+                if (payload.route.name === 'posts') dispatch('getAllArticles', {page:payload.page, limit: 4})
+                if (payload.route.name === 'drafts') dispatch('getAllDrafts', {page:payload.page, limit: 4})
                 if (payload.route.name === 'search') router.push({name:'posts'})
             }).catch((err) => {console.log(err) })
     },
 
     //draft
     saveDraft({state, commit}, aid){
-        if(aid){
-            return Vue.http.patch('/api/draft/' + aid, state.article)
-                .then(() => {
-                    commit('isSaving_toggle',true)
-                    router.push({name:'drafts'})
-                }, () => {alert ('保存失败')}).catch((err) => {console.log(err)})
-        }else{
-            return Vue.http.post('/api/draft/', state.article)
-                .then(() => {
-                    commit('isSaving_toggle',true)
-                    router.push({name:'drafts'})
-                }, () => {alert ('保存失败')}).catch((err) => {console.log(err)})
+        if(!state.isSaving){
+            if(aid){
+                return Vue.http.patch('/api/draft/' + aid, state.article)
+                    .then(() => {
+                        commit('isSaving_toggle',true)
+                        router.push({name:'drafts'})
+                    }, () => {alert ('保存失败')}).catch((err) => {console.log(err)})
+            }else{
+                return Vue.http.post('/api/draft/', state.article)
+                    .then(() => {
+                        commit('isSaving_toggle',true)
+                        router.push({name:'drafts'})
+                    }, () => {alert ('保存失败')}).catch((err) => {console.log(err)})
+            }
         }
+
     },
     getAllDrafts ({commit}, payload) {
         return Vue.http.get('/api/drafts', {params: {payload}})
-            .then(response => response.json())
+            .then(response => {
+                console.log(response)
+                if(response.status == 200){
+                    response.json()
+                }else{
+                    console.log('没有了')
+                }
+
+            })
             .then(articles => {
+                console.log("1")
                 commit('set_all_articles', articles)
             }).catch((err) => { console.log(err) })
     },
-
-
-
-
-
-
-
-
-
-
-
-
 
     delArticle ({dispatch}, payload) {
         return Vue.http.delete('/api/article/' + payload.aid)

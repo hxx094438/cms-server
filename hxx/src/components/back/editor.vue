@@ -67,6 +67,7 @@ export default {
     created () {
         const aid = this.$route.query.aid
         this.isSaving_toggle(false)
+        this.isSend_toggle(false)
         if (aid) {
             return this.getArticle(aid)
         }
@@ -108,7 +109,7 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(['set_article', 'update_post_content', 'update_post_title', 'update_post_tags', 'isSaving_toggle', 'set_dialog']),
+        ...mapMutations(['set_article', 'update_post_content', 'update_post_title', 'update_post_tags', 'isSaving_toggle','isSend_toggle', 'set_dialog']),
         ...mapActions(['saveArticle', 'getArticle', 'saveDraft'])
     },
     components: {

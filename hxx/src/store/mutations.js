@@ -17,6 +17,9 @@ export default {
     isSaving_toggle: (state, isSaving) => {
         state.isSaving = isSaving
     },
+    isSend_toggle: (state, isSend) => {
+        state.isSend = isSend
+    },
     isLoading_toggle: (state, isLoading) => {
         state.isLoading = isLoading
     },

@@ -15,7 +15,7 @@ import ArticleContent           from './component/ArticleContent'
 
 export default {
     created () {
-        this.getAllArticles({page: this.page, limit: 8})
+        this.getAllArticles({page: this.page, limit: 4})
     },
     data () {
         return {
@@ -26,11 +26,11 @@ export default {
         ...mapActions(['getAllArticles']),
         nextPage () {
             this.page++
-            this.getAllArticles({page: this.page, limit: 8})
+            this.getAllArticles({page: this.page, limit: 4})
         },
         prePage () {
             this.page--
-            this.getAllArticles({page: this.page, limit: 8})
+            this.getAllArticles({page: this.page, limit: 4})
         }
     },
     computed: {

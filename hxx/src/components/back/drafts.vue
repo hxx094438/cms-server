@@ -14,7 +14,7 @@ import {mapActions, mapState}   from 'vuex'
 import ArticleContent           from './component/ArticleContent'
 export default {
     created () {
-        this.getAllDrafts({page: this.page, limit: 8})
+        this.getAllDrafts({page: this.page, limit: 4})
     },
     data () {
         return {
@@ -25,14 +25,14 @@ export default {
         ...mapActions(['getAllDrafts']),
         nextPage () {
             this.page++
-            this.getAllDrafts({page: this.page, limit: 8})
+            this.getAllDrafts({page: this.page, limit: 4})
         },
         prePage () {
             if (!(this.page - 1)) {
                 alert('已经到第一页咯')
             } else {
                 this.page--
-                this.getAllDrafts({page: this.page, limit: 8})
+                this.getAllDrafts({page: this.page, limit: 4})
             }
         }
     },

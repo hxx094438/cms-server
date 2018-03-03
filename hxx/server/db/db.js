@@ -28,6 +28,19 @@ const ArticleSchema = new Schema(
     {versionKey: false}
 )
 
+const CommentSchema = new Schema(
+    {
+        imgName: String,
+        name: String,
+        address: String,
+        content: String,
+        articleId: Number,
+        date: Date,
+        like: Number
+    },
+    {versionKey: false}
+)
+
 
 // 生成从0开始自增长的文章aid
 ArticleSchema.pre('save', function (next) {
@@ -48,7 +61,7 @@ ArticleSchema.pre('save', function (next) {
 const Models = {
     User: mongoose.model('User', UserSchema),
     Article: mongoose.model('Article', ArticleSchema),
-
+    Comment: mongoose.model('Comment', CommentSchema)
 }
 
 // 初始化数据

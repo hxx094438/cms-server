@@ -49,13 +49,25 @@ router.patch('/api/draft/:aid',confirmToken, (req, res) => {
 //获取所有草稿
 router.get('/api/drafts', (req, res) => {
     const page = req.query.payload.page
-    const limit = req.query.payload.limit - 0 || 8
+    const limit = req.query.payload.limit - 0 || 4
     const skip = limit * (page - 1 )
-    db.Article.find({isPublish: false}).sort({date: -1}).limit(limit).skip(skip).exec().then((articles) => { //将查找到的数据降序，limit读取指定数量的数据，skip跳过指定的数据显示之后的数据，exec()返回pr
-        res.send(articles)
-    }).catch((err) => {
-        console.log(err)
-    })
+    db.Article.find({isPublish:false},function (err,data) {
+        if(err){
+            console.log(err)
+        }else if(data) {
+            const articles = data.sort({date: -1}).limit(limit).skip(skip)
+            res.status(200).send(articles)
+        }else{
+            res.status(401).end()
+        }
+    });
+    //
+    //
+    // db.Article.find({isPublish: false}).sort({date: -1}).limit(limit).skip(skip).exec().then((articles) => { //将查找到的数据降序，limit读取指定数量的数据，skip跳过指定的数据显示之后的数据，exec()返回pr
+    //     res.send(articles)
+    // }).catch((err) => {
+    //     console.log(err)
+    // })
 })
 
 module.exports = router

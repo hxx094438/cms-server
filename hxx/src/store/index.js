@@ -14,6 +14,7 @@ const store = new Vuex.Store({
         moreArticle: true,
         loadMore: false,
         isSaving: false,
+        isSend: false,
         noMore: false,
         dialog: {
             show: false,
