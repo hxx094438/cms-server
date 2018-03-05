@@ -1,8 +1,9 @@
 <template>
     <div class="wrapper">
         <p>所有文章</p>
-        <article-content v-on:addPage="nextPage" v-on:dropPage="prePage"></article-content>
+        <article-content v-on:addPage="nextPage" v-on:dropPage="prePage "></article-content>
         <router-link
+
                 :to="{name: 'editor'}"
                 class="addPost" tag="button"
         ><span>添加文章</span></router-link>
@@ -19,9 +20,11 @@ export default {
     },
     data () {
         return {
-            page: 1
+            page: 1,
+
         }
     },
+
     methods: {
         ...mapActions(['getAllArticles']),
         nextPage () {
@@ -34,7 +37,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['articles'])
+        ...mapState(['articles']),
     },
     components: {
         ArticleContent

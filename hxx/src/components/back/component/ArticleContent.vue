@@ -38,10 +38,22 @@ export default {
         }
     },
     computed: {
-        ...mapState(['articles', 'dialog'])
+        ...mapState(['articles', 'dialog']),
+        obj(){
+            return this.$store.state.noMore
+        }
+    },
+    watch:{
+        obj:function() {
+            if(this.$store.state.noMore){
+                this.page--
+                this.getAllArticles({page: this.page, limit: 4})
+                this.getAllDrafts({page: this.page, limit: 4})
+            }
+        }
     },
     methods: {
-        ...mapActions(['delArticle']),
+        ...mapActions(['delArticle','getAllArticles','getAllDrafts']),
         ...mapMutations(['set_dialog']),
         nextPage () {
             this.page++

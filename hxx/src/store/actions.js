@@ -118,22 +118,18 @@ export default {
                     }, () => {alert ('保存失败')}).catch((err) => {console.log(err)})
             }
         }
-
     },
+    // 这里要怎么把pagetotal返回？
     getAllDrafts ({commit}, payload) {
         return Vue.http.get('/api/drafts', {params: {payload}})
-            .then(response => {
-                console.log(response)
-                if(response.status == 200){
-                    response.json()
-                }else{
-                    console.log('没有了')
-                }
-
-            })
+            .then((response) => response.json())
             .then(articles => {
-                console.log("1")
-                commit('set_all_articles', articles)
+                if(articles.length == 0){
+                    commit('noMore_toggle',true)
+                }else {
+                    commit('noMore_toggle',false)
+                    commit('set_all_articles', articles)
+                }
             }).catch((err) => { console.log(err) })
     },
 
