@@ -3,6 +3,7 @@ const router = express.Router()
 const db = require('../db/db.js')
 const confirmToken = require('../middlewares/confirmToken')
 
+
 //保存草稿
 router.post('/api/draft',confirmToken, (req,res) => {
     const article = {
@@ -46,14 +47,28 @@ router.patch('/api/draft/:aid',confirmToken, (req, res) => {
     })
 })
 
+
 //获取所有草稿
 router.get('/api/drafts', (req, res) => {
     const page = req.query.payload.page
     const limit = req.query.payload.limit - 0 || 4
     const skip = limit * (page - 1 )
+    const draft = {};
+
+    db.Article.count({isPublish: false}).exec(function (err, count) {
+        if(err){
+            console.log(err);
+        }
+        else{
+            draft.total =  Math.ceil(count/limit);
+        }
+    });
+
+
+
     db.Article.find({isPublish: false}).sort({date: -1}).limit(limit).skip(skip).exec().then((articles) => { //将查找到的数据降序，limit读取指定数量的数据，skip跳过指定的数据显示之后的数据，exec()返回pr
-        const pagetotal = articles.length
-        res.send(articles)
+        draft.articles = articles;
+        res.send(draft)
     }).catch((err) => {
         console.log(err)
     })

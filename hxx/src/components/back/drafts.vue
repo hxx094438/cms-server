@@ -24,8 +24,14 @@ export default {
     methods: {
         ...mapActions(['getAllDrafts']),
         nextPage () {
+            console.log(this.pageTotal)
+            console.log(this.page)
+            if(this.page < this.pageTotal){
             this.page++
             this.getAllDrafts({page: this.page, limit: 4})
+            }else{
+                alert('没有更多了！')
+            }
         },
         prePage () {
             if (!(this.page - 1)) {
@@ -37,7 +43,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['articles'])
+        ...mapState(['articles','pageTotal'])
     },
     components: {
         ArticleContent

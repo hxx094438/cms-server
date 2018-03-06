@@ -29,6 +29,7 @@ const store = new Vuex.Store({
         articles: [],
         draft: {},
         drafts: {},
+        pageTotal:'',
         comments: []
     },
     getters,

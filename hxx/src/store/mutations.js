@@ -36,6 +36,10 @@ export default {
     set_tags: (state, tags) => {
         state.tags = tags
     },
+    // pageTotal
+    set_pageTotal: (state, total) => {
+        state.pageTotal = total
+    },
     set_curtag: (state, tag) => {
         state.curTag = tag
     },

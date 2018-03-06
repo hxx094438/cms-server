@@ -119,16 +119,18 @@ export default {
             }
         }
     },
-    // 这里要怎么把pagetotal返回？
+    // 这里要怎么把pageTotal返回？
     getAllDrafts ({commit}, payload) {
         return Vue.http.get('/api/drafts', {params: {payload}})
             .then((response) => response.json())
-            .then(articles => {
-                if(articles.length == 0){
+            .then(draft => {
+
+                if(payload.page > draft.total){
                     commit('noMore_toggle',true)
                 }else {
+                    commit('set_pageTotal',draft.total)
                     commit('noMore_toggle',false)
-                    commit('set_all_articles', articles)
+                    commit('set_all_articles', draft.articles)
                 }
             }).catch((err) => { console.log(err) })
     },
