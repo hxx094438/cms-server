@@ -66,18 +66,24 @@ router.patch('/api/article/:aid', confirmToken, (req, res) => {
 
 // 获取很多文章
 router.get('/api/articles', (req, res) => {
-    const page = req.query.payload.page
-    const value = req.query.payload.value
-    const limit = req.query.payload.limit - 0 || 4
-    const skip = limit * (page - 1)
+    const page = req.query.payload.page;
+    const value = req.query.payload.value;
+    const limit = req.query.payload.limit - 0 || 4;
+    const skip = limit * (page - 1);
+    const article = {};
+    db.Article.count({isPublish: true}).exec(function (err, count) {
+        err ? console(err) : article.total = Math.ceil(count / limit)
+    })
     if (value && value !== '全部') {
         db.Article.find({tags: value, isPublish: true}).sort({date: -1}).limit(limit).skip(skip).exec()
             .then((articles) => {
-                res.send(articles)
+                article.articles = articles;
+                res.send(article)
             })
     } else {
         db.Article.find({isPublish: true}).sort({date: -1}).limit(limit).skip(skip).exec().then((articles) => {
-            res.send(articles)
+            article.articles = articles;
+            res.send(article)
         })
     }
 })

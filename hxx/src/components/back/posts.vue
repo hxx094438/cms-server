@@ -1,9 +1,8 @@
 <template>
     <div class="wrapper">
         <p>所有文章</p>
-        <article-content v-on:addPage="nextPage" v-on:dropPage="prePage "></article-content>
+        <article-content v-on:addPage="nextPage" v-on:dropPage="prePage" :page="page"></article-content>
         <router-link
-
                 :to="{name: 'editor'}"
                 class="addPost" tag="button"
         ><span>添加文章</span></router-link>
@@ -21,23 +20,29 @@ export default {
     data () {
         return {
             page: 1,
-
         }
     },
-
     methods: {
         ...mapActions(['getAllArticles']),
         nextPage () {
-            this.page++
-            this.getAllArticles({page: this.page, limit: 4})
+            if(this.page < this.pageTotal){
+                this.page++
+                this.getAllArticles({page: this.page, limit: 4})
+            }else{
+                alert('没有更多了！')
+            }
         },
         prePage () {
-            this.page--
-            this.getAllArticles({page: this.page, limit: 4})
+            if (!(this.page - 1)) {
+                alert('已经到第一页咯')
+            } else {
+                this.page--
+                this.getAllArticles({page: this.page, limit: 4})
+            }
         }
     },
     computed: {
-        ...mapState(['articles']),
+        ...mapState(['articles','pageTotal']),
     },
     components: {
         ArticleContent

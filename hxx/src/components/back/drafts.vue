@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <p>所有草稿</p>
-        <article-content v-on:addPage="nextPage" v-on:dropPage="prePage"></article-content>
+        <article-content v-on:addPage="nextPage" v-on:dropPage="prePage" :page="page"></article-content>
         <router-link
                 :to="{name: 'editor'}"
                 class="addPost" tag="button"
@@ -24,8 +24,6 @@ export default {
     methods: {
         ...mapActions(['getAllDrafts']),
         nextPage () {
-            console.log(this.pageTotal)
-            console.log(this.page)
             if(this.page < this.pageTotal){
             this.page++
             this.getAllDrafts({page: this.page, limit: 4})

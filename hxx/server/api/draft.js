@@ -63,9 +63,6 @@ router.get('/api/drafts', (req, res) => {
             draft.total =  Math.ceil(count/limit);
         }
     });
-
-
-
     db.Article.find({isPublish: false}).sort({date: -1}).limit(limit).skip(skip).exec().then((articles) => { //将查找到的数据降序，limit读取指定数量的数据，skip跳过指定的数据显示之后的数据，exec()返回pr
         draft.articles = articles;
         res.send(draft)

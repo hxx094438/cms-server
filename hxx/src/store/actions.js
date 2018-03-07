@@ -35,18 +35,20 @@ export default {
         }
         return Vue.http.get('/api/articles', {params: {payload}})
             .then(response => response.json())
-            .then(articles => {
-                if (articles.length === 0) {
+            .then(article => {
+                if(payload.page > article.total){
                     commit('moreArticle_toggle', false)
                     commit('noMore_toggle', true)
-                } else {
-                    commit('noMore_toggle', false)
+                }else {
+                    commit('set_pageTotal',article.total)
+                    commit('noMore_toggle',false)
                 }
+
                 if (payload.add) {
-                    commit('add_articles', articles)
+                    commit('add_articles', article.articles)
                     endLoading(commit, startTime, 'loadMore_toggle')
                 } else {
-                    commit('set_all_articles', articles)
+                    commit('set_all_articles', article.articles)
                     endLoading(commit, startTime, 'isLoading_toggle')
                 }
             }).catch((err) => {
@@ -73,8 +75,6 @@ export default {
                     }, () => { alert('保存失败2') }).catch((err) => { console.log(err) })
             }
         }
-
-
     },
 
     getArticle({commit,state}, aid){
@@ -124,7 +124,6 @@ export default {
         return Vue.http.get('/api/drafts', {params: {payload}})
             .then((response) => response.json())
             .then(draft => {
-
                 if(payload.page > draft.total){
                     commit('noMore_toggle',true)
                 }else {
@@ -142,6 +141,30 @@ export default {
                 if (payload.route.name === 'drafts') dispatch('getAllDrafts', {page: payload.page, limit: 4})
                 if (payload.route.name === 'search') router.push({name: 'posts'})
             }).catch((err) => { console.log(err) })
-    }
+    },
+    searchArticles ({commit}, payload) {
+        document.title = '搜索中...'
+        commit('moreArticle_toggle',true)
+        const startTime = beginLoading(commit, payload.add)
+        return Vue.http.get('/api/someArticles', {params: {payload}})
+            .then(response => response.json())
+            .then(search => {
+                if(payload.page > search.total){
+                    commit('moreArticle_toggle', false)
+                    commit('noMore_',true)
+                }else{
+                    commit('pageTotal',search.total)
+                    commit('noMore_',false)
+                }
+                if( payload.add) {
+                    commit('add_articles',search.article)
+                    endLoading(commit, startTime, 'loadMore_toggle')
+                }else{
+                    commit('set_all_articles', articles)
+                    endLoading(commit, startTime, 'isLoading_toggle')
+                }
+                document.title = '搜索成功'
 
+            }).catch((err) => console.log(err))
+    }
 }

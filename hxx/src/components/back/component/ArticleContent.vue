@@ -9,15 +9,17 @@
         </tr>
         </thead>
         <tbody>
-            <tr v-for="article in articles">
-                <router-link :to="{name:'editor', query: {aid: article.aid}}" tag="td" class="title">{{article.title}}</router-link>
-                <td>{{article.tags | toTag}}</td>
-                <td>{{article.date | toDate}}</td>
-                <td>
-                    <router-link :to="{name:'editor', query: {aid: article.aid}}" class="iconfont icon-biji-copy" tag="i"></router-link>
-                    <i class="iconfont icon-shanchu" @click="deleteConfirm(article.aid)"></i>
-                </td>
-            </tr>
+        <tr v-for="article in articles">
+            <router-link :to="{name:'editor', query: {aid: article.aid}}" tag="td" class="title">{{article.title}}
+            </router-link>
+            <td>{{article.tags | toTag}}</td>
+            <td>{{article.date | toDate}}</td>
+            <td>
+                <router-link :to="{name:'editor', query: {aid: article.aid}}" class="iconfont icon-biji-copy"
+                             tag="i"></router-link>
+                <i class="iconfont icon-shanchu" @click="deleteConfirm(article.aid)"></i>
+            </td>
+        </tr>
         </tbody>
         <tfoot>
         <tr>
@@ -30,104 +32,96 @@
 </template>
 
 <script>
-import {mapState, mapActions, mapMutations} from 'vuex'
-export default {
-    data () {
-        return {
-            page: 1
-        }
-    },
-    computed: {
-        ...mapState(['articles', 'dialog']),
-        // obj(){
-        //     return this.$store.state.noMore
-        // }
-    },
-    // watch:{
-    //     obj:function() {
-    //         if(this.$store.state.noMore){
-    //             this.page--
-    //             this.getAllArticles({page: this.page, limit: 4})
-    //             this.getAllDrafts({page: this.page, limit: 4})
-    //         }
-    //     }
-    // },
-    methods: {
-        ...mapActions(['delArticle','getAllArticles','getAllDrafts']),
-        ...mapMutations(['set_dialog']),
-        nextPage () {
-            this.page++
-            this.$emit('addPage')   // 传递给父组件
+    import {mapState, mapActions, mapMutations} from 'vuex'
+
+    export default {
+        props: ['page'],
+        computed: {
+            ...mapState(['articles', 'dialog']),
+            // obj(){
+            //     return this.$store.state.noMore
+            // }
         },
-        prePage () {
-            if (!(this.page - 1)) {
-                alert('已经到第一页咯')
-            } else {
-                this.page--
+        // watch:{
+        //     obj:function() {
+        //         if(this.$store.state.noMore){
+        //             this.page--
+        //             this.getAllArticles({page: this.page, limit: 4})
+        //             this.getAllDrafts({page: this.page, limit: 4})
+        //         }
+        //     }
+        // },
+        methods: {
+            ...mapActions(['delArticle', 'getAllArticles', 'getAllDrafts']),
+            ...mapMutations(['set_dialog']),
+            nextPage() {
+                this.$emit('addPage')   // 传递给父组件
+            },
+            prePage() {
                 this.$emit('dropPage') // 传递给父组件
+            },
+            deleteConfirm(aid) {
+                this.set_dialog({
+                    info: '确认删除(⊙o⊙)？',
+                    hasTwoBtn: true,
+                    show: true
+                })
+                new Promise((resolve, reject) => {
+                    this.dialog.resolveFn = resolve
+                    this.dialog.rejectFn = reject
+                }).then(() => {
+                    this.delArticle({aid: aid, page: this.page, route: this.$route})
+                }).catch((err) => {
+                    console.log(err)
+                })
             }
-        },
-        deleteConfirm (aid) {
-            this.set_dialog({
-                info: '确认删除(⊙o⊙)？',
-                hasTwoBtn: true,
-                show: true
-            })
-            new Promise((resolve, reject) => {
-                this.dialog.resolveFn = resolve
-                this.dialog.rejectFn = reject
-            }).then(() => {
-                this.delArticle({aid: aid, page: this.page, route: this.$route})
-            }).catch((err) => {
-                console.log(err)
-            })
         }
     }
-}
 
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
-table {
-    border-left: 0.1875rem solid rgb(129, 216, 208);
-    border-right: 0.1875rem solid rgb(129, 216, 208);
-    margin: 0 auto;
-    text-align: center;
-    max-height: 25rem;
-    min-width: 70%;
-    th, td {
-        width: 25%;
+    table {
+        border-left: 0.1875rem solid rgb(129, 216, 208);
+        border-right: 0.1875rem solid rgb(129, 216, 208);
+        margin: 0 auto;
+        text-align: center;
+        max-height: 25rem;
+        min-width: 70%;
+        th, td {
+            width: 25%;
+        }
+        thead, tfoot {
+            color: darkturquoise;
+        }
+        tbody {
+            color: #666;
+        }
+        tr {
+            height: 2.5rem;
+            line-height: 1.875rem;
+        }
+        i {
+            font-size: 1.25rem;
+            margin-right: 0.625rem;
+            color: rgb(129, 216, 208);
+            cursor: pointer;
+            &:hover {
+                color: #ffc520;
+            }
+        }
+        tfoot tr td:nth-child(1), tfoot tr td:nth-child(3) {
+            cursor: pointer;
+            &:hover {
+                color: #ffc520;
+            }
+        }
     }
-    thead, tfoot {
-        color: darkturquoise;
-    }
-    tbody {
-        color: #666;
-    }
-    tr {
-        height: 2.5rem;
-        line-height: 1.875rem;
-    }
-    i {
-        font-size: 1.25rem;
-        margin-right: 0.625rem;
-        color: rgb(129, 216, 208);
+
+    .title {
         cursor: pointer;
         &:hover {
             color: #ffc520;
         }
     }
-    tfoot tr td:nth-child(1), tfoot tr td:nth-child(3) {
-        cursor: pointer;
-        &:hover {
-            color: #ffc520;
-        }
-    }
-}
-.title {
-    cursor: pointer;
-    &:hover {
-         color: #ffc520;
-     }
-}
 </style>
