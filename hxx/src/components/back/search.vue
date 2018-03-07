@@ -3,16 +3,16 @@
         <div class="search">
             <input
                     type="text" v-model="text"
-                    :placeholder="tip" onfocus="this.placeholder = ''"
+                    :placeholder="tip" onfocus="this.placeholder=''"
                     @keydown.enter="searchArticles({key: picked, value: text, page: page})"
             />
             <i class="iconfont icon-search" @click="searchArticles({key: picked, value: text, page: page})"></i>
         </div>
         <div class="searchString">
             搜索匹配：
-            <label for="title"><input type="radio" value="title" id="title" v-model="picked"/></label>
-            <label for="tags"><input type="radio" value="tags" id="tags" v-model="picked"/></label>
-            <label for="date"><input type="radio" value="date" id="date" v-model="picked"/></label>
+            <label for="title"><input type="radio" value="title" id="title" v-model="picked"/>标题</label>
+            <label for="tags"><input type="radio" value="tags" id="tags" v-model="picked"/>标签</label>
+            <label for="date"><input type="radio" value="date" id="date" v-model="picked"/>日期</label>
         </div>
         <p>搜索结果</p>
         <article-content v-on:addPage="nextPage" v-on:dropPage="prePage"></article-content>
@@ -46,14 +46,14 @@
             ...mapMutations(['set_all_articles']),
             nextPage () {
                 this.page++
-                this.searchArticles({key: this.picked, value: this.text, page: this.page})
+                this.searchArticles({key: this.picked, value: this.text, page: this.page, limit: 4})
             },
             prePage () {
                 if (!(this.page - 1)) {
                     alert('已经到第一页咯')
                 } else {
                     this.page--
-                    this.searchArticles({key: this.picked, value: this.text, page: this.page})
+                    this.searchArticles({key: this.picked, value: this.text, page: this.page,limit: 4})
                 }
             }
         },
@@ -81,7 +81,7 @@
                 border-radius: 1.875rem;
                 outline: none;
                 text-align: center;
-                color: #ffffff;
+                color: #333;
                 background: transparent;
             }
             i {
@@ -97,7 +97,7 @@
             }
         }
         .searchString {
-            color: #fff;
+            color: #333;
             font-size: 1.25rem;
             margin-bottom: 4.375rem;
             input {
@@ -116,7 +116,7 @@
             font-size: 1.875rem;
             margin: 0 auto 2.5rem;
             padding-bottom: 0.625rem;
-            color: #ffffff;
+            color: #333;
         }
     }
 

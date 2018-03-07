@@ -151,16 +151,19 @@ export default {
             .then(search => {
                 if(payload.page > search.total){
                     commit('moreArticle_toggle', false)
-                    commit('noMore_',true)
+                    commit('noMore_toggle_',true)
                 }else{
-                    commit('pageTotal',search.total)
-                    commit('noMore_',false)
+                    console.log(search.total)
+                    commit('set_pageTotal',search.total)
+                    commit('noMore_toggle',false)
                 }
                 if( payload.add) {
-                    commit('add_articles',search.article)
+
+                    commit('add_articles',search.articles)
                     endLoading(commit, startTime, 'loadMore_toggle')
                 }else{
-                    commit('set_all_articles', articles)
+
+                    commit('set_all_articles', search.articles)
                     endLoading(commit, startTime, 'isLoading_toggle')
                 }
                 document.title = '搜索成功'

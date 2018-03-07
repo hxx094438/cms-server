@@ -93,27 +93,42 @@ router.get('/api/someArticles', (req, res) => {
     const key = req.query.payload.key
     const value = req.query.payload.value
     const page = req.query.payload.page || 1
+    const limit = req.query.payload.limit - 0 || 4;
     const skip = 4 * (page - 1)
     const re = new RegExp(value, 'i')
+    const search = {};
     if (key === 'tags') {                                       // 根据标签来搜索文章
         const arr = value.split(' ')
+        db.Article.count({tags: {$all: arr}}).exec(function (err, count) {
+            err ? console(err) : search.total = Math.ceil(count / limit)
+        })
         db.Article.find({tags: {$all: arr}})
-            .sort({date: -1}).limit(4).skip(skip).exec()
+            .sort({date: -1}).limit(limit).skip(skip).exec()
             .then((articles) => {
-                res.send(articles)
+                search.articles = articles
+                res.send(search)
             })
-    } else if (key === 'title') {                               // 根据标题的部分内容来搜索文章
+    } else if (key === 'title') {
+        // 根据标题的部分内容来搜索文章
+        db.Article.count({title: re, isPublish: true}).exec(function (err, count) {
+            err ? console(err) : search.total = Math.ceil(count / limit)
+        })
         db.Article.find({title: re, isPublish: true})
-            .sort({date: -1}).limit(4).skip(skip).exec()
+            .sort({date: -1}).limit(limit).skip(skip).exec()
             .then((articles) => {
-                res.send(articles)
+                search.articles = articles
+                res.send(search)
             })
     } else if (key === 'date') {                                // 根据日期来搜索文章
         const nextDay = value + 'T24:00:00'
+        db.Article.count({date: {$gte: new Date(value), $lt: new Date(nextDay)}}).exec(function (err, count) {
+            err ? console(err) : search.total = Math.ceil(count / limit)
+        })
         db.Article.find({date: {$gte: new Date(value), $lt: new Date(nextDay)}})
-            .sort({date: -1}).limit(4).skip(skip).exec()
+            .sort({date: -1}).limit(limit).skip(skip).exec()
             .then((articles) => {
-                res.send(articles)
+                search.articles = articles
+                res.send(search)
             })
     }
 })
