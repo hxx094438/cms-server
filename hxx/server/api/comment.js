@@ -21,7 +21,7 @@ router.post('/api/comment', (req, res) => {
     db.Comment.findOne({name: req.body.name, articleId: req.body.articleId}, (err, doc) => {
         if (doc && doc.address !== req.body.address) {
             res.status(403).end('用户名已存在')
-        } else if(!doc || doc.address === req.body.address) {
+        } else if (!doc || doc.address === req.body.address) {
             const comment = {
                 imgName: req.body.imgName,
                 name: req.body.name,
@@ -36,17 +36,19 @@ router.post('/api/comment', (req, res) => {
                 db.Comment.findOne({name: reviewer, articleId: req.body.articleId}, (err, doc) => {
                     const url = 'https://www.xxx.cn' + req.body.curPath
                     const replyEmail = doc.address
-                    const content =  emailForm('欢迎常来我的博客', reviewer, req.body.name, '回复了你的评论',req.body.content, url)
-                    mail.send(replyEmail, '您在FatDong的博客有一条新评论', content, res)
+                    const content = emailForm('欢迎常来我的博客', reviewer, req.body.name, '回复了你的评论', req.body.content, url)
+                    mail.send(replyEmail, '您在hxx的博客有一条新评论', content, res)
                 })
             }
             new db.Comment(comment).save().then(() => {
                 const url = 'https://www.xxx.cn' + req.body.curPath
-                const content = emailForm('MyBlog Message', '站长', req.body.name, '评论了你的文章',req.body.content, url)
+                const content = emailForm('MyBlog Message', '站长', req.body.name, '评论了你的文章', req.body.content, url)
                 mail.send('287668256@qq.com', '您的博客有一条新评论', content, res)
                 res.status(200).send('send email successfully')
-            }).catch(err => { console.log(err) })
-            db.Article.update({aid: req.body.articleId},{$inc: {comment_n: 1}}, (err, data) => {
+            }).catch(err => {
+                console.log(err)
+            })
+            db.Article.update({aid: req.body.articleId}, {$inc: {comment_n: 1}}, (err, data) => {
                 if (err) {
                     console.log(err)
                 }
@@ -61,17 +63,20 @@ router.get('/api/comments', (req, res) => {
     if (req.query.payload.sort === 'date') {                                // 根据时间排序评论
         db.Comment.find({articleId: articleId}, 'name date content like imgName').sort({date: -1}).exec()
             .then((comments) => {
+                console.log("1")
                 res.send(comments)
-            })
+            }).catch((err) => console.log(err))
     } else if (req.query.payload.sort === 'like') {                         // 根据点赞数量排序评论
         db.Comment.find({articleId: articleId}, 'name date content like imgName').sort({like: -1}).exec()
             .then((comments) => {
+                console.log("2")
                 res.send(comments)
-            })
+            }).catch((err) => console.log(err))
     } else {                                                                // 根据文章的aid获取所有评论
         db.Comment.find({articleId: articleId}, 'name date content like imgName').exec().then((comments) => {
+            console.log(comments.length)
             res.send(comments)
-        })
+        }).catch((err) => console.log(err))
     }
 })
 
@@ -79,20 +84,25 @@ router.get('/api/comments', (req, res) => {
 router.patch('/api/comments/:id', (req, res) => {
     const id = req.params.id
     if (req.body.option === 'add') {
+        console.log("1")
         db.Comment.update({_id: id}, {$inc: {like: 1}}, (err, data) => {
             if (err) {
                 console.log(err)
             } else {
+                console.log("1")
                 res.status(200).send('succeed in updating like')
             }
         })
     } else if (req.body.option === 'drop') {
         db.Comment.update({_id: id}, {$inc: {like: -1}}, (err, data) => {
             if (err) {
-            console.log(err)
-        } else {
-            res.status(200).send('succeed in updating like')
-        }})
+                console.log("1")
+                console.log(err)
+            } else {
+                console.log("1")
+                res.status(200).send('succeed in updating like')
+            }
+        })
     }
 })
 

@@ -193,11 +193,26 @@ export default {
                 document.title = '搜索成功'
             }).catch((err) => console.log(err))
     },
-    getAllComments({commit}, payload) {
+
+    // email
+    sendMail ({commit}, payload) {
+        return Vue.http.post('/api/mail', payload).catch((err) => { console.log(err) })
+    },
+    // comment
+    summitComment ({commit}, payload) {
+        return Vue.http.post('/api/comment', payload)
+    },
+
+    getAllComments ({commit}, payload) {
         return Vue.http.get('/api/comments', {params: {payload}})
-            .then(response => response.json())
+            .then(response => {return response.json()})         //箭头函数有{...}别忘了return...
             .then(comments => {
-                commit('set_comments',comments)
-            }).catch((err) => {console.log(err)})
+                console.log(comments)
+                commit('set_comments', comments)
+            }).catch((err) => { console.log(err) })
+    },
+    updateLike ({commit}, payload) {
+        return Vue.http.patch('/api/comments/' + payload.id, {option: payload.option})
+            .catch((err) => { console.log(err) })
     }
 }

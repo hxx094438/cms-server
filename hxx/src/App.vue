@@ -13,11 +13,23 @@
 
     export default {
         name: 'App',
+        mounted () {
+            document.addEventListener('visibilitychange', this.changeTitle, false)
+        },
         components: {
             DialogBox
         },
         computed:{
             ...mapState(['isLoading','dialog'])
+        },
+        methods: {
+            changeTitle () {            // 切换标签页后，改变title
+                if (document.hidden) {
+                    document.title = 'letMego'
+                } else {
+                    document.title = 'welcome!'
+                }
+            }
         }
     }
 </script>
