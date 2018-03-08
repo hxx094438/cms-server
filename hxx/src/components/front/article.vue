@@ -120,12 +120,12 @@ export default {
     padding: 1.875rem 15.625rem 0;
     position: relative;
     min-height: 43.75rem;
-    color: #c0ccda;
+    color: #666;
     #content {
         h1 {
             text-align: center;
             margin-bottom: 1.25rem;
-            color: #F0F0F0;
+            color: #333;
         }
         .content {
             min-height: 31.25rem;
@@ -138,11 +138,11 @@ export default {
         .appendInfo {
             text-align: right;
             time {
-                color: #F0F0F0;
+                color: #333;
                 display: inline-block;
             }
             span {
-                color: #F0F0F0;
+                color: #333;
                 display: inline-block;
                 margin-left: 0.625rem;
             }
@@ -174,7 +174,7 @@ export default {
                 margin-top: 1.25rem;
                 i {
                     font-size: 1.125rem;
-                    color: rgb(129, 216, 208);
+                    color: rgb(216, 54, 54);
                 }
                 i.icon-left {
                     margin-right: 0.625rem;
@@ -185,13 +185,13 @@ export default {
                 p {
                     flex-grow: 1;
                     cursor: pointer;
-                    color: #c0ccda;
+                    color: #666;
                     display: inline-block;
                     padding: 0 0.625rem;
                     transition: 1s;
                     margin-top: 1rem;
                     &:hover {
-                         color: rgb(129, 216, 208);
+                         color: rgb(216, 54, 54);
                      }
                 }
                 p.left {
@@ -212,7 +212,7 @@ export default {
         }
     }
     i.icon-fanhui {
-        color: #C0CCDA;
+        color: #666;
         font-size: 1.875rem;
         position: absolute;
         bottom: 1.25rem;
@@ -240,7 +240,7 @@ export default {
     }
     .last {
         p:hover {
-            color: rgb(129, 216, 208) !important;
+            color: rgb(216, 54, 54) !important;
         }
     }
 }

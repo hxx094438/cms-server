@@ -43,7 +43,7 @@ router.post('/api/comment', (req, res) => {
             new db.Comment(comment).save().then(() => {
                 const url = 'https://www.xxx.cn' + req.body.curPath
                 const content = emailForm('MyBlog Message', '站长', req.body.name, '评论了你的文章',req.body.content, url)
-                mail.send('xxx@qq.com', '您的博客有一条新评论', content, res)
+                mail.send('287668256@qq.com', '您的博客有一条新评论', content, res)
                 res.status(200).send('send email successfully')
             }).catch(err => { console.log(err) })
             db.Article.update({aid: req.body.articleId},{$inc: {comment_n: 1}}, (err, data) => {

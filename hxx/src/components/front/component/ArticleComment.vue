@@ -206,9 +206,9 @@ export default {
             border-radius: 0.625rem;
         }
         textarea {
-            color: #ffffff;
+            color: #666;
             font-size: 1.125rem;
-            border: 0.125rem solid rgb(129, 216, 208);
+            border: 0.125rem solid rgb(216, 88, 86);
             padding: 0.3125rem;
             border-radius: 0.625rem;
             width: calc(100% - 16.5rem);
@@ -227,9 +227,9 @@ export default {
             input {
                 flex-grow: 1;
                 margin-right: 1.5625rem;
-                color: #ffffff;
+                color: #ff5a6e;
                 font-size: 1.125rem;
-                border: 0.125rem solid rgb(129, 216, 208);
+                border: 0.125rem solid rgb(216, 59, 69);
                 border-radius: 0.3125rem;
                 outline: none;
                 width: 12.5rem;
@@ -257,7 +257,7 @@ export default {
             span {
                 cursor: pointer;
                 &:hover {
-                    color: darkturquoise;
+                    color: #d1494c;
                  }
             }
         }
@@ -273,12 +273,12 @@ export default {
                 border: 0.125rem solid #cccccc;
                 border-radius: 0.3125rem;
                 padding: 0.625rem;
-                color: #ccc;
+                color: #999;
                 .commentName {
                     font-size: 1.125rem;
                     margin-bottom: 0.3125rem;
                     span {
-                        color: darkturquoise;
+                        color: #d14f4c;
                     }
                 }
                 .text {
@@ -292,13 +292,13 @@ export default {
                     justify-content: flex-end;
                     text-align: right;
                     a {
-                        color: white;
+                        color: #999;
                         margin-right: 0.625rem;
                         i.icon-huifu {
                             margin-right: 0.3125rem;
                         }
                         &:hover {
-                            color: deepskyblue;
+                            color: #ff525b;
                          }
                     }
                     p {
@@ -306,7 +306,7 @@ export default {
                         margin-right: 0.3125rem;
                         cursor: pointer;
                         &:hover {
-                             color: darkturquoise;
+                             color: #d15c5c;
                          }
                     }
                 }

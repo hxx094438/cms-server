@@ -67,7 +67,7 @@ export default {
 
 <style lang="scss" rel="stylesheet/scss" scoped>
 #list {
-    color: #F0F0F0;
+    color: #666;
     left: 0.3125rem;
     top: 2.5rem;
     text-align: left;
@@ -86,7 +86,7 @@ export default {
         position: absolute;
         right: -0.9375rem;
         top: 0.3125rem;
-        color: #fff;
+        color: #999;
         font-size: 0.9375rem;
         font-weight: bolder;
         cursor: pointer;
@@ -100,11 +100,11 @@ export default {
             background: rgba(204, 204, 204, 0.5);
             position: absolute;
             padding-left: 0.3125rem;
-            border-left: 0.1875rem solid darkturquoise;
+            border-left: 0.1875rem solid #d13d4c;
             transition: 1s;
         }
         p.summary {
-            color: white;
+            color: #ff5b5a;
             font-size: 1.25rem;
             font-weight: bold;
             height: 2rem;
@@ -117,13 +117,13 @@ export default {
                 min-height: 1.875rem;
                 list-style-type: circle;
                 a {
-                    color: #F0F0F0;
+                    color: #999;
                     display: block;
                     padding: 0.375rem 0 0.375rem 0;
                     font-size: 1rem;
                     cursor: pointer;
                     &:hover {
-                         color: #00ff7f;
+                         color: #666;
                      }
                 }
             }
