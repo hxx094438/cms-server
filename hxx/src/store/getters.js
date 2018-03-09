@@ -33,7 +33,6 @@ export default {
             let list = []
             let index = 0
             const sizeTop = arr[1]
-
             list.push({
                 level: 1,
                 size: sizeTop,
