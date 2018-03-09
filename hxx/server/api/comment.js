@@ -63,18 +63,15 @@ router.get('/api/comments', (req, res) => {
     if (req.query.payload.sort === 'date') {                                // 根据时间排序评论
         db.Comment.find({articleId: articleId}, 'name date content like imgName').sort({date: -1}).exec()
             .then((comments) => {
-                console.log("1")
                 res.send(comments)
             }).catch((err) => console.log(err))
     } else if (req.query.payload.sort === 'like') {                         // 根据点赞数量排序评论
         db.Comment.find({articleId: articleId}, 'name date content like imgName').sort({like: -1}).exec()
             .then((comments) => {
-                console.log("2")
                 res.send(comments)
             }).catch((err) => console.log(err))
     } else {                                                                // 根据文章的aid获取所有评论
         db.Comment.find({articleId: articleId}, 'name date content like imgName').exec().then((comments) => {
-            console.log(comments.length)
             res.send(comments)
         }).catch((err) => console.log(err))
     }
@@ -84,22 +81,18 @@ router.get('/api/comments', (req, res) => {
 router.patch('/api/comments/:id', (req, res) => {
     const id = req.params.id
     if (req.body.option === 'add') {
-        console.log("1")
         db.Comment.update({_id: id}, {$inc: {like: 1}}, (err, data) => {
             if (err) {
                 console.log(err)
             } else {
-                console.log("1")
                 res.status(200).send('succeed in updating like')
             }
         })
     } else if (req.body.option === 'drop') {
         db.Comment.update({_id: id}, {$inc: {like: -1}}, (err, data) => {
             if (err) {
-                console.log("1")
                 console.log(err)
             } else {
-                console.log("1")
                 res.status(200).send('succeed in updating like')
             }
         })

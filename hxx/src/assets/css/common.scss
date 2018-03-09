@@ -8,7 +8,7 @@ html {
 }
 body {
   height: 100%;
-  font-family: "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", serif;
+  font-family: Source Sans Pro,Helvetica Neue,Arial,sans-serif;
 }
 a {
   text-decoration: none;
@@ -19,8 +19,8 @@ button {
   border: none;
   outline: none;
   color: #fff;
-  background: rgb(216, 63, 65);
-  margin-top: 1.875rem;
+  background: #42b983;
+  margin-top: 1rem;
   padding-left: 0.4375rem;
   cursor: pointer;
   border-radius: 0.25rem;
@@ -56,7 +56,7 @@ button {
 
  h2, h3, h4, h5, h6 {
   padding-top: 0.8rem;
-  color: #333;
+  color: #34495e;
 }
 
 

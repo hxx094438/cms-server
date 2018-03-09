@@ -207,7 +207,6 @@ export default {
         return Vue.http.get('/api/comments', {params: {payload}})
             .then(response => {return response.json()})         //箭头函数有{...}别忘了return...
             .then(comments => {
-                console.log(comments)
                 commit('set_comments', comments)
             }).catch((err) => { console.log(err) })
     },
