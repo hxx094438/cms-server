@@ -29,10 +29,13 @@ export default {
         const strHtml = unescapeHTML(marked(state.article.content || '', { renderer: renderer }))
         if (strHtml) {
             const Re = /<h(\d) id="(.*?)">/g
+
             let arr = Re.exec(strHtml)
+
             let list = []
             let index = 0
             const sizeTop = arr[1]
+
             list.push({
                 level: 1,
                 size: sizeTop,
@@ -60,6 +63,7 @@ export default {
                 })
                 index = index + 1
             }
+
             return list
         }
     }

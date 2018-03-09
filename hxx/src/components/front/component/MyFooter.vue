@@ -16,7 +16,7 @@ export default {}
 <style lang="scss" rel="stylesheet/scss" scoped>
     .iconfont {
        font-size: 1.875rem;
-       color: #fff;
+       color: #333;
        margin-right: 0.625rem;
     }
     .icon-github:hover {
@@ -36,15 +36,14 @@ export default {}
         padding-top: 0.625rem;
         line-height: 2.5rem;
         width: 100%;
-        background: rgba(0,0,0,.8);
     }
     p {
         text-align: center;
-        color: #ffffff;
+        color: #333;
         font-size: 1rem;
     }
     span.login {
         cursor: pointer;
-        color: #fff;
+        color: #333;
     }
 </style>
