@@ -1,9 +1,10 @@
 <template>
     <div class="container">
         <section class="newBlog">
-            <a href="#lastPost" class="title animated bounceIn">
-                <p class="headline" id="lastPost">最近更新</p>
-            </a>
+            <div class="title animated fadeIn">
+                <span class="headline" id="lastPost">最近更新</span>
+                <span class="line"></span>
+            </div>
             <div class="posts animated fadeIn">
                 <div class="flex">
                     <div v-for="(article, index) in reducedArticles" class="oneArticle">
@@ -19,22 +20,10 @@
                         <p class="content">{{article.content}}</p>
                         <router-link
                                 :to="{name: 'article', params: {id: article.aid, index: index, page: 1}, hash: '#article'}"
-                                tag="button" exact><span>Read More</span></router-link>
+                                tag="button" exact><span>Read More</span>
+                        </router-link>
                     </div>
                 </div>
-            </div>
-        </section>
-        <section class="contact">
-            <a href="#contactMe" class="title animated bounceIn">
-                <p class="headline" id="contactMe">Contact me</p>
-            </a>
-            <div class="email animated fadeIn">
-                <input type="text" placeholder=" 邮件主题" v-model="subject"/>
-                <input type="text" placeholder=" 邮箱" v-model="address"/>
-                <textarea placeholder=" 来唠唠嗑呗" spellcheck="false" v-model="content"></textarea>
-                <button class="sendEmail" @click="send" :disabled="sendFlag">
-                    <span>{{sendFlag ? '发送中...' : '确认'}}</span>
-                </button>
             </div>
         </section>
     </div>
@@ -107,23 +96,39 @@
 
 <style lang="scss" rel="stylesheet/scss" scoped>
     .container {
+        padding-top: 2rem;
         .newBlog {
             min-height: 43.75rem;
-            width: 60rem;
+            width: 50rem;
             margin: 0 auto;
             .title {
-                margin-bottom: 4.75rem;
-                p {
-                    padding-top: 2.8125rem;
-                    width: 13rem;
+                position: relative;
+                display: flex;
+                justify-content: space-between;
+                padding: .5rem 0;
+                line-height: 2rem;
+                font-weight: 600;
+                span.headline {
+                    position: relative;
+                    padding-right: 1.5rem;
+                    background: #fff;
+                    z-index: 99;
+                }
+                .line{
+                    top: 50%;
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    height: 1px;
+                    color: #eee;
+                    background: currentColor;
                 }
             }
             .posts {
                 margin-top: 1rem;
                 .flex {
-                    color: #666;
-                    padding-left: 1rem;
-                    padding-right: 1rem;
+                    color: #555;
                     div.oneArticle {
                         padding-bottom: 2rem;
                         .title_1 {
@@ -175,7 +180,6 @@
                 input {
                     color: #333;
                     font-size: 1.125rem;
-
                     width: 70%;
                     height: 1.5625rem;
                     margin-bottom: 1.25rem;
@@ -202,14 +206,7 @@
         }
     }
 
-    p.headline {
-        padding-top: 4.375rem;
-        margin: 0 auto 2.25rem;
-        text-align: center;
-        color: #333;
-        font-size: 2rem;
-        padding-bottom: 1.25rem;
-    }
+
 
     .commentNumber {
         color: #333;

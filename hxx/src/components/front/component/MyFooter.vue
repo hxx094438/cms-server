@@ -34,13 +34,13 @@ export default {}
     div {
         text-align: center;
         padding-top: 0.625rem;
-        line-height: 2.5rem;
+        line-height: 1.6rem;
         width: 100%;
     }
     p {
         text-align: center;
         color: #333;
-        font-size: 1rem;
+        font-size: .8rem;
     }
     span.login {
         cursor: pointer;

@@ -31,13 +31,15 @@ export default {
       ...mapMutations(['set_user']),
       confirm (name, password) {
         this.login({name: name, password: password}).then((res) => {
-          this.info = '正在登录中...'
-          this.set_user(res.data)
-          this.$router.push({name:'posts'})
-        }).catch((err) => {
-          console.log(err)
-          this.info = '登录失败， 请重新登录'
-        })
+            console.log(res)
+            if(res.data === '账号或密码错误'){
+                this.info = '账号或密码错误'
+            }else{
+                this.info = '正在登录中...'
+                this.set_user(res.data)
+                this.$router.push({name:'posts'})
+            }
+        }).catch((err) => {console.log(err)})
       }
     },
     watch: {

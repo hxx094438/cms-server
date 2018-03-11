@@ -4,10 +4,8 @@ import Router from 'vue-router'
 
 
 const index = resolve => require(['@/components/front/index'], resolve)
-const AboutMe = resolve => require(['@/components/front/AboutMe'], resolve)
 const Home = resolve => require(['@/components/front/Home'], resolve)
 const Articles = resolve => require(['@/components/front/Articles'], resolve)
-const contact = resolve => require(['@/components/front/contact'], resolve)
 const login = resolve => require(['@/components/back/login'], resolve)
 const admin = resolve => require(['@/components/back/admin'], resolve)
 const posts = resolve => require(['@/components/back/posts'], resolve)
@@ -20,7 +18,7 @@ const SearchResult = resolve => require(['@/components/front/SearchResult'], res
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
     mode: 'history',
     scrollBehavior(to, from, savedPosition) {
         if (to.hash) {
@@ -38,10 +36,8 @@ export default new Router({
             component: index,
             children: [
                 {path: 'home', name: 'home', component: Home, meta: {title: '博客首页'}},
-                {path: 'about', name: 'about', component: AboutMe, meta: {title: '关于我'}},
                 {path: 'articles', name: 'articles', component: Articles, meta: {title: '学习笔记分享'}},
                 {path: 'articles/:id', name: 'article', component: article},
-                {path: 'contact', name: 'contact', component: contact, meta: {title: '联系站长'}},
                 {path: 'search/:text', name: 'SearchResult', component: SearchResult, meta: {title: '搜索结果'}}
             ]
         },
@@ -63,5 +59,19 @@ export default new Router({
                 {path: 'account', name: 'account', component: account, meta: {requireAuth: true, title: '修改账户'}}
             ]
         }
-    ]
+    ],
 })
+
+router.beforeEach((to, from, next) => {
+    document.title = to.meta.title
+    console.log(Store.state.user)
+    if (Store.state.user.token && to.name === 'login') {
+        next({name:'posts'})
+    }else if (!Store.state.user.token && to.meta.requireAuth){
+        next({name:'login'})
+    }else{
+        next()
+    }
+})
+
+export default router

@@ -32,13 +32,13 @@ export default {
     noMore_toggle: (state, flag) => {
         state.noMore = flag
     },
-    // tags
-    set_tags: (state, tags) => {
-        state.tags = tags
-    },
     // pageTotal
     set_pageTotal: (state, total) => {
         state.pageTotal = total
+    },
+    // tags
+    set_tags: (state, tags) => {
+        state.tags = tags
     },
     set_curtag: (state, tag) => {
         state.curTag = tag

@@ -1,6 +1,15 @@
 <template>
     <div id="nav">
         <div class="flexDiv">
+            <nav>
+                <ul class="catalog">
+                    <router-link to="/home" tag="li">首页</router-link>
+                    <router-link to="/articles" tag="li">博客</router-link>
+                    <router-link to="/articles" tag="li">科学</router-link>
+                    <router-link to="/articles" tag="li">民主</router-link>
+                    <router-link to="/articles" tag="li">自由</router-link>
+                </ul>
+            </nav>
             <div class="search">
                 <input
                         type="text"
@@ -10,14 +19,6 @@
                 />
                 <i class="iconfont icon-search" @click="search"></i>
             </div>
-            <nav>
-                <ul class="catalog">
-                    <router-link to="/home" tag="li">首页</router-link>
-                    <router-link to="/articles" tag="li">博客</router-link>
-                    <router-link to="/contact" tag="li">联系站长</router-link>
-                    <router-link to="/about" tag="li">关于我</router-link>
-                </ul>
-            </nav>
         </div>
     </div>
 </template>
@@ -52,15 +53,14 @@
         z-index: 100;
         background: #fff;
         box-shadow: 0 0 4px rgba(0,0,0,.25);
+        line-height: 3rem;
         .flexDiv {
             max-width :60rem;
             margin: 0 auto;
-            height :40px;
-            padding :25px 0;
+            height :3rem;
             display: flex;
             justify-content: space-between;
             .search {
-                margin-top: 0.55rem;
                 margin-left: 0.625rem;
                 position: relative;
                 input {
@@ -85,8 +85,8 @@
                 }
             }
             nav {
+                height: 3rem;
                 font-weight: 600;
-                height: 3.125rem;
                 ul {
                     color: #333;
                     display: flex;
@@ -95,20 +95,20 @@
                     list-style: none;
                     width: 100%;
                     li {
-                        width: 5rem;
-                        font-size: 1.125rem;
+                        width: 2.5rem;
+                        font-size: .8rem;
                         text-align: center;
                         margin-right: 1.2rem;
-                        height: 2.9375rem;
-                        line-height: 3.3125rem;
+                        height: 3rem;
+                        line-height: 3rem;
                         cursor: pointer;
                         border-bottom: 0.1875rem solid transparent;
                         &:hover {
-                            border-bottom: 0.1875rem solid rgb(129, 216, 208);
+                            color: rgb(129, 216, 208) ;
                             transition: all 0.8s;
                         }
                         &.router-link-active {
-                            border-bottom: 0.1875rem solid rgb(129, 216, 208);
+                            color: rgb(129, 216, 208) ;
                         }
                     }
                 }

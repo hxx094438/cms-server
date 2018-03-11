@@ -11,21 +11,16 @@ const endLoading = (commit, startTime, toggle) => {
     leftTime > 0 ? setTimeout(commit(toggle, false), leftTime) : commit(toggle, false)
 }
 
-
 export default {
-    login({commit}, payload) {
-        return Vue.http.post('/api/login', payload).catch((err) => {
-            console.log(err)
-        })
+    login ({commit}, payload) {
+        return Vue.http.post('/api/login', payload).catch((err) => { console.log(err) })
     },
-    resetUser({commit}, payload) {
+    resetUser ({commit}, payload) {
         return Vue.http.post('/api/user', payload)
             .then(() => {
                 commit('unset_user')
                 router.go({name: 'login'})
-            }).catch((err) => {
-                console.log(err)
-            })
+            }).catch((err) => { console.log(err) })
     },
     getAllArticles({commit}, payload) {
         commit('moreArticle_toggle', true)
@@ -36,6 +31,7 @@ export default {
         return Vue.http.get('/api/articles', {params: {payload}})
             .then(response => response.json())
             .then(article => {
+                console.log(article)
                 if (payload.page > article.total) {
                     commit('moreArticle_toggle', false)
                     commit('noMore_toggle', true)
@@ -43,7 +39,6 @@ export default {
                     commit('set_pageTotal', article.total)
                     commit('noMore_toggle', false)
                 }
-
                 if (payload.add) {
                     commit('add_articles', article.articles)
                     endLoading(commit, startTime, 'loadMore_toggle')
@@ -182,16 +177,22 @@ export default {
                     commit('noMore_toggle', false)
                 }
                 if (payload.add) {
-
                     commit('add_articles', search.articles)
                     endLoading(commit, startTime, 'loadMore_toggle')
                 } else {
-
                     commit('set_all_articles', search.articles)
                     endLoading(commit, startTime, 'isLoading_toggle')
                 }
                 document.title = '搜索成功'
             }).catch((err) => console.log(err))
+    },
+
+    //getAllTags
+    getAllTags ({commit},payload) {
+      return Vue.http.get('/api/tags',payload)
+          .then(response => {
+              commit('set_tags',response.data)
+          }).catch(err => console.log(err))
     },
 
     // email

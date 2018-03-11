@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 
 Vue.use(VueResource)
 
-Vue.filter('toDate', (date) => {                    // 2017年5月10日15：35
+Vue.filter('toDate', (date) => {
     if (date) {
         const d = new Date(date)
         const minutes = d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes()
@@ -21,7 +21,7 @@ Vue.filter('toDate', (date) => {                    // 2017年5月10日15：35
     }
 })
 
-Vue.filter('to_date', (date) => {                   // 2017-5-10 at 15：35
+Vue.filter('to_date', (date) => {
     if (date) {
         const d = new Date(date)
         const minutes = d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes()
@@ -43,9 +43,10 @@ Vue.http.interceptors.push((request, next) => {
     }
     next((response) => {
         console.log(response)
-        if (response.status === 401) {
-            store.commit('unset_user')
-            router.go({name: 'login'})
+        if(response.url === '/api/login'){
+            if (response.status === 200 && response.body === '账号或密码错误') {
+                store.commit('unset_user')
+            }
         }
         return response
     })

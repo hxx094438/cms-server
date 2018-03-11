@@ -26,8 +26,10 @@ router.post('/api/login', (req, res) => {
                     token: token
                 })
             } else {
-                res.status(401).end()
+                res.status(200).end('账号或密码错误')
             }
+        }else{
+                res.status(200).end('账号或密码错误')
         }
     })
 })

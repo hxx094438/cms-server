@@ -3,6 +3,7 @@ const article = require('./article')
 const draft = require('./draft.js')
 const tag = require('./tag.js')
 const comment = require('./comment')
+const user = require('./user')
 
 module.exports = (app) => {
     app.use(login)
@@ -10,4 +11,5 @@ module.exports = (app) => {
     app.use(draft)
     app.use(tag)
     app.use(comment)
+    app.use(user)
 }

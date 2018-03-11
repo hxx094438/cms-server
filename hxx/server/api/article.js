@@ -79,12 +79,13 @@ router.get('/api/articles', (req, res) => {
             .then((articles) => {
                 article.articles = articles;
                 res.send(article)
-            })
+            }).catch(err => console.log(err))
     } else {
-        db.Article.find({isPublish: true}).sort({date: -1}).limit(limit).skip(skip).exec().then((articles) => {
-            article.articles = articles;
-            res.send(article)
-        })
+        db.Article.find({isPublish: true}).sort({date: -1}).limit(limit).skip(skip).exec()
+            .then((articles) => {
+                article.articles = articles;
+                res.send(article)
+        }).catch(err => console.log(err))
     }
 })
 

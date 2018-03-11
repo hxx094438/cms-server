@@ -100,7 +100,7 @@ export default {
                 justify-content: space-around;
                 .activeBtn {
                     background: #ffc520;
-                    color: #ffffff;
+                    color: #333;
                     transition:  1s;
                 }
                 button {
@@ -115,11 +115,10 @@ export default {
             }
         }
         div#article {
-            color: #fff;
+            color: #333;
             width: 100%;
             border-bottom: 0.125rem solid rgb(129, 216, 208);
             h2 {
-                color: rgb(129, 216, 208);
                 margin-top: 1.875rem;
                 margin-bottom: 1.25rem;
             }
@@ -146,14 +145,14 @@ export default {
                 margin-right: 0.625rem;
             }
             .commentNumber {
-                color: #ffffff;
+                color: #333;
                 i {
                     font-size: 1.125rem;
                     margin-right: 0.3125rem;
                 }
             }
             i.icon-label, i.icon-shijian {
-                color: #ffffff;
+                color: #333;
                 font-size: 1.25rem;
                 margin-right: 0.3125rem;
             }
@@ -162,7 +161,7 @@ export default {
             width: 100%;
             height: 1.5rem;
             line-height: 1.5rem;
-            color: #ffffff;
+            color: #333;
             margin-top: 1.875rem;
             margin-bottom: 1.875rem;
             text-align: center;
