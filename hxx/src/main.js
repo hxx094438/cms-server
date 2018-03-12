@@ -39,6 +39,7 @@ Vue.filter('toTag', (arr) => {
 
 Vue.http.interceptors.push((request, next) => {
     if (window.localStorage.getItem('token')) {
+        alert('token')
         request.headers.set('authorization', 'Bearer ' + window.localStorage.getItem('token'))
     }
     next((response) => {

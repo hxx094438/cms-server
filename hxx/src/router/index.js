@@ -64,7 +64,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
     document.title = to.meta.title
-    console.log(Store.state.user)
+
     if (Store.state.user.token && to.name === 'login') {
         next({name:'posts'})
     }else if (!Store.state.user.token && to.meta.requireAuth){
