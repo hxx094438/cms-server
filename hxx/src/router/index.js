@@ -64,10 +64,10 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
     document.title = to.meta.title
-
+    let token = window.localStorage.getItem('token')
     if (Store.state.user.token && to.name === 'login') {
         next({name:'posts'})
-    }else if (!Store.state.user.token && to.meta.requireAuth){
+    }else if ((!token || token === null) && to.meta.requireAuth){
         next({name:'login'})
     }else{
         next()

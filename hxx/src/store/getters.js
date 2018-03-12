@@ -13,9 +13,11 @@ renderer.heading = function (text, level) {
 
 export default {
     reducedArticles: (state) => {
-        const articles = state.articles.map(article => {
+        const articles = state.articles.map(article => { //不把文章保存到vuex中，直接请求数据，拿到回调，然后想办法把数据显示出来
             let newArticle = {};
             for(let i in article) { newArticle[i] = article[i];}
+            console.log(newArticle.content)
+            console.log(article.content)
             newArticle.content = marked(article.content || '').replace(/<[^>]*>/g, '').slice(0,200) + '......'
             return newArticle
         })
