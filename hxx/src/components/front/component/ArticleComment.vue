@@ -2,7 +2,7 @@
     <div id='comment'>
         <div class='newComment'>
             <div class="user">
-                <img :src="gravatar(address) || '../../../../static/me.jpg'">
+                <img :src="gravatar(address) || '../../../../static/fuck.jpg'">
             </div>
             <div class="editor">
                 <textarea spellcheck='false' placeholder='说点什么吧...' v-model='content' id='reply'
@@ -41,7 +41,7 @@
                             </i> {{comment.like}}
                         </p>
                     </div>
-                    <img :src="gravatar(address) || '../../../../static/me.jpg'">
+                    <img :src="gravatar(comment.address)">
                 </div>
             </div>
             <p v-show='comments.length === 0' class='nocomment'>还没有人评论&nbsp; :(</p>
@@ -52,12 +52,9 @@
 <script>
     import {mapActions, mapState, mapMutations} from 'vuex'
     import gravatar from 'gravatar'
-
-
     export default {
         data() {
             return {
-
                 name: '',
                 address: '',
                 content: '',
@@ -71,10 +68,10 @@
         },
         created() {
             this.getAllComments({id: this.$route.params.id})
-            if (localStorage.token && this.user.name) {
+            if (localStorage.token || this.user.name) {
                 this.imgName = 'me'
             } else {
-                this.imgName = 'reviewer'
+                this.imgName = 'fuck'
             }
             if (localStorage.reviewer) {
                 this.address = localStorage['e-mail']
@@ -85,7 +82,7 @@
             ...mapState(['comments', 'user']),
             likeArr() {                            // 访问者点赞了哪些评论的数组
                 if (localStorage.getItem(this.$route.params.id)) {
-                    const item = localStorage.getItem(this.$route.params.id)  // 初始化访问者的点赞情况
+                    const item = localStorage.getItem(this.$route.params.id)  // 初始化访问者的点赞情况(由于没有用户信息，所有将点赞信息保存在本地的localStarage中)
                     return JSON.parse(item)
                 }
                 return []
@@ -149,7 +146,7 @@
                     /([\u4E00\u4E8C\u4E09\u56DB\u4E94\u516D\u4E03\u516B\u4E5D\u25CB\u58F9\u8D30\u53C1\u8086\u4F0D\u9646\u67D2\u634C\u7396\u96F6].*){7,}/i.test(this.content) // 过滤用汉字发Q号和Q群的评论
                 ) {
                     this.set_dialog({
-                        info: '请不要发表灌水、广告、违法、Q群Q号等信息，感谢您的配合！',
+                        info: '涉及敏感信息！',
                         hasTwoBtn: false,
                         show: true
                     })
@@ -186,7 +183,11 @@
                 this.$refs.textBox.focus()
             },
             addLike(id, index) {
+                console.log(index)
+                console.log(this.likeArr)
                 const i = this.likeArr.indexOf(index)
+                console.log(i)
+                console.log(i === -1)
                 if (i === -1) {
                     this.updateLike({id: id, option: 'add'}).then(() => {
                         this.likeArr.push(index)
@@ -357,7 +358,6 @@
                         height: 3rem;
                         position: absolute;
                         top: 0;
-                        border: 0.0625rem solid #cccccc;
                         border-radius: 0.3125rem;
                     }
                 }
@@ -385,30 +385,6 @@
         margin-left: calc(40% - 7.625rem);
         img {
             right: -5.9375rem;
-        }
-        &:after {
-            position: absolute;
-            right: -1.15rem;
-            top: 50%;
-            margin-top: -0.5rem;
-            content: '';
-            width: 0;
-            height: 0;
-            border: 0.625rem solid transparent;
-            border-left-color: #000000;
-            z-index: 3;
-        }
-        &:before {
-            position: absolute;
-            right: -1.3rem;
-            top: 50%;
-            margin-top: -0.5rem;
-            content: '';
-            width: 0;
-            height: 0;
-            border: 0.625rem solid transparent;
-            border-left-color: #cccccc;
-            z-index: 2;
         }
     }
 

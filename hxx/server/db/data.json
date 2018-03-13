@@ -71,16 +71,6 @@
     ]
   },
   {
-    "title" : "关于我",
-    "date" : "2017-11-25T07:55:40.000Z",
-    "content" : "## 随笔\n---\n### 感悟\n不知不觉已经花了一个月的时间去做这个这个博客项目了，这个过程有苦有乐，虽然这个简单的项目在别人眼里可能没什么特点，但是对于我自己来说，能完成这个项目真是太好了，自己做了一回设计者和体验者，感受到了编程创造的乐趣，虽然每次调试完一个bug后，短暂的开心之后又会迎来下一个bug，无穷无尽的bug让我心力交瘁，还好现在看起来是没什么bug，我得趁现在还没什么bug，去找找暑假的实习了，不然得一直陷在这个博客项目里了，对于一个非科班的学生来说，暑假可没什么地方可以去，以后有时间精力再对这个博客进行完善了。Goodbye，myblog！\n\n### 联系方式\n- 广州大学大三在读， 2018毕业\n- QQ： 3552116732\n- 邮箱： xuhaodong66@gmail.com\n\n\n\n",
-    "isPublish" : true,
-    "comment_n" : 0,
-    "tags" : [
-      "个人介绍"
-    ]
-  },
-  {
     "title" : "测试--标签去重",
     "content" : "## 测试标签去重\n---\n### 文章的schema\n```js\nconst ArticleSchema = new Schema(\n    {\n        aid: { type : Number, index: { unique: true } },\n        title: String,\n        content: String,\n        tags: [String],\n        date: Date,\n        isPublish: Boolean,\n        comment_n: Number\n    },\n    { versionKey: false }\n)\n```\n\n### 标签去重\n主要是使用了mongodb里面的distinct方法，就可以方便把文章schema里的tags合并",
     "date" : "2017-11-25T05:59:09.000Z",
