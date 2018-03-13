@@ -85,7 +85,7 @@ router.get('/api/articles', (req, res) => {
             .then((articles) => {
                 article.articles = articles;
                 res.send(article)
-        }).catch(err => console.log(err))
+            }).catch(err => console.log(err))
     }
 })
 
@@ -98,39 +98,50 @@ router.get('/api/someArticles', (req, res) => {
     const skip = 4 * (page - 1)
     const re = new RegExp(value, 'i')
     const search = {};
-    if (key === 'tags') {                                       // 根据标签来搜索文章
-        const arr = value.split(' ')
-        db.Article.count({tags: {$all: arr}}).exec(function (err, count) {
+    if (value === '') {                 // 如果没有输入值则搜索全部
+        db.Article.count({isPublish: true}).exec(function (err, count) {
             err ? console(err) : search.total = Math.ceil(count / limit)
         })
-        db.Article.find({tags: {$all: arr}})
-            .sort({date: -1}).limit(limit).skip(skip).exec()
+        db.Article.find({isPublish: true}).sort({date: -1}).limit(limit).skip(skip).exec()
             .then((articles) => {
-                search.articles = articles
+                search.articles = articles;
                 res.send(search)
+            }).catch(err => console.log(err))
+    } else {
+        if (key === 'tags') {                                       // 根据标签来搜索文章
+            const arr = value.split(' ')
+            db.Article.count({tags: {$all: arr}}).exec(function (err, count) {
+                err ? console(err) : search.total = Math.ceil(count / limit)
             })
-    } else if (key === 'title') {
-        // 根据标题的部分内容来搜索文章
-        db.Article.count({title: re, isPublish: true}).exec(function (err, count) {
-            err ? console(err) : search.total = Math.ceil(count / limit)
-        })
-        db.Article.find({title: re, isPublish: true})
-            .sort({date: -1}).limit(limit).skip(skip).exec()
-            .then((articles) => {
-                search.articles = articles
-                res.send(search)
+            db.Article.find({tags: {$all: arr}})
+                .sort({date: -1}).limit(limit).skip(skip).exec()
+                .then((articles) => {
+                    search.articles = articles
+                    res.send(search)
+                })
+        } else if (key === 'title') {
+            // 根据标题的部分内容来搜索文章
+            db.Article.count({title: re, isPublish: true}).exec(function (err, count) {
+                err ? console(err) : search.total = Math.ceil(count / limit)
             })
-    } else if (key === 'date') {                                // 根据日期来搜索文章
-        const nextDay = value + 'T24:00:00'
-        db.Article.count({date: {$gte: new Date(value), $lt: new Date(nextDay)}}).exec(function (err, count) {
-            err ? console(err) : search.total = Math.ceil(count / limit)
-        })
-        db.Article.find({date: {$gte: new Date(value), $lt: new Date(nextDay)}})
-            .sort({date: -1}).limit(limit).skip(skip).exec()
-            .then((articles) => {
-                search.articles = articles
-                res.send(search)
+            db.Article.find({title: re, isPublish: true})
+                .sort({date: -1}).limit(limit).skip(skip).exec()
+                .then((articles) => {
+                    search.articles = articles
+                    res.send(search)
+                })
+        } else if (key === 'date') {                                // 根据日期来搜索文章
+            const nextDay = value + 'T24:00:00'
+            db.Article.count({date: {$gte: new Date(value), $lt: new Date(nextDay)}}).exec(function (err, count) {
+                err ? console(err) : search.total = Math.ceil(count / limit)
             })
+            db.Article.find({date: {$gte: new Date(value), $lt: new Date(nextDay)}})
+                .sort({date: -1}).limit(limit).skip(skip).exec()
+                .then((articles) => {
+                    search.articles = articles
+                    res.send(search)
+                })
+        }
     }
 })
 

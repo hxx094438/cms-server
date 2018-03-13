@@ -15,13 +15,13 @@
             <label for="date"><input type="radio" value="date" id="date" v-model="picked"/>日期</label>
         </div>
         <p>搜索结果</p>
-        <article-content v-on:addPage="nextPage" v-on:dropPage="prePage"></article-content>
+        <article-content v-on:addPage="nextPage" v-on:dropPage="prePage" :page="page"></article-content>
     </div>
 </template>
 
 <script>
     import ArticleContent from './component/ArticleContent'
-    import {mapActions, mapMutations} from 'vuex'
+    import {mapActions, mapMutations,mapState} from 'vuex'
 
     export default {
         data() {
@@ -32,28 +32,35 @@
             }
         },
         created() {
-            this.set_all_articles({})
+            this.getAllArticles({page: this.page, limit: 4})
+            // this.set_all_articles({})
+            // console.log(this.articles)
         },
-        computed: {
-            tip () {
+        computed:{
+            ...mapState(['articles','pageTotal']),
+            tip() {
                 if (this.picked === 'title') return '请输入标题的部分内容'
                 if (this.picked === 'tags') return '请输入完整的标签，多个标签空格隔开'
-                if (this.picked === 'date') return '检索格式： 2017-04-01'
+                if (this.picked === 'date') return '检索格式： 2017-12-01'
             }
         },
         methods: {
-            ...mapActions(['searchArticles']),
+            ...mapActions(['searchArticles','getAllArticles']),
             ...mapMutations(['set_all_articles']),
             nextPage () {
-                this.page++
-                this.searchArticles({key: this.picked, value: this.text, page: this.page, limit: 4})
+                if(this.page < this.pageTotal){
+                    this.page++
+                    this.searchArticles({key: this.picked, value: this.text, page: this.page, limit: 4})
+                }else{
+                    alert('没有更多了！')
+                }
             },
-            prePage () {
+            prePage() {
                 if (!(this.page - 1)) {
                     alert('已经到第一页咯')
                 } else {
                     this.page--
-                    this.searchArticles({key: this.picked, value: this.text, page: this.page,limit: 4})
+                    this.searchArticles({key: this.picked, value: this.text, page: this.page, limit: 4})
                 }
             }
         },

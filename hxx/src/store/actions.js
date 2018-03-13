@@ -36,6 +36,7 @@ export default {
                     commit('moreArticle_toggle', false)
                     commit('noMore_toggle', true)
                 } else {
+
                     commit('set_pageTotal', article.total)
                     commit('noMore_toggle', false)
                 }
@@ -170,9 +171,8 @@ export default {
             .then(search => {
                 if (payload.page > search.total) {
                     commit('moreArticle_toggle', false)
-                    commit('noMore_toggle_', true)
+                    commit('noMore_toggle', true)
                 } else {
-                    console.log(search.total)
                     commit('set_pageTotal', search.total)
                     commit('noMore_toggle', false)
                 }

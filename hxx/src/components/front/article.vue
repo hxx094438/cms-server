@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper" id="article">
         <div id="content">
-            <h1 class="title animated fadeIn">{{article.title}}</h1>
+            <h3 class="title animated fadeIn">{{article.title}}</h3>
             <div class="appendInfo animated fadeIn">
                 <time>
                     <i class="iconfont icon-shijian"></i>{{article.date | toDate}}
@@ -13,7 +13,7 @@
                     <i class="iconfont icon-huifu"></i>{{article.comment_n}}
                 </a>
             </div>
-            <article-list class="list animated fadeIn"></article-list>
+            <!--<article-list class="list animated fadeIn"></article-list>-->
             <div class="content animated fadeIn" v-html="mdHtml"></div>
             <div class="indexes animated fadeIn">
                 <div class="last animated fadeIn">
@@ -34,7 +34,7 @@ import marked                                       from 'marked'
 import hljs                                         from 'highlight.js'
 import {mapState, mapActions}                       from 'vuex'
 import ArticleComment                               from './component/ArticleComment'
-import ArticleList                                  from './component/ArticleList'
+// import ArticleList                                  from './component/ArticleList'
 
 marked.setOptions({
     highlight: function (code) {
@@ -109,7 +109,7 @@ export default {
     },
     components: {
         ArticleComment,
-        ArticleList
+        // ArticleList
     }
 }
 
@@ -117,38 +117,31 @@ export default {
 
 <style lang="scss" rel="stylesheet/scss" scoped>
 .wrapper {
+    width: 50rem;
+    margin: 0 auto;
     padding: 1.875rem 15.625rem 0;
     position: relative;
     min-height: 43.75rem;
     color: #666;
     #content {
-        h1 {
-            text-align: center;
-            margin-bottom: 1.25rem;
-            color: #333;
-        }
         .content {
-            min-height: 31.25rem;
-            margin-top: 1rem;
+            padding-top: 1.5rem;
             text-align: left;
             font-size: 1rem;
             white-space: pre-wrap;
             word-wrap: break-word;
         }
         .appendInfo {
-            text-align: right;
+            color: #999;
             time {
-                color: #333;
                 display: inline-block;
             }
             span {
-                color: #333;
                 display: inline-block;
                 margin-left: 0.625rem;
             }
             a.commentCount {
                 display: inline-block;
-                color: #333;
                 cursor: pointer;
                 margin-left: 0.625rem;
                 &:hover {
