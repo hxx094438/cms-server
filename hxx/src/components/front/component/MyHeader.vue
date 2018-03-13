@@ -95,6 +95,7 @@
                     list-style: none;
                     width: 100%;
                     li {
+                        color: #999;
                         width: 2.5rem;
                         font-size: .8rem;
                         text-align: center;
@@ -104,11 +105,11 @@
                         cursor: pointer;
                         border-bottom: 0.1875rem solid transparent;
                         &:hover {
-                            color: rgb(129, 216, 208) ;
+                            color: #333 ;
                             transition: all 0.8s;
                         }
                         &.router-link-active {
-                            color: rgb(129, 216, 208) ;
+                            color: #333 ;
                         }
                     }
                 }

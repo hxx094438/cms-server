@@ -57,6 +57,7 @@
     export default {
         data() {
             return {
+
                 name: '',
                 address: '',
                 content: '',

@@ -38,13 +38,13 @@ router.post('/api/comment', (req, res) => {
                     const url = 'https://www.xxx.cn' + req.body.curPath
                     const replyEmail = doc.address
                     const content = emailForm('欢迎常来我的博客', reviewer, req.body.name, '回复了你的评论', req.body.content, url)
-                    mail.send(replyEmail, '您在hxx的博客有一条新评论', content, res)
+                    // mail.send(replyEmail, '您在hxx的博客有一条新评论', content, res)
                 })
             }
             new db.Comment(comment).save().then(() => {
                 const url = 'https://www.xxx.cn' + req.body.curPath
                 const content = emailForm('MyBlog Message', '站长', req.body.name, '评论了你的文章', req.body.content, url)
-                mail.send('287668256@qq.com', '您的博客有一条新评论', content, res)
+                // mail.send('287668256@qq.com', '您的博客有一条新评论', content, res)
                 res.status(200).send('send email successfully')
             }).catch(err => {
                 console.log(err)
