@@ -47,6 +47,7 @@
                 animation: 'animated bounceIn'
             })
             this.getAllArticles({page: 1, limit: 5})
+            console.log()
         },
         computed: {
             ...mapGetters(['reducedArticles'])
@@ -135,6 +136,9 @@
                             color: #333;
                             font-size: 1.5rem;
                             font-weight: bold;
+                            &:hover{
+                                underline: currentColor;
+                            }
                         }
                         .option {
                             display: flex;

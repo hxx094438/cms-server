@@ -58,7 +58,6 @@
                 name: '',
                 address: '',
                 content: '',
-                gravatars: null,
                 imgName: '',
                 summitFlag: false,
                 regexs: {
@@ -67,7 +66,7 @@
             }
         },
         created() {
-            this.getAllComments({id: this.$route.params.id})
+            this.getAllComments({id: this.$route.params.id})            // 加载所有评论
             if (localStorage.token || this.user.name) {
                 this.imgName = 'me'
             } else {
@@ -82,8 +81,8 @@
             ...mapState(['comments', 'user']),
             likeArr() {                            // 访问者点赞了哪些评论的数组
                 if (localStorage.getItem(this.$route.params.id)) {
-                    const item = localStorage.getItem(this.$route.params.id)  // 初始化访问者的点赞情况(由于没有用户信息，所有将点赞信息保存在本地的localStarage中)
-                    return JSON.parse(item)
+                    const item = localStorage.getItem(this.$route.params.id)
+                    return JSON.parse(item)         //将保存在localStorage中的对象转化为数组
                 }
                 return []
             }
@@ -111,7 +110,7 @@
                 const re = /^[\w_-]+@[\w_-]+\.[\w\\.]+$/
                 if (!this.name || !this.content) {
                     this.set_dialog({
-                        info: '还有选项没填(⊙o⊙)？',
+                        info: '还有选项没填',
                         hasTwoBtn: false,
                         show: true
                     })
@@ -134,7 +133,7 @@
                     return false
                 } else if (this.content.length < 3) {
                     this.set_dialog({
-                        info: '您的评论内容太短，说多一点嘛',
+                        info: '您的评论内容太短',
                         hasTwoBtn: false,
                         show: true
                     })
@@ -156,14 +155,14 @@
                 // 将评论者的邮箱和用户名存储在浏览器中，在created钩子中赋值, 这样刷新后邮箱和昵称都不用再写一遍
                 localStorage.setItem('e-mail', this.address)
                 localStorage.setItem('reviewer', this.name)
-                localStorage.setItem('gravatar',this.gravatar)
+                // localStorage.setItem('gravatar',this.gravatar)
                 this.summitComment({
                     imgName: this.imgName,
                     name: this.name,
                     content: this.content,
                     address: this.address,
                     articleId: this.$route.params.id,
-                    curPath: this.$route.fullPath
+                    curPath: this.$route.fullPath       //为了自动发送邮箱是带上当前页面的链接
                 }).then(() => {
                     this.content = ''
                     this.summitFlag = false
@@ -183,24 +182,20 @@
                 this.$refs.textBox.focus()
             },
             addLike(id, index) {
-                console.log(index)
-                console.log(this.likeArr)
-                const i = this.likeArr.indexOf(index)
-                console.log(i)
-                console.log(i === -1)
+                const i = this.likeArr.indexOf(index)           //判断这个index有没有被加入到数组中去
                 if (i === -1) {
                     this.updateLike({id: id, option: 'add'}).then(() => {
-                        this.likeArr.push(index)
-                        this.getAllComments({id: this.$route.params.id})
-                        localStorage[this.$route.params.id] = JSON.stringify(this.likeArr)  // 记录访问者的点赞情况
+                        this.likeArr.push(index)            //将点赞位置加入数组中
+                        // this.getAllComments({id: this.$route.params.id})
+                        localStorage[this.$route.params.id] = JSON.stringify(this.likeArr)  // 将点赞情况数组转化为对象保存在localStorage中
                     }).catch((err) => {
                         console.log(err)
                     })
                 } else {
                     this.updateLike({id: id, option: 'drop'}).then(() => {
-                        this.likeArr.splice(i, 1)
-                        this.getAllComments({id: this.$route.params.id})
-                        localStorage[this.$route.params.id] = JSON.stringify(this.likeArr)  // 记录访问者的点赞情况
+                        this.likeArr.splice(i, 1)           //将取消点赞的位置从数组中移除
+                        // this.getAllComments({id: this.$route.params.id})
+                        localStorage[this.$route.params.id] = JSON.stringify(this.likeArr)  // 将点赞情况数组转化为对象保存在localStorage中
                     }).catch((err) => {
                         console.log(err)
                     })
