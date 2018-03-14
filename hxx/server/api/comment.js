@@ -81,7 +81,7 @@ router.get('/api/comments', (req, res) => {
 router.patch('/api/comments/:id', (req, res) => {
     const id = req.params.id
     if (req.body.option === 'add') {
-        db.Comment.update({_id: id}, {$inc: {like: 1}}, (err, data) => {
+        db.Comment.findOneAndUpdate({_id: id}, {$inc: {like: 1}}, {new: true},(err, data) => { //必须设置参数{new: true}返回的才是最新数据
             if (err) {
                 console.log(err)
             } else {
@@ -89,7 +89,7 @@ router.patch('/api/comments/:id', (req, res) => {
             }
         })
     } else if (req.body.option === 'drop') {
-        db.Comment.update({_id: id}, {$inc: {like: -1}}, (err, data) => {
+        db.Comment.findOneAndUpdate({_id: id}, {$inc: {like: -1}}, {new: true},(err, data) => {
             if (err) {
                 console.log(err)
             } else {

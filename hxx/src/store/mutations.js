@@ -63,6 +63,9 @@ export default {
     set_comments: (state, comments) => {
         state.comments = comments
     },
+    updata_like: (state, like) => {
+        state.like = like
+    },
     // 对话框
     set_dialog: (state, payload) => {
         state.dialog = payload

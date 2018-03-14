@@ -30,7 +30,9 @@ const store = new Vuex.Store({
         draft: {},
         drafts: {},
         pageTotal:'',
-        comments: []
+        comments: [],
+       // comment:{},
+       // like:''
     },
     getters,
     actions,

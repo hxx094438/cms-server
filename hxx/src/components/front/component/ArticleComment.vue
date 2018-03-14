@@ -52,6 +52,8 @@
 <script>
     import {mapActions, mapState, mapMutations} from 'vuex'
     import gravatar from 'gravatar'
+    import {_debounce} from '../../../lib/utils.js'
+
     export default {
         data() {
             return {
@@ -90,6 +92,7 @@
         methods: {
             ...mapActions(['summitComment', 'getAllComments', 'updateLike']),
             ...mapMutations(['set_dialog']),
+
             gravatar(address) {
                 if (!this.regexs.email.test(address)) return null
                 let gravatar_url = gravatar.url(address, {
@@ -182,11 +185,11 @@
                 this.$refs.textBox.focus()
             },
             addLike(id, index) {
-                const i = this.likeArr.indexOf(index)           //判断这个index有没有被加入到数组中去
+                const i = this.likeArr.indexOf(index)           //判断这个index是否存在数组中
                 if (i === -1) {
                     this.updateLike({id: id, option: 'add'}).then(() => {
                         this.likeArr.push(index)            //将点赞位置加入数组中
-                        // this.getAllComments({id: this.$route.params.id})
+                        this.getAllComments({id: this.$route.params.id})
                         localStorage[this.$route.params.id] = JSON.stringify(this.likeArr)  // 将点赞情况数组转化为对象保存在localStorage中
                     }).catch((err) => {
                         console.log(err)
@@ -194,7 +197,7 @@
                 } else {
                     this.updateLike({id: id, option: 'drop'}).then(() => {
                         this.likeArr.splice(i, 1)           //将取消点赞的位置从数组中移除
-                        // this.getAllComments({id: this.$route.params.id})
+                        this.getAllComments({id: this.$route.params.id})
                         localStorage[this.$route.params.id] = JSON.stringify(this.likeArr)  // 将点赞情况数组转化为对象保存在localStorage中
                     }).catch((err) => {
                         console.log(err)
