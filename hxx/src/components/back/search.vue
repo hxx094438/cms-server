@@ -1,18 +1,20 @@
 <template>
-    <div class="container">
-        <div class="search">
-            <input
-                    type="text" v-model="text"
-                    :placeholder="tip" onfocus="this.placeholder=''"
-                    @keydown.enter="searchArticles({key: picked, value: text, page: page})"
-            />
-            <i class="iconfont icon-search" @click="searchArticles({key: picked, value: text, page: page})"></i>
-        </div>
-        <div class="searchString">
-            搜索匹配：
-            <label for="title"><input type="radio" value="title" id="title" v-model="picked"/>标题</label>
-            <label for="tags"><input type="radio" value="tags" id="tags" v-model="picked"/>标签</label>
-            <label for="date"><input type="radio" value="date" id="date" v-model="picked"/>日期</label>
+    <div class="search_container">
+        <div class="search_box">
+            <div class="searchString">
+                搜索匹配：
+                <label for="title"><input type="radio" value="title" id="title" v-model="picked"/>标题</label>
+                <label for="tags"><input type="radio" value="tags" id="tags" v-model="picked"/>标签</label>
+                <label for="date"><input type="radio" value="date" id="date" v-model="picked"/>日期</label>
+            </div>
+            <div class="search">
+                <input
+                        type="text" v-model="text"
+                        :placeholder="tip" onfocus="this.placeholder=''"
+                        @keydown.enter="searchArticles({key: picked, value: text, page: page})"
+                />
+                <i class="iconfont icon-search" @click="searchArticles({key: picked, value: text, page: page})"></i>
+            </div>
         </div>
         <p>搜索结果</p>
         <article-content v-on:addPage="nextPage" v-on:dropPage="prePage" :page="page"></article-content>
@@ -74,49 +76,65 @@
 
 
 <style lang="scss" rel="stylesheet/scss" scoped>
-    .container {
+    .search_container {
+        max-width: 82%;
         text-align: center;
         padding-bottom: 2rem;
-        .search {
-            margin-right: -2.8125rem;
-            input {
-                width: 28.125rem;
-                margin: 1.25rem auto 0.625rem;
-                height: 2.8125rem;
-                font-size: 1.25rem;
-                border: 0.125rem solid rgb(129, 216, 208);
-                border-radius: 1.875rem;
-                outline: none;
-                text-align: center;
-                color: #333;
-                background: transparent;
-            }
-            i {
+        .search_box{
+            display: flex;
+            justify-content: space-between;
+            line-height: 2.8125rem;
+            margin-bottom: 2rem;
+            .search {
+                width: 40%;
                 position: relative;
-                left: -3.4375rem;
-                top: 0.5625rem;
-                color: rgb(169, 169, 169);
-                font-size: 2.5rem;
-                cursor: pointer;
-                &:hover {
-                    color: rgb(129, 216, 208);
+                input {
+                    width: 100%;
+                    height: 2.8125rem;
+                    font-size: 1.25rem;
+                    color: #999;
+                    padding:0 1.5rem;
+                    border: 0.0625rem #eee solid;
+                    border-radius: 1.875rem;
+                    outline: none;
+
+                    color: #333;
+                    background: transparent;
+                    &:hover {
+                        border-color: #8391a5;
+                        transition: all 0.8s;
+                    }
+                }
+                i {
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    transform: translate(0,-50%);
+                    color: #999;
+                    font-size: 2.5rem;
+                    cursor: pointer;
+                    &:hover {
+                        border-color: rgb(32, 32, 32);
+                        transition: all 0.8s;
+                    }
+                }
+            }
+            .searchString {
+                width: 60%;
+                color: #333;
+                font-size: 1.25rem;
+                input {
+                    outline: none;
+                    cursor: pointer;
+                    margin-right: 0.625rem;
+                }
+                label {
+                    margin-right: 1.25rem;
+                    cursor: pointer;
                 }
             }
         }
-        .searchString {
-            color: #333;
-            font-size: 1.25rem;
-            margin-bottom: 4.375rem;
-            input {
-                outline: none;
-                cursor: pointer;
-                margin-right: 0.625rem;
-            }
-            label {
-                margin-right: 1.25rem;
-                cursor: pointer;
-            }
-        }
+
         p {
             border-bottom: 0.1875rem double rgb(129, 216, 208);
             width: 12.5rem;

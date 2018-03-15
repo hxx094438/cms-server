@@ -215,7 +215,6 @@ export default {
         return Vue.http.patch('/api/comments/' + payload.id, {option: payload.option})
             .then(response => {return response.json()})
             .then(comment =>{
-                console.log(comment)
                 state.comments.splice(payload.index,1,comment)
             })
             .catch((err) => { console.log(err) })

@@ -50,7 +50,7 @@
 </template>
 
 <script>
-    import {mapActions, mapState, mapMutations} from 'vuex'
+    import {mapActions, mapState, mapMutations,mapGetters} from 'vuex'
     import gravatar from 'gravatar'
     import {_debounce} from '../../../lib/utils.js'
 
@@ -64,12 +64,12 @@
                 summitFlag: false,
                 regexs: {
                     email: /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/,
-                }
+                },
             }
         },
         created() {
             this.getAllComments({id: this.$route.params.id})            // 加载所有评论
-            console.log(localStorage[this.$route.params.id])
+
             if (localStorage.token || this.user.name) {
                 this.imgName = 'me'
             } else {
@@ -79,16 +79,28 @@
                 this.address = localStorage['e-mail']
                 this.name = localStorage['reviewer']
             }
+
+            const item = localStorage.getItem(this.$route.params.id)
+            if(item) {
+                this.$store.state.likeArr = JSON.parse(item)     //  转化为数组赋值给vuex中likeArr
+            } else{
+                this.$store.state.likeArr = []
+            }
+            console.log(this.$store.state.likeArr)
+
         },
         computed: {
-            ...mapState(['comments', 'user']),
-            likeArr() {                            // 访问者点赞了哪些评论的数组
-                if (localStorage.getItem(this.$route.params.id)) {
-                    const item = localStorage.getItem(this.$route.params.id)
-                    return JSON.parse(item)         //将保存在localStorage中的对象转化为数组
-                }
-                return []
-            }
+            // ...mapGetters(['likes']),
+            ...mapState(['comments', 'user','likeArr']),
+            // likeArr() {                            // 访问者点赞了哪些评论的数组
+            //     if (localStorage.getItem(this.$route.params.id)) {
+            //         const item = localStorage.getItem(this.$route.params.id)
+            //         alert('1')
+            //         console.log(JSON.parse(item))
+            //         return JSON.parse(item)         //将保存在localStorage中的对象转化为数组
+            //     }
+            //     return []
+            // }
         },
         methods: {
             ...mapActions(['summitComment', 'getAllComments', 'updateLike']),
@@ -186,21 +198,21 @@
                 this.$refs.textBox.focus()
             },
             addLike(id, index) {
-                const i = this.likeArr.indexOf(index)           //判断这个index是否存在数组中
+                const i = this.$store.state.likeArr.indexOf(index)           //判断这个index是否存在数组中
                 if (i === -1) {
                     this.updateLike({id: id, option: 'add',index: index}).then(() => {
-                        this.likeArr.push(index)            //将点赞索引加入数组中
-                        console.log(this.likeArr)
+                        this.$store.state.likeArr.push(index)            //将点赞索引加入数组中
                         // this.getAllComments({id: this.$route.params.id})
-                        localStorage[this.$route.params.id] = JSON.stringify(this.likeArr)  // 将点赞情况数组转化为对象保存在localStorage中
+                        localStorage[this.$route.params.id] = JSON.stringify(this.$store.state.likeArr)  // 将点赞情况数组转化为对象保存在localStorage中
                     }).catch((err) => {
                         console.log(err)
                     })
                 } else {
                     this.updateLike({id: id, option: 'drop',index: index}).then(() => {
-                        this.likeArr.splice(i, 1)           //将取消点赞的索引从数组中移除
+                        this.$store.state.likeArr.splice(i, 1)           //将取消点赞的索引从数组中移除
+
                        //  this.getAllComments({id: this.$route.params.id})
-                        localStorage[this.$route.params.id] = JSON.stringify(this.likeArr)  // 将点赞情况数组转化为对象保存在localStorage中
+                        localStorage[this.$route.params.id] = JSON.stringify(this.$store.state.likeArr)  // 将点赞情况数组转化为对象保存在localStorage中
                     }).catch((err) => {
                         console.log(err)
                     })
@@ -213,7 +225,8 @@
                 // #article是跳到另一篇文章，将评论框清空，#目录标题是锚点跳转，不清空评论框
                 to.hash === '#article' ? this.content = '' : 0
                 this.getAllComments({id: to.params.id})
-            }
+            },
+
         }
     }
 

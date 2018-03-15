@@ -44,7 +44,7 @@ export default {
             while (currentIndex) {
                 if (currentValue.toLowerCase() === this.tags[currentIndex - 1].toLowerCase()) {  // 标签去重
                     this.set_dialog({
-                        info: '傻了吧，标签不能重复',
+                        info: '标签不能重复',
                         hasTwoBtn: false,
                         show: true
                     })

@@ -1,11 +1,11 @@
 <template>
-    <div class="wrapper">
-        <p>所有文章</p>
-        <article-content v-on:addPage="nextPage" v-on:dropPage="prePage" :page="page"></article-content>
-        <router-link
-                :to="{name: 'editor'}"
-                class="addPost" tag="button"
-        ><span>添加文章</span></router-link>
+    <div class="content">
+            <p>所有文章</p>
+            <article-content v-on:addPage="nextPage" v-on:dropPage="prePage" :page="page"></article-content>
+            <router-link
+                    :to="{name: 'editor'}"
+                    class="addPost" tag="button"
+            ><span>添加文章</span></router-link>
     </div>
 </template>
 
@@ -52,27 +52,27 @@ export default {
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
-.wrapper {
-    position: relative;
+.content {
+    max-width: 82%;
     padding-top: 0.625rem;
-    /*height: 35.625rem;*/
     color: #666;
+    position: relative;
     p {
         border-bottom: 0.1875rem double rgb(129, 216, 208);
-        width: 12.5rem;
+        width: 20%;
         font-size: 1.875rem;
         margin:0 auto 2.5rem;
         padding-bottom: 0.625rem;
         text-align: center;
     }
     .addPost {
-        position: fixed;
-        bottom: 1.25rem;
-        right: 1.25rem;
+        position: absolute;
+        left: -15%;
+        bottom: 5%;
     }
 }
 @media screen and (max-width: 440px) {
-    .wrapper {
+    .content {
         padding-top: 2rem !important;
         margin-bottom: 4rem;
         .addPost {

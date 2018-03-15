@@ -10,17 +10,19 @@
                 <span>登出</span>
             </p>
         </div>
-        <nav>
-            <ul>
-                <router-link :to="{name: 'posts'}" tag="li"><i class="iconfont icon-biji-copy"></i>文章</router-link>
-                <router-link :to="{name: 'search'}" tag="li"><i class="iconfont icon-search"></i>搜索</router-link>
-                <router-link :to="{name: 'drafts'}" tag="li"><i class="iconfont icon-draft"></i>草稿</router-link>
-                <router-link :to="{name: 'account'}" tag="li"><i class="iconfont icon-zhanghu"></i>账户</router-link>
-            </ul>
-        </nav>
-        <transition mode="out-in" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-            <router-view class="content"></router-view>
-        </transition>
+        <div class="container">
+            <nav>
+                <ul>
+                    <router-link :to="{name: 'posts'}" tag="li"><i class="iconfont icon-biji-copy"></i>文章</router-link>
+                    <router-link :to="{name: 'search'}" tag="li"><i class="iconfont icon-search"></i>搜索</router-link>
+                    <router-link :to="{name: 'drafts'}" tag="li"><i class="iconfont icon-draft"></i>草稿</router-link>
+                    <router-link :to="{name: 'account'}" tag="li"><i class="iconfont icon-zhanghu"></i>账户</router-link>
+                </ul>
+            </nav>
+            <transition mode="out-in" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+                <router-view></router-view>
+            </transition>
+        </div>
     </div>
 </template>
 
@@ -59,6 +61,8 @@ export default {
 <style lang="scss" rel="stylesheet/scss" scoped>
 @import '../../assets/css/icon.scss';
 .wrapper {
+    width: 65rem;
+    margin: 0 auto;
     .statusLine {
         background: transparent;
         width: 100%;
@@ -75,8 +79,8 @@ export default {
                 color: rgb(129, 216, 208);
                 cursor: pointer;
                 &:hover {
-                     color: darkturquoise;
-                 }
+                    color: darkturquoise;
+                }
             }
         }
         p.right {
@@ -87,46 +91,46 @@ export default {
                 font-size: 1.25rem;
             }
             &:hover {
-                 color: rgb(129, 216, 208);
-             }
+                color: rgb(129, 216, 208);
+            }
         }
     }
-    nav {
-        float: left;
-        display: inline-block;
-        position: relative;
-        color: #666;
-        margin-top: 13.75rem;
-        width: 6.25rem;
-        ul {
-            padding-left: 0;
-            list-style: none;
-            li {
-                width: 6.25rem;
-                height: 2.5rem;
-                line-height: 2.5rem;
-                text-align: center;
-                cursor: pointer;
-                border-left: 0.1875rem solid transparent;
-                transition: 1s;
-                &:hover {
-                     transition: 1s;
-                     padding-left: 1.25rem;
-                     color: darkturquoise;
-                 }
-                i {
-                    font-size: 1.125rem;
-                    margin-right: 0.625rem;
+    .container{
+        display: flex;
+        justify-content: space-between;
+        nav {
+            display: inline-block;
+            position: relative;
+            color: #666;
+            margin-top: 10%;
+            width: 15%;
+            ul {
+                padding-left: 0;
+                list-style: none;
+                li {
+                    width: 80%;
+                    height: 2.5rem;
+                    line-height: 2.5rem;
+                    text-align: center;
+                    cursor: pointer;
+                    border-left: 0.1875rem solid transparent;
+                    transition: .5s;
+                    &:hover {
+                        transition: .5s;
+                        padding-left: 1.25rem;
+                        color: darkturquoise;
+                    }
+                    i {
+                        font-size: 1.125rem;
+                        margin-right: 0.625rem;
+                    }
+                }
+                li.router-link-active {
+                    border-left: 0.1875rem solid darkturquoise;
+                    background: rgba(204, 204, 204, 0.5);
                 }
             }
-            li.router-link-active {
-                border-left: 0.1875rem solid darkturquoise;
-                background: rgba(204, 204, 204, 0.5);
-            }
         }
-    }
-    .content {
-        margin-left: 6.25rem;
     }
 }
 @media screen and (max-width: 440px) {

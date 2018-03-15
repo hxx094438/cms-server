@@ -82,38 +82,53 @@
 
 <style lang="scss" rel="stylesheet/scss" scoped>
     table {
-        border-left: 0.1875rem solid rgb(129, 216, 208);
-        border-right: 0.1875rem solid rgb(129, 216, 208);
+        border-left: 0.125rem solid #eee;
+        border-right: 0.125rem solid #eee;
         margin: 0 auto;
+        padding: 0 1rem;
         text-align: center;
         max-height: 25rem;
-        min-width: 70%;
-        th, td {
-            width: 25%;
+        table-layout:fixed;
+        width: 100%;
+        td{
+            word-wrap: break-word;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 0 1rem;
         }
+
         thead, tfoot {
-            color: darkturquoise;
+            color: #333;
         }
         tbody {
             color: #666;
         }
         tr {
+            th{
+                width: 23%;
+                &:nth-child(1){
+                    width: 31%;
+                }
+            }
             height: 2.5rem;
             line-height: 1.875rem;
         }
         i {
             font-size: 1.25rem;
             margin-right: 0.625rem;
-            color: rgb(129, 216, 208);
+            color: #999;
             cursor: pointer;
             &:hover {
-                color: #ffc520;
+                color: #333;
+                transition:  1s;
             }
         }
         tfoot tr td:nth-child(1), tfoot tr td:nth-child(3) {
             cursor: pointer;
             &:hover {
-                color: #ffc520;
+                color: #333;
+                transition:  1s;
             }
         }
     }
@@ -121,7 +136,8 @@
     .title {
         cursor: pointer;
         &:hover {
-            color: #ffc520;
+            color: #444;
+            transition:  1s;
         }
     }
 </style>

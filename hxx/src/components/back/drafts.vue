@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="drafts_container">
         <p>所有草稿</p>
         <article-content v-on:addPage="nextPage" v-on:dropPage="prePage" :page="page"></article-content>
         <router-link
@@ -51,10 +51,11 @@ export default {
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
-.container {
+.drafts_container {
     padding-top: 0.625rem;
     color: #333;
     position: relative;
+    max-width: 82%;
     P {
         border-bottom: 0.1875rem double rgb(129, 216, 208);
         width: 12.5rem;
@@ -64,9 +65,9 @@ export default {
         text-align: center;
     }
     .addPost {
-         position: fixed;
-         bottom: 1.25rem;
-         right: 1.25rem;
+         position: absolute;
+         bottom: 5%;
+         left: -15%;
      }
 }
 @media screen and (max-width: 440px) {

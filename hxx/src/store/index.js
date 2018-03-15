@@ -31,6 +31,7 @@ const store = new Vuex.Store({
         drafts: {},
         pageTotal:'',
         comments: [],
+        likeArr: []
        // comment:{},
        // like:''
     },

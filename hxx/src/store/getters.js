@@ -25,6 +25,19 @@ export default {
         state.tags.unshift('全部')
         return state.tags
     },
+    // likes: (state) => {
+    //     const item = localStorage.getItem(this.$route.params.id)
+    //     alert(item)
+    //     if(item) {
+    //         state.likeArr = JSON.parse(item)
+    //     } else{
+    //         state.likeArr =[]
+    //     }
+    //     return state.likeArr
+    // }
+
+
+
     // articleList: (state) => {
     //     const strHtml = unescapeHTML(marked(state.article.content || '', { renderer: renderer }))
     //     if (strHtml) {

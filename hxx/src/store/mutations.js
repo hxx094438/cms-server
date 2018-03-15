@@ -66,6 +66,9 @@ export default {
     update_comment: (state, comment) => {
         state.comment = comment
     },
+    set_likeArr: (state, likeArr) => {
+        state.likeArr = likeArr
+    },
     // 对话框
     set_dialog: (state, payload) => {
         state.dialog = payload
