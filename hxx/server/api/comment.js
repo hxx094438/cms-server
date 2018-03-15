@@ -63,7 +63,6 @@ router.get('/api/comments', (req, res) => {
     if (req.query.payload.sort === 'date') {                                // 根据时间排序评论
         db.Comment.find({articleId: articleId}, 'name date content like imgName address').sort({date: -1}).exec()
             .then((comments) => {
-                console.log(comments)
                 res.send(comments)
             }).catch((err) => console.log(err))
     } else if (req.query.payload.sort === 'like') {                         // 根据点赞数量排序评论
