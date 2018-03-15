@@ -69,6 +69,7 @@
         },
         created() {
             this.getAllComments({id: this.$route.params.id})            // 加载所有评论
+            console.log(localStorage[this.$route.params.id])
             if (localStorage.token || this.user.name) {
                 this.imgName = 'me'
             } else {
@@ -187,23 +188,25 @@
             addLike(id, index) {
                 const i = this.likeArr.indexOf(index)           //判断这个index是否存在数组中
                 if (i === -1) {
-                    this.updateLike({id: id, option: 'add'}).then(() => {
-                        this.likeArr.push(index)            //将点赞位置加入数组中
-                        this.getAllComments({id: this.$route.params.id})
+                    this.updateLike({id: id, option: 'add',index: index}).then(() => {
+                        this.likeArr.push(index)            //将点赞索引加入数组中
+                        console.log(this.likeArr)
+                        // this.getAllComments({id: this.$route.params.id})
                         localStorage[this.$route.params.id] = JSON.stringify(this.likeArr)  // 将点赞情况数组转化为对象保存在localStorage中
                     }).catch((err) => {
                         console.log(err)
                     })
                 } else {
-                    this.updateLike({id: id, option: 'drop'}).then(() => {
-                        this.likeArr.splice(i, 1)           //将取消点赞的位置从数组中移除
-                        this.getAllComments({id: this.$route.params.id})
+                    this.updateLike({id: id, option: 'drop',index: index}).then(() => {
+                        this.likeArr.splice(i, 1)           //将取消点赞的索引从数组中移除
+                       //  this.getAllComments({id: this.$route.params.id})
                         localStorage[this.$route.params.id] = JSON.stringify(this.likeArr)  // 将点赞情况数组转化为对象保存在localStorage中
                     }).catch((err) => {
                         console.log(err)
                     })
                 }
-            }
+            },
+
         },
         watch: {
             $route(to, from) {

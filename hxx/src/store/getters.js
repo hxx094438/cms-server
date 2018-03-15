@@ -25,44 +25,44 @@ export default {
         state.tags.unshift('全部')
         return state.tags
     },
-    articleList: (state) => {
-        const strHtml = unescapeHTML(marked(state.article.content || '', { renderer: renderer }))
-        if (strHtml) {
-            const Re = /<h(\d) id="(.*?)">/g
-            let arr = Re.exec(strHtml)
-            let list = []
-            let index = 0
-            const sizeTop = arr[1]
-
-            list.push({
-                level: 1,
-                size: sizeTop,
-                content: arr[2]
-            })
-            while ((arr = Re.exec(strHtml)) !== null) {
-                var level
-                if (arr[1] > list[index].size) {
-                    level = list[index].level + 1
-                } else if (arr[1] === list[index].size) {
-                    level = list[index].level
-                } else if (arr[1] < list[index].size) {
-                    let i = index
-                    while (i--) {
-                        if (arr[1] === list[i].size) {
-                            level = list[i].level
-                            break
-                        }
-                    }
-                }
-                list.push({
-                    level: level,
-                    size: arr[1],
-                    content: arr[2]
-                })
-                index = index + 1
-            }
-
-            return list
-        }
-    }
+    // articleList: (state) => {
+    //     const strHtml = unescapeHTML(marked(state.article.content || '', { renderer: renderer }))
+    //     if (strHtml) {
+    //         const Re = /<h(\d) id="(.*?)">/g
+    //         let arr = Re.exec(strHtml)
+    //         let list = []
+    //         let index = 0
+    //         const sizeTop = arr[1]
+    //
+    //         list.push({
+    //             level: 1,
+    //             size: sizeTop,
+    //             content: arr[2]
+    //         })
+    //         while ((arr = Re.exec(strHtml)) !== null) {
+    //             var level
+    //             if (arr[1] > list[index].size) {
+    //                 level = list[index].level + 1
+    //             } else if (arr[1] === list[index].size) {
+    //                 level = list[index].level
+    //             } else if (arr[1] < list[index].size) {
+    //                 let i = index
+    //                 while (i--) {
+    //                     if (arr[1] === list[i].size) {
+    //                         level = list[i].level
+    //                         break
+    //                     }
+    //                 }
+    //             }
+    //             list.push({
+    //                 level: level,
+    //                 size: arr[1],
+    //                 content: arr[2]
+    //             })
+    //             index = index + 1
+    //         }
+    //
+    //         return list
+    //     }
+    // }
 }

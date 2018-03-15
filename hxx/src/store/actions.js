@@ -211,8 +211,14 @@ export default {
                 commit('set_comments', comments)
             }).catch((err) => { console.log(err) })
     },
-    updateLike ({commit}, payload) {
+    updateLike ({state,commit}, payload) {            //返回一个comment对象
         return Vue.http.patch('/api/comments/' + payload.id, {option: payload.option})
+            .then(response => {return response.json()})
+            .then(comment =>{
+                console.log(comment)
+                state.comments.splice(payload.index,1,comment)
+            })
             .catch((err) => { console.log(err) })
     }
+
 }
