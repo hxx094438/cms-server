@@ -37,7 +37,7 @@ const router = new Router({
             children: [
                 {path: 'home', name: 'home', component: Home, meta: {title: '博客首页'}},
                 {path: 'articles', name: 'articles', component: Articles, meta: {title: '学习笔记分享'}},
-                {path: 'articles/:id', name: 'article', component: article},
+                {path: 'articles/:id/:index/:page', name: 'article', component: article},
                 {path: 'search/:text', name: 'SearchResult', component: SearchResult, meta: {title: '搜索结果'}}
             ]
         },
