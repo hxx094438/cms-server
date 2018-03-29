@@ -25,7 +25,7 @@
                     <span @click="getAllComments({id: $route.params.id, sort: 'like'})"> 最热</span>
                 </p>
             </div>
-            <div class='comments' v-for='(comment,index) in comments'>
+            <div class='comments' v-for='(comment,index) in comments' :key="comment._id">
                 <div id='info' :class='comment.imgName'>
                     <p class='commentName'>#{{index + 1}} <span>{{comment.name}}</span></p>
                     <p class='text'>{{comment.content}}</p>
@@ -178,7 +178,7 @@
                     content: this.content,
                     address: this.address,
                     articleId: this.$route.params.id,
-                    curPath: this.$route.fullPath       //为了自动发送邮箱是带上当前页面的链接
+                    curPath: this.$route.fullPath       //为自动发送邮箱时带上的当前页面链接
                 }).then(() => {
                     this.content = ''
                     this.summitFlag = false

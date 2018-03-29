@@ -92,6 +92,7 @@ export default {
         ...mapActions(['getArticle', 'getAllArticles']),
         mark: marked,
         initPage () {
+            console.log(this.$route.params.index)//
             const index = this.$route.params.index - 0
             let page = this.$route.params.page - 0 || 1
             if (index === 0) {

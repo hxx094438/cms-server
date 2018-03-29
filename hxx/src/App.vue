@@ -25,7 +25,7 @@
         methods: {
             changeTitle () {            // 切换标签页后，改变title
                 if (document.hidden) {
-                    document.title = 'letMego'
+                    document.title = 'waiting'
                 } else {
                     document.title = 'welcome!'
                 }
