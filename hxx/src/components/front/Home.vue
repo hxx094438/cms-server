@@ -43,11 +43,10 @@
         },
         created() {
             this.set_headline({
-                content: 'Welcome to my blog',
+                content: 'Welcome',
                 animation: 'animated bounceIn'
             })
             this.getAllArticles({page: 1, limit: 5})
-            console.log()
         },
         computed: {
             ...mapGetters(['reducedArticles'])

@@ -55,9 +55,14 @@ export default {
     },
     set_all_articles: (state, articles) => {
         state.articles = articles
+        localStorage.setItem('articles',window.JSON.stringify(articles))
     },
-    add_articles: (state, articles) => {
+    get_all_articles: (state, articles ) => {
+        state.articles = articles
+    },
+    add_articles: (state, articles) => {    //
         state.articles = state.articles.concat(articles)
+        localStorage.setItem('articles', window.JSON.stringify(state.articles))
     },
     // comment
     set_comments: (state, comments) => {

@@ -32,7 +32,7 @@
 <script>
 import marked                                       from 'marked'
 import hljs                                         from 'highlight.js'
-import {mapState, mapActions}                       from 'vuex'
+import {mapState, mapActions,mapMutations}          from 'vuex'
 import ArticleComment                               from './component/ArticleComment'
 // import ArticleList                                  from './component/ArticleList'
 
@@ -62,7 +62,7 @@ export default {
         this.initPage()
     },
     beforeRouteUpdate (to, from, next) {
-    // 从foo/1跳到foo/2组件会复用，不会再执行created钩子函数，可以在这里执行
+        // 从foo/1跳到foo/2组件会复用，不会再执行created钩子函数，可以在这里执行
         this.getArticle(to.params.id)
         if (to.params.index === 0) {
             this.prePage = -1
@@ -82,27 +82,76 @@ export default {
         }
         next()
     },
+
+
+    // beforeRouteUpdate (to, from, next) {
+    // // 从foo/1跳到foo/2组件会复用，不会再执行created钩子函数，可以在这里执行
+    //     this.getArticle(to.params.id)
+    //     if (to.params.index === 0) {
+    //         this.prePage = -1
+    //         this.nextPage = 1
+    //     } else if (to.params.index === this.articles.length - 1) {
+    //         this.prePage = to.params.index - 1
+    //         this.getAllArticles({value: this.curTag, add: true, page: ++to.params.page})
+    //         this.nextPage = to.params.index + 1
+    //     } else if (to.hash && to.hash !== '#article') {   // 目录锚点跳转
+    //         to.params.page = from.params.page
+    //         to.params.index = from.params.index
+    //         this.prePage = to.params.index - 1
+    //         this.nextPage = parseInt(to.params.index) + 1
+    //     } else {
+    //         this.prePage = to.params.index - 1
+    //         this.nextPage = parseInt(to.params.index) + 1
+    //     }
+    //     next()
+    // },
     computed: {
         ...mapState(['articles', 'curTag', 'article']),
+
         mdHtml () {
             return marked(this.article.content || '', { renderer: renderer })
-        }
+        },
+
     },
     methods: {
         ...mapActions(['getArticle', 'getAllArticles']),
+        ...mapMutations(['get_all_articles']),
         mark: marked,
-        initPage () {
-            console.log(this.$route.params.index)//
-            const index = this.$route.params.index - 0
-            let page = this.$route.params.page - 0 || 1
-            if (index === 0) {
-                this.prePage = -1
-                this.nextPage = 1
-            } else if (index === this.articles.length - 1) {        // 加载更多文章
-                this.prePage = index - 1
+
+        // initPage () {
+        //     console.log(this.$route.params.index)
+        //     const index = this.$route.params.index - 0
+        //     let page = this.$route.params.page - 0 || 1
+        //     if (index === 0) {
+        //         this.prePage = -1
+        //         this.nextPage = 1
+        //     } else if (index === this.articles.length - 1) {        // 加载更多文章
+        //         this.prePage = index - 1
+        //         this.getAllArticles({value: this.curTag, add: true, page: ++page})
+        //         this.nextPage = index + 1
+        //     } else {
+        //         this.prePage = index - 1
+        //         this.nextPage = index + 1
+        //     }
+        // }
+        initPage() {
+            if(this.articles.length == 0){
+                this.$store.commit('get_all_articles',JSON.parse(window.localStorage.getItem('articles')))
+            }
+            // console.log(this.articles)
+            // console.log(this.articles.length)
+            // console.log(window.localStorage.getItem('articles'))
+            // this.$store.dispatch('')
+            const index = parseInt(this.$route.params.index);
+            let page = parseInt(this.$route.params.page);
+            if (index === 0){
+                this.prePage = -1;
+                this.nextPage = 1;
+            }else if (index === this.articles.length - 1){
+                this.prePage = index - 1;
                 this.getAllArticles({value: this.curTag, add: true, page: ++page})
-                this.nextPage = index + 1
-            } else {
+                this.nextPage = index + 1;
+            }else {
                 this.prePage = index - 1
                 this.nextPage = index + 1
             }

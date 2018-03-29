@@ -13,7 +13,7 @@ renderer.heading = function (text, level) {
 
 export default {
     reducedArticles: (state) => {
-        const articles = state.articles.map(article => { //不把文章保存到vuex中，直接请求数据，拿到回调，然后想办法把数据显示出来
+        const articles = state.articles.map(article => {            //遍历处理已经请求到的articles
             let newArticle = {};
             for(let i in article) { newArticle[i] = article[i];}
             newArticle.content = marked(article.content || '').replace(/<[^>]*>/g, '').slice(0,200) + '......'
@@ -25,6 +25,7 @@ export default {
         state.tags.unshift('全部')
         return state.tags
     },
+
     // likes: (state) => {
     //     const item = localStorage.getItem(this.$route.params.id)
     //     alert(item)
