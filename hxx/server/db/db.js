@@ -74,7 +74,7 @@ const initialize = () => {
         } else if (!doc.length) {
             const salt = rand(160, 36)
             // 第一次创建站长账户
-            new Models['User']({name: 'boss', password: sha1('123456' + salt), salt: salt}).save()
+            new Models['User']({name: 'hxx', password: sha1('123456' + salt), salt: salt}).save()
             Promise.all(data.map((item) => {
                 new Models['Article'](item).save()
             }))

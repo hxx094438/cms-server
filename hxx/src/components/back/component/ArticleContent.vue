@@ -62,7 +62,7 @@
             },
             deleteConfirm(aid) {
                 this.set_dialog({
-                    info: '确认删除(⊙o⊙)？',
+                    info: '确认删除？',
                     hasTwoBtn: true,
                     show: true
                 })
