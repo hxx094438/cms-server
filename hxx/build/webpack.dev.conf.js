@@ -11,10 +11,6 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 const express = require('express')
 
-if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
-}
-
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
