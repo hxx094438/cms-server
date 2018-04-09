@@ -11,7 +11,8 @@ router.post('/api/article', confirmToken, (req, res) => {
         content: req.body.content,
         date: Date(),
         tags: req.body.tags,
-        isPublish: true
+        isPublish: true,
+        ArticleLike: 0
     }
     new db.Article(article).save()
     res.status(200).send('succeed in saving new passage.')
@@ -142,6 +143,21 @@ router.get('/api/someArticles', (req, res) => {
                     res.send(search)
                 })
         }
+    }
+})
+
+// 文章点赞
+
+router.patch('/api/ArticleLike/:aid', (req, res) => {
+    const aid = req.params.aid
+    if (aid) {
+        db.Article.findOneAndUpdate({aid: aid}, {$inc: {ArticleLike: 1}}, {new: true},(err, data) => { //必须设置参数{new: true}返回的才是最新数据
+            if (err) {
+                console.log(err)
+            } else {
+                res.status(200).send(data)
+            }
+        })
     }
 })
 

@@ -217,6 +217,14 @@ export default {
                 state.comments.splice(payload.index,1,comment)
             })
             .catch((err) => { console.log(err) })
+    },
+    updateArticleLike ({state,commit}, aid) {
+        return Vue.http.patch('/api/ArticleLike/' + aid, {aid:aid})
+            .then(response => {
+                console.log(response.data)
+                commit('set_article', response.data)
+            })
+            .catch((err) => {console.log(err)})
     }
 
 }

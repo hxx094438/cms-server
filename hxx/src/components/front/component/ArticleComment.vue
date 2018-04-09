@@ -73,7 +73,7 @@
             if (localStorage.token || this.user.name) {
                 this.imgName = 'me'
             } else {
-                this.imgName = 'fuck'
+                this.imgName = 'reviewer'
             }
             if (localStorage.reviewer) {
                 this.address = localStorage['e-mail']
@@ -86,7 +86,7 @@
             } else{
                 this.$store.state.likeArr = []
             }
-            console.log(this.$store.state.likeArr)
+
 
         },
         computed: {

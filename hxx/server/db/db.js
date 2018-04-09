@@ -23,7 +23,8 @@ const ArticleSchema = new Schema(
         tags: [String],
         date: Date,
         isPublish: Boolean,
-        comment_n: Number
+        comment_n: Number,
+        ArticleLike:Number
     },
     {versionKey: false}
 )

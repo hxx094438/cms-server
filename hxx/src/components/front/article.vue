@@ -24,7 +24,9 @@
                 </div>
             </div>
             <article-comment class="comment animated fadeIn"></article-comment>
+            <like-bar></like-bar>
         </div>
+
         <router-link :to="{name: 'articles'}" class="iconfont icon-fanhui" tag="i"></router-link>
     </div>
 </template>
@@ -34,6 +36,7 @@ import marked                                       from 'marked'
 import hljs                                         from 'highlight.js'
 import {mapState, mapActions,mapMutations}          from 'vuex'
 import ArticleComment                               from './component/ArticleComment'
+import likeBar                                      from './component/likeBar.vue'
 // import ArticleList                                  from './component/ArticleList'
 
 marked.setOptions({
@@ -114,7 +117,7 @@ export default {
 
     },
     methods: {
-        ...mapActions(['getArticle', 'getAllArticles']),
+        ...mapActions(['getArticle', 'getAllArticles','']),
         ...mapMutations(['get_all_articles']),
         mark: marked,
 
@@ -155,10 +158,12 @@ export default {
                 this.prePage = index - 1
                 this.nextPage = index + 1
             }
-        }
+        },
+
     },
     components: {
         ArticleComment,
+        likeBar
         // ArticleList
     }
 }
@@ -257,9 +262,9 @@ export default {
     i.icon-fanhui {
         color: #666;
         font-size: 1.875rem;
-        position: absolute;
+        position: fixed;
         bottom: 1.25rem;
-        left: 1.25rem;
+        left: 2.5rem;
         cursor: pointer;
         &:hover {
             color: darkturquoise;

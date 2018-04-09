@@ -24,7 +24,6 @@
         methods: {
             handleScroll () {
                 this.show = window.scrollY > 400
-                console.log(document.documentElement.scrollTop)
             },
             getTop(){
                 let timer = setInterval(() => {
@@ -39,7 +38,7 @@
         },
         beforeDestroy () {
             //  组件销毁的时候，需要删除scroll的监听事件。
-            this.target.removeEventListener('scroll', this.showIcon)
+            this.removeEventListener('scroll', this.showIcon)
         }
     }
 </script>

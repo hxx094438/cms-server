@@ -43,7 +43,6 @@ Vue.http.interceptors.push((request, next) => {
         request.headers.set('authorization', 'Bearer ' + window.localStorage.getItem('token'))
     }
     next((response) => {
-        console.log(response)
         if(response.url === '/api/login'){
             if (response.status === 200 && response.body === '账号或密码错误') {
                 store.commit('unset_user')
