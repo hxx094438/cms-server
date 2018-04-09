@@ -10,7 +10,7 @@
                     <div v-for="(article, index) in reducedArticles" class="oneArticle">
                         <router-link
                                 :to="{name: 'article', params: {id: article.aid, index: index, page: 1}, hash: '#article'}"
-                                tag="p" exact class="title_1">{{article.title}}
+                                tag="a" exact class="title_1">{{article.title}}
                         </router-link>
                         <div class="option">
                             <time>{{article.date | toDate}}</time>
@@ -20,10 +20,15 @@
                         <p class="content">{{article.content}}</p>
                         <router-link
                                 :to="{name: 'article', params: {id: article.aid, index: index, page: 1}, hash: '#article'}"
-                                tag="button" exact><span>Read More</span>
+                                tag="button" exact><span><i>Read More</i></span>
                         </router-link>
                     </div>
+
+                    <span @click="LoadArticles"  v-if="!loadMore" v-show="!noMore" class=" animated fadeIn">more</span>
+                    <span v-if="noMore" class="animated fadeIn">end</span>
                 </div>
+                <spinner v-show="loadMore" class="spinner"></spinner>
+
             </div>
         </section>
     </div>
@@ -31,14 +36,13 @@
 
 <script>
     import {mapMutations, mapActions, mapGetters, mapState} from 'vuex'
+    import spinner                                              from '../share/spinner'
 
     export default {
         data() {
             return {
-                subject: '',
-                address: '',
-                content: '',
-                sendFlag: false
+                page:'1',
+
             }
         },
         created() {
@@ -46,50 +50,23 @@
                 content: 'Welcome',
                 animation: 'animated bounceIn'
             })
-            this.getAllArticles({page: 1, limit: 5})
+            this.getAllArticles({page: 1})
         },
         computed: {
-            ...mapGetters(['reducedArticles'])
+            ...mapGetters(['reducedArticles']),
+            ...mapState(['noMore','isLoading','loadMore','moreArticle'])
         },
         methods: {
             ...mapMutations(['set_headline', 'set_dialog']),
-            ...mapActions(['getAllArticles', 'sendMail']),
-            send() {
-                const re = /^[\w_-]+@[\w_-]+\.[\w\\.]+$/
-                if (!this.subject || !this.content) {
-                    this.set_dialog({
-                        info: '还有选项没填(⊙o⊙)？',
-                        hasTwoBtn: false,
-                        show: true
-                    })
-                    return
-                } else if (!re.test(this.address)) {
-                    this.set_dialog({
-                        info: '请正确填写邮箱地址',
-                        hasTwoBtn: false,
-                        show: true
-                    })
-                    return
+            ...mapActions(['getAllArticles']),
+            LoadArticles(){
+                if(this.$route.name === 'home'){
+                    this.getAllArticles({add: true, page: ++this.page})
                 }
-                this.sendFlag = true
-                this.sendMail({
-                    subject: this.subject,
-                    address: this.address,
-                    content: this.content
-                }).then(() => {
-                    this.subject = ''
-                    this.content = ''
-                    this.address = ''
-                    this.sendFlag = false
-                }).catch(() => {
-                    this.sendFlag = false
-                    this.set_dialog({
-                        info: 'sorry, 邮件发送失败，请重新发送',
-                        hasTwoBtn: false,
-                        show: true
-                    })
-                })
             }
+        },
+        components: {
+            spinner
         }
     }
 </script>
@@ -159,6 +136,18 @@
                         }
                         .content{
                             padding: 1rem 0;
+                        }
+                        button{
+                            margin-top: 0;
+                            background: transparent;
+                            font-weight: 600;
+                            border-bottom: 1px solid #eee;
+                            span{
+                                color: #666;
+                            }
+                            &:hover span{
+                                color: #333;
+                            }
                         }
                     }
                 }

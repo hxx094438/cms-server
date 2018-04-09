@@ -19,7 +19,8 @@ button {
   border: none;
   outline: none;
   color: #fff;
-  background: #42b983;
+  background: transparent;
+  color: #333;
   margin-top: 1rem;
   padding-left: 0.4375rem;
   cursor: pointer;
@@ -56,7 +57,7 @@ button {
 
  h2, h3, h4, h5, h6 {
   padding-top: 0.8rem;
-  color: #34495e;
+  color: #444;
 }
 
 

@@ -13,17 +13,21 @@
                 </div>
             </div>
             <div v-for="(article, index) in reducedArticles" id="article" class="animated fadeIn">
-                <h2>{{article.title}}</h2>
-                <time><i class="iconfont icon-shijian"></i>{{article.date | toDate}}</time>
-                <span class="articleTag"><i class="iconfont icon-label"></i>{{article.tags | toTag}}</span>
-                <span class="commentNumber"><i class="iconfont icon-huifu"></i>{{article.comment_n}}</span>
+                <router-link :to="{name:'article', params:{id: article.aid, index: index, page:page}, hash: '#article'}" tag="a" exact class="title_1">{{article.title}}
+                </router-link>
+                <div class="option">
+                    <time><i class="iconfont icon-shijian"></i>{{article.date | toDate}}</time>
+                    <span class="articleTag"><i class="iconfont icon-label"></i>{{article.tags | toTag}}</span>
+                    <span class="commentNumber"><i class="iconfont icon-huifu"></i>{{article.comment_n}}</span>
+                </div>
+
                 <p>{{article.content}}</p>
-                <router-link :to="{name: 'article', params: {id: article.aid, index: index, page: page}, hash: '#article'}" tag="button" exact>
+                <router-link :to="{name:'article', params: {id: article.aid, index: index, page: page}, hash: '#article'}" tag="button" exact>
                     <span>Continue reading</span>
                 </router-link>
             </div>
-            <p v-if="!loadMore" v-show="!noMore" class="noMore animated fadeIn">下拉加载更多</p>
-            <p v-if="noMore" class="noMore animated fadeIn">已经到底了，别扯了</p>
+            <p v-if="!loadMore" @click="loadTags" v-show="!noMore" class="noMore animated fadeIn">more</p>
+            <p v-if="noMore" class="noMore animated fadeIn">end</p>
         </div>
         <spinner v-show="loadMore" class="spinner"></spinner>
     </div>
@@ -52,9 +56,7 @@ export default {
         ...mapGetters(['reducedArticles', 'allTags']),
         ...mapState(['curTag', 'loadMore', 'moreArticle', 'isLoading', 'noMore'])
     },
-    mounted () {
-        window.addEventListener('scroll', this.handleScroll)
-    },
+
     beforeRouteLeave (to, from, next) {
         window.removeEventListener('scroll', this.handleScroll)
         next()
@@ -67,15 +69,9 @@ export default {
             this.selectIndex = index
             this.set_curtag(tag)
         },
-        handleScroll () {
+        loadTags () {
             if (!this.isLoading && this.$route.name === 'articles') {
-                const body = document.body
-                const totalHeight = body.scrollHeight
-                const scrollTop = body.scrollTop
-                const clientHeight = window.innerHeight
-                if (totalHeight - scrollTop - clientHeight === 0 && this.moreArticle) {
-                    this.getAllArticles({value: this.curTag, add: true, page: ++this.page})
-                }
+                this.getAllArticles({value: this.curTag, add: true, page: ++this.page})
                 if (!this.moreArticle) {
                     this.page = 1
                 }
@@ -97,9 +93,10 @@ export default {
             .tagFlex {
                 display: flex;
                 flex-wrap: wrap;
-                justify-content: space-around;
+                justify-content: flex-start;
+                overflow: hidden;
                 .activeBtn {
-                    background: #ffc520;
+                    font-weight: 600;
                     color: #333;
                     transition:  1s;
                 }
@@ -108,16 +105,22 @@ export default {
                     padding-left: 1rem;
                     padding-right: 0.2rem;
                     text-align: center;
-                    background: rgb(129, 216, 208);
-                    color: #00193a;
+                    background: transparent;
                     margin: 0 1.25rem 1.25rem 0;
+                    span{
+                        color: #666;
+                    }
+                    &:hover span{
+                        color: #333;
+                    }
                 }
             }
         }
         div#article {
             color: #333;
             width: 100%;
-            border-bottom: 0.125rem solid rgb(129, 216, 208);
+            border-bottom: 1px solid #eee;
+            padding-top: 1rem;
             h2 {
                 margin-top: 1.875rem;
                 margin-bottom: 1.25rem;
@@ -140,22 +143,37 @@ export default {
                 border-radius: 0.25rem;
                 margin-left: calc(100% - 8.75rem);
             }
-            .articleTag {
-                margin-bottom: 1.875rem;
-                margin-right: 0.625rem;
-            }
-            .commentNumber {
+            .title_1 {
                 color: #333;
-                i {
-                    font-size: 1.125rem;
+                font-size: 1.5rem;
+                font-weight: bold;
+                &:hover{
+                    underline: currentColor;
+                }
+            }
+            .option{
+                padding-top: 1rem;
+                line-height: 2rem;
+                color: #666;
+                .articleTag {
+                    margin-bottom: 1.875rem;
+                    margin-right: 0.625rem;
+                }
+                .commentNumber {
+                    color: #333;
+                    i {
+                        font-size: 1.125rem;
+                        margin-right: 0.3125rem;
+                    }
+                }
+                i.icon-label, i.icon-shijian {
+                    color: #333;
+                    font-size: 1.25rem;
                     margin-right: 0.3125rem;
                 }
             }
-            i.icon-label, i.icon-shijian {
-                color: #333;
-                font-size: 1.25rem;
-                margin-right: 0.3125rem;
-            }
+
+
         }
         p.noMore {
             width: 100%;
@@ -164,7 +182,6 @@ export default {
             color: #333;
             margin-top: 1.875rem;
             margin-bottom: 1.875rem;
-            text-align: center;
         }
     }
 }
