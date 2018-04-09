@@ -33,9 +33,10 @@ Vue.use(Router)
 const router = new Router({
     mode: 'history',
     scrollBehavior(to, from, savedPosition) {
-        if (to.hash) {
+        console.log(savedPosition)
+        if (savedPosition) {
             return {
-                selector: to.hash
+                savedPosition
             }
         } else {
             return {x: 0, y: 0}
@@ -43,8 +44,8 @@ const router = new Router({
     },
     routes: [
         {
-            path:'/',
-            redirect:'home',
+            path: '/',
+            redirect: 'home',
             component: index,
             children: [
                 {path: 'home', name: 'home', component: Home, meta: {title: '博客首页'}},
@@ -60,13 +61,13 @@ const router = new Router({
             meta: {title: '登录页面'}
         },
         {
-            path:'/admin',
-            redirect:'admin/posts',
+            path: '/admin',
+            redirect: 'admin/posts',
             component: admin,
             children: [
-                {path:'posts',name:'posts', component: posts, meta:{requireAuth:true, title:'博客文章'}},
-                {path:'editor',name:'editor', component: editor, meta:{requireAuth:true, title:'博客编辑'}},
-                {path:'drafts',name:'drafts', component: drafts, meta:{requireAuth:true, title:'博客草稿'}},
+                {path: 'posts', name: 'posts', component: posts, meta: {requireAuth: true, title: '博客文章'}},
+                {path: 'editor', name: 'editor', component: editor, meta: {requireAuth: true, title: '博客编辑'}},
+                {path: 'drafts', name: 'drafts', component: drafts, meta: {requireAuth: true, title: '博客草稿'}},
                 {path: 'search', name: 'search', component: search, meta: {requireAuth: true, title: '搜索结果'}},
                 {path: 'account', name: 'account', component: account, meta: {requireAuth: true, title: '修改账户'}}
             ]
@@ -78,10 +79,10 @@ router.beforeEach((to, from, next) => {
     document.title = to.meta.title
     let token = window.localStorage.getItem('token')
     if (Store.state.user.token && to.name === 'login') {
-        next({name:'posts'})
-    }else if ((!token || token === null) && to.meta.requireAuth){
-        next({name:'login'})
-    }else{
+        next({name: 'posts'})
+    } else if ((!token || token === null) && to.meta.requireAuth) {
+        next({name: 'login'})
+    } else {
         next()
     }
 })

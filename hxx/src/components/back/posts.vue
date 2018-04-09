@@ -58,7 +58,7 @@ export default {
     color: #666;
     position: relative;
     p {
-        border-bottom: 0.1875rem double rgb(129, 216, 208);
+        border-bottom: 1px solid #eee;
         width: 20%;
         font-size: 1.875rem;
         margin:0 auto 2.5rem;

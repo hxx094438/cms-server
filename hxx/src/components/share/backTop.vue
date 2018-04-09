@@ -35,11 +35,11 @@
                     }
                 }, 20)
             }
-        },
-        beforeDestroy () {
-            //  组件销毁的时候，需要删除scroll的监听事件。
-            this.removeEventListener('scroll', this.showIcon)
         }
+//        beforeDestroy () {
+//            //  组件销毁的时候，需要删除scroll的监听事件。
+//            this.removeEventListener('scroll', this.showIcon)
+//        }
     }
 </script>
 

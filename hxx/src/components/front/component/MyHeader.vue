@@ -5,9 +5,9 @@
                 <ul class="catalog">
                     <router-link to="/home" tag="li">首页</router-link>
                     <router-link to="/articles" tag="li">博客</router-link>
-                    <router-link to="/articles" tag="li">科学</router-link>
-                    <router-link to="/articles" tag="li">民主</router-link>
-                    <router-link to="/articles" tag="li">自由</router-link>
+                    <!--<router-link to="/articles" tag="li">科学</router-link>-->
+                    <!--<router-link to="/articles" tag="li">民主</router-link>-->
+                    <!--<router-link to="/articles" tag="li">自由</router-link>-->
                 </ul>
             </nav>
             <div class="search">
@@ -71,9 +71,9 @@
                     height: 1.875rem;
                     line-height: 1.875rem;
                     border-radius: 1.25rem;
-                    font-size: 1.125rem;
+                    font-size: 1rem;
                     padding-left: 0.625rem;
-                    border: 0.125rem solid #cccccc;
+                    border: 1px solid #eee;
                 }
                 .icon-search {
                     cursor: pointer;

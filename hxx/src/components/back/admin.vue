@@ -76,22 +76,22 @@ export default {
             margin-left: 1.25rem;
             i.icon-zhuye {
                 font-size: 1.875rem;
-                color: rgb(129, 216, 208);
+                color: #999;
                 cursor: pointer;
                 &:hover {
-                    color: darkturquoise;
+                    color: #666;
                 }
             }
         }
         p.right {
             cursor: pointer;
             margin-right: 1.25rem;
-            color: rgb(129, 216, 208);
+            color: #999;
             i.icon-out {
                 font-size: 1.25rem;
             }
             &:hover {
-                color: rgb(129, 216, 208);
+                color: #666;
             }
         }
     }
@@ -118,7 +118,7 @@ export default {
                     &:hover {
                         transition: .5s;
                         padding-left: 1.25rem;
-                        color: darkturquoise;
+                        color: #444;
                     }
                     i {
                         font-size: 1.125rem;
@@ -126,8 +126,8 @@ export default {
                     }
                 }
                 li.router-link-active {
-                    border-left: 0.1875rem solid darkturquoise;
-                    background: rgba(204, 204, 204, 0.5);
+                    font-weight: 600;
+                    color: #333;
                 }
             }
         }

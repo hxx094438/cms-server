@@ -24,8 +24,8 @@
                         </router-link>
                     </div>
 
-                    <span @click="LoadArticles"  v-if="!loadMore" v-show="!noMore" class=" animated fadeIn">more</span>
-                    <span v-if="noMore" class="animated fadeIn">end</span>
+                    <span @click="LoadArticles"  v-if="!loadMore" v-show="!noMore" class=" animated fadeIn loadMore"><i>more</i></span>
+                    <span v-if="noMore" class="animated fadeIn"><i>end</i></span>
                 </div>
                 <spinner v-show="loadMore" class="spinner"></spinner>
 
@@ -149,6 +149,9 @@
                                 color: #333;
                             }
                         }
+                    }
+                    .loadMore{
+                        cursor:pointer;
                     }
                 }
             }

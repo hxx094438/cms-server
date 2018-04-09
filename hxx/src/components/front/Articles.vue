@@ -26,8 +26,8 @@
                     <span>Continue reading</span>
                 </router-link>
             </div>
-            <p v-if="!loadMore" @click="loadTags" v-show="!noMore" class="noMore animated fadeIn">more</p>
-            <p v-if="noMore" class="noMore animated fadeIn">end</p>
+            <p v-if="!loadMore" @click="loadTags" v-show="!noMore" class="noMore animated fadeIn"><i>more</i></p>
+            <p v-if="noMore" class="noMore animated fadeIn"><i>end</i></p>
         </div>
         <spinner v-show="loadMore" class="spinner"></spinner>
     </div>
@@ -182,6 +182,7 @@ export default {
             color: #333;
             margin-top: 1.875rem;
             margin-bottom: 1.875rem;
+            cursor: pointer;
         }
     }
 }
