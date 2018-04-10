@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const data = require('./data')
 const sha1 = require('sha1')
 const rand = require('csprng')
 const Sequence = require('./sequence')
