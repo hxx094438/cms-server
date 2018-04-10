@@ -1,8 +1,8 @@
 <template>
     <aside class="article_side">
         <div class="like">
-            <i class="iconfont icon-like rubberBand" :class="{'activeLike': isLiked}"
-               @click="giveLive(article.aid)"></i>
+            <i class="iconfont iconLike rubberBand" :class="{'activeLike': isLiked}"
+               @click="giveLive(article.aid)">&#xe88b;</i>
             <span>{{article.ArticleLike}}</span>
         </div>
         <div class="comment">
@@ -60,7 +60,7 @@
 <style lang="scss" rel="stylesheet/scss" scoped>
     @import '../../../assets/css/icon.scss';
 
-    .icon-like, .icon-huifu {
+    .iconLike, .icon-huifu {
         font-size: 24px;
     }
 

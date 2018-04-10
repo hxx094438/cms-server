@@ -3,8 +3,8 @@
         <a href="https://segmentfault.com" class="iconfont icon-iconsf"></a>
         <a class="iconfont icon-github" href="https://github.com/hxx094438"></a>
         <a href="http://www.facebook.com" class="iconfont icon-cion15"></a>
-        <p>湘ICP备号</p>
-        <p>Copyright @ 2017 Powered by Vue.  | <router-link :to="{name: 'login'}" tag="span" class="login">站长登录</router-link></p>
+        <p>湘ICP备17018968号</p>
+        <p>Copyright © Hxx | <router-link :to="{name: 'login'}" tag="span" class="login">admin</router-link></p>
     </div>
 </template>
 
@@ -33,9 +33,11 @@ export default {}
     }
     div {
         text-align: center;
-        padding-top: 0.625rem;
+        padding-top: 1.625rem;
+        border-top: 1px solid #eee;
         line-height: 1.6rem;
-        width: 100%;
+        width: 50rem;
+        margin: 3rem auto 0;
     }
     p {
         text-align: center;

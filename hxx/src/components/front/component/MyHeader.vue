@@ -17,7 +17,7 @@
                         v-model="text"
                         @keydown.enter="search"
                 />
-                <i class="iconfont icon-search" @click="search"></i>
+                <i class="iconfont iconSearch" @click="search">&#xe86f;</i>
             </div>
         </div>
     </div>
@@ -74,14 +74,19 @@
                     font-size: 1rem;
                     padding-left: 0.625rem;
                     border: 1px solid #eee;
+                    transition-duration: .2s;
+                    &:hover{
+                        border-color: #999;
+                    }
                 }
-                .icon-search {
+                .iconSearch {
                     cursor: pointer;
-                    font-size: 1.875rem;
+                    font-size: 1.5rem;
                     color: #666;
                     position: absolute;
-                    right: 0.5rem;
-                    top: 0.2rem;
+                    right: 1rem;
+                    top: 50%;
+                    transform:translateY(-50%);
                 }
             }
             nav {

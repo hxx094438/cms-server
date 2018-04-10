@@ -4,11 +4,11 @@
             <i class="iconfont icon-icon69"></i>
             <div>
                 <input type="text" placeholder="请输入你的账号" v-model="name"/>
-                <i class="iconfont icon-zhanghu"></i>
+                <i class="iconfont">&#xe8f3;</i>
             </div>
             <div>
                 <input type="password" placeholder="请输入你的密码" v-model="password" @keydown.enter="confirm(name, password)"/>
-                <i class="iconfont icon-yuechi"></i>
+                <i class="iconfont">&#xe8f2;</i>
             </div>
             <p>{{info}}</p>
             <button @click="confirm(name, password)"><span>登录</span></button>
@@ -63,14 +63,14 @@ export default {
         position: relative;
         .icon-icon69 {
             font-size: 3.75rem;
-            color: darkturquoise;
+            color: #000;
         }
         div {
             width: 100%;
             margin: 0 auto;
             position: relative;
             i {
-                color: darkturquoise;
+                color: #000;
                 font-size: 1.875rem;
                 display: block;
                 position: absolute;
@@ -88,7 +88,7 @@ export default {
             margin-left: 3rem;
             outline: none;
             border: none;
-            border-bottom: 0.1875rem solid darkturquoise;
+            border-bottom: 1px solid #eee;
             background: transparent;
             color: #333;
             font-size: 1rem;
@@ -104,7 +104,12 @@ export default {
             position: relative;
             left: 1.25rem;
             text-align: center;
-            background: darkturquoise;
+            color: #444;
+            border: 1px solid #eee;
+            background: transparent;
+            &:hover{
+                border-color: #666;
+            }
         }
     }
 }
