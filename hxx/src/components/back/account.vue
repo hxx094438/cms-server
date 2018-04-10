@@ -91,7 +91,7 @@
             margin: 0 auto 6.25rem;
             .icon-icon69 {
                 font-size: 3.75rem;
-                color: rgb(129, 216, 208);
+                color: #000;
             }
         }
         div {
@@ -99,7 +99,7 @@
             margin: 0 auto;
             position: relative;
             i {
-                color: rgb(129, 216, 208);
+                color: #000;
                 font-size: 1.875rem;
                 display: block;
                 position: absolute;
@@ -117,7 +117,7 @@
             margin-left: 4.375rem;
             outline: none;
             border: none;
-            border-bottom: 0.1875rem solid rgb(129, 216, 208);
+            border-bottom: 1px solid #eee;
             background: transparent;
             color: #333;
             font-size: 1rem;
@@ -132,7 +132,12 @@
             bottom: 0;
             left: 50%;
             margin-left: -5rem;
-            background: rgb(129, 216, 208);
+            background: transparent;
+            color: #444;
+            border: 1px solid #eee;
+            &:hover{
+                border: 1px solid #444;
+            }
         }
     }
 

@@ -136,7 +136,7 @@
         }
 
         p {
-            border-bottom: 0.1875rem double rgb(129, 216, 208);
+            border-bottom: 1px solid #eee;
             width: 12.5rem;
             font-size: 1.875rem;
             margin: 0 auto 2.5rem;
