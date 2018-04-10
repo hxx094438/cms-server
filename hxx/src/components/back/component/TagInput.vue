@@ -79,7 +79,7 @@ export default {
      }
     .newInput {
         border: none;
-        border-bottom: 0.125rem solid rgb(129, 216, 208);
+        border-bottom: 1px solid #eee;
         outline: none;
         background: transparent;
         color: #333;
@@ -95,12 +95,12 @@ export default {
         right: 0;
         top: -0.3125rem;
         font-size: 1rem;
-        color: #ffc520;
+        color: #444;
         cursor: pointer;
         opacity: 0;
         transition: 1s;
         &:hover {
-             color: darkturquoise;
+             color: #000;
              font-weight: bolder;
          }
     }
@@ -110,10 +110,10 @@ export default {
     right: -1rem;
     top: 0.4rem;
     font-size: 1rem;
-    color: rgb(129, 216, 208);
+    color: #444;
     cursor: pointer;
     &:hover {
-         color: darkturquoise;
+         color: #000;
          font-weight: bolder;
      }
 }

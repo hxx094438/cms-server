@@ -158,7 +158,7 @@ export default {
     padding: 0 3.125rem 0;
     input {
         border: none;
-        border-bottom: 0.125rem solid rgb(129, 216, 208);
+        border-bottom: 1px solid #eee;
         outline: none;
         background: transparent;
         color: #333;
@@ -179,7 +179,7 @@ export default {
         }
     }
     .info {
-        border: 0.125rem solid rgb(129, 216, 208);
+        border: 1px solid #eee;
         position: relative;
         height: 29.375rem;
         .right {
@@ -187,9 +187,9 @@ export default {
             position: absolute;
             right: -0.125rem;
             top: -2rem;
-            border-top: 0.125rem solid rgb(129, 216, 208);
-            border-right: 0.125rem solid rgb(129, 216, 208);
-            border-left: 0.125rem solid rgb(129, 216, 208);
+            border-top: 1px solid #eee;
+            border-right: 1px solid #eee;
+            border-left: 1px solid #eee;
             p {
                 float: left;
                 width: 5rem;
@@ -199,7 +199,7 @@ export default {
                 cursor: pointer;
             }
             p:nth-child(1) {
-                border-right: 0.125rem solid rgb(129, 216, 208);
+                border-right: 1px solid #eee;
             }
         }
         #editor {
@@ -235,7 +235,8 @@ export default {
     position: fixed;
     left: 1rem;
     bottom: 32.5rem;
-    background: rgb(129, 216, 208);
+    background: transparent;
+    border: 1px solid #eee;
     color: #000;
 }
 .draft {
@@ -243,12 +244,16 @@ export default {
     position: fixed;
     left: 1rem;
     bottom: 2.5rem;
-    background: rgb(129, 216, 208);
+    background: transparent;
+    border: 1px solid #eee;
     color: #000;
+    &:hover{
+        border-color: #444;
+    }
 }
 .active {
-    background: rgb(129, 216, 208);
-    color: #111111;
+    background: #444;
+    color: #fff;
 }
 @media screen and (max-width: 440px) {
     .wrapper {
