@@ -234,7 +234,7 @@ export default {
     width: 6.25rem;
     position: fixed;
     left: 1rem;
-    bottom: 32.5rem;
+    bottom: 7.5rem;
     background: transparent;
     border: 1px solid #eee;
     color: #000;
