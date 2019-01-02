@@ -13,7 +13,7 @@ const endLoading = (commit, startTime, toggle) => {
 
 export default {
     login ({commit}, payload) {
-        return Vue.http.post('/api/login', payload).catch((err) => { console.log(err) })
+        return Vue.http.post('/login', payload).catch((err) => { console.log(err) })
     },
     resetUser ({commit}, payload) {
         return Vue.http.post('/api/user', payload)

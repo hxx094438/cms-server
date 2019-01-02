@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div class="login">
-            <i class="iconfont icon-icon69"></i>
+            <h2>admin</h2>
             <div>
                 <input type="text" placeholder="请输入你的账号" v-model="name"/>
                 <i class="iconfont">&#xe8f3;</i>
