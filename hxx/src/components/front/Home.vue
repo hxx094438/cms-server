@@ -7,7 +7,7 @@
             </div>
             <div class="posts animated fadeIn">
                 <div class="flex">
-                    <div v-for="(article, index) in reducedArticles" class="oneArticle">
+                    <div v-for="(article, index) in reducedArticles" :key="index" class="oneArticle">
                         <router-link
                                 :to="{name: 'article', params: {id: article.aid, index: index, page: 1}, hash: '#article'}"
                                 tag="a" exact class="title_1">{{article.title}}
@@ -36,7 +36,7 @@
 
 <script>
     import {mapMutations, mapActions, mapGetters, mapState} from 'vuex'
-    import spinner                                              from '../share/spinner'
+    import spinner from '../share/spinner'
 
     export default {
         data() {

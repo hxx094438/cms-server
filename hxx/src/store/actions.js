@@ -28,7 +28,7 @@ export default {
         if (payload.value) {
             commit('isLoading_toggle', false)
         }
-        return Vue.http.get('/api/articles', {params: {payload}})
+        return Vue.http.get('/api/articles/all', {params: {payload}})
             .then(response => response.json())
             .then(article => {
                 if (payload.page > article.total) {
