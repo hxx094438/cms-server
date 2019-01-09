@@ -6,7 +6,8 @@ import mutations from './mutations.js'
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
+export function createStore () {
+  return new Vuex.Store({
     state: {
         user: {},
         headline: {},
@@ -38,5 +39,6 @@ const store = new Vuex.Store({
     getters,
     actions,
     mutations
-})
-export default store
+  })
+}
+

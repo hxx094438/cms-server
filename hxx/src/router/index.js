@@ -15,18 +15,6 @@ const drafts = () => import('@/components/back/drafts')
 const search = () => import('@/components/back/search')
 const account = () => import('@/components/back/account')
 
-// const index = resolve => require(['@/components/front/index'], resolve)
-// const Home = resolve => require(['@/components/front/Home'], resolve)
-// const Articles = resolve => require(['@/components/front/Articles'], resolve)
-// const login = resolve => require(['@/components/back/login'], resolve)
-// const admin = resolve => require(['@/components/back/admin'], resolve)
-// const posts = resolve => require(['@/components/back/posts'], resolve)
-// const editor = resolve => require(['@/components/back/editor'], resolve)
-// const drafts = resolve => require(['@/components/back/drafts'], resolve)
-// const search = resolve => require(['@/components/back/search'], resolve)
-// const article = resolve => require(['@/components/front/article'], resolve)
-// const account = resolve => require(['@/components/back/account'], resolve)
-// const SearchResult = resolve => require(['@/components/front/SearchResult'], resolve)
 
 Vue.use(Router)
 
@@ -88,4 +76,6 @@ router.beforeEach((to, from, next) => {
     }
 })
 
-export default router
+export function createRouter () {
+  return router
+}
