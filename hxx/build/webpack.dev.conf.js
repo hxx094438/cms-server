@@ -11,6 +11,7 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 const ExtractPlugin = require('extract-text-webpack-plugin')
 const VueClientPlugin = require('vue-server-renderer/client-plugin')
+const HTMLPlugin = require('html-webpack-plugin')
 
 
 const HOST = process.env.HOST
@@ -24,9 +25,9 @@ const defaultPluins = [
       NODE_ENV: isDev ? '"development"' : '"production"'
     }
   }),
-  new HTMLPlugin({
-    template: path.join(__dirname, 'template.html')
-  }),
+  // new HTMLPlugin({
+  //   template: path.join(__dirname, 'template.html')
+  // }),
   new VueClientPlugin()
 ]
 

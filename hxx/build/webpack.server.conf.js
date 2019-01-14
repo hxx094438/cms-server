@@ -6,7 +6,7 @@ const merge = require('webpack-merge')
 const path = require('path')
 const baseWebpackConfig = require('./webpack.base.conf')
 const ExtractPlugin = require('extract-text-webpack-plugin')
-
+const VueServerPlugin = require('vue-server-renderer/server-plugin')
 const isDev = process.env.NODE_ENV === 'development'
 
 const plugins = [
@@ -14,12 +14,9 @@ const plugins = [
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     'process.env.VUE_ENV': '"server"'
-  })
+  }),
+  new VueServerPlugin()
 ]
-
-if (isDev) {
-  plugins.push(new VueServerPlugin())
-}
 
 module.exports = merge(baseWebpackConfig, {
   target: 'node',
