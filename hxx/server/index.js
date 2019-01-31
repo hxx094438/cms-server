@@ -25,20 +25,35 @@ const useMiddlewares = (app) => {
 }
 
 ;(async function () {
-  // mongoose.connect(config.mongoConfig.url, {useNewUrlParser: true}, (err) => {
-  //   if (err) {
-  //     console.log(err)
-  //   } else {
-  //     console.log('Connection success!')
-  //   }
-  // })
   /**
    * 将config注入中间件的ctx
    * */
   // app.context.config = config
 
+  const isDev = process.env.NODE_ENV === 'development'
+  let pageRouter
+  if (isDev) {
+ /*   pageRouter = require('./middleware/dev-ssr')
+    // pageRouter = require('./routers/dev-ssr-no-bundle')*/
+    // In development: setup the dev server with watch and hot-reload,
+    // and create a new renderer on bundle / index template update.
+    readyPromise = require('./build/setup-dev-server')(
+      app,
+      templatePath,
+      (bundle, options) => {
+        renderer = createRenderer(bundle, options)
+      }
+    )
+
+  } else {
+    pageRouter = require('./routers/ssr')
+    // pageRouter = require('./routers/ssr-no-bundle')
+  }
 
   const app = new Koa()
+
+  app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
+
   await useMiddlewares(app)
 
   // app.use(require('./routes/index.js').routes())
