@@ -12,6 +12,11 @@ import config from './config/index'
 
 const MIDDLEWARES = ['database', 'general', 'router']
 
+const path = require('path')
+
+const resolve = file => path.resolve(__dirname, file)
+
+
 const useMiddlewares = (app) => {
   R.map(
     R.compose(
@@ -29,6 +34,12 @@ const useMiddlewares = (app) => {
    * 将config注入中间件的ctx
    * */
   // app.context.config = config
+  const app = new Koa()
+
+  let renderer
+  let readyPromise
+  const templatePath = resolve('../src/index.template.html')
+
 
   const isDev = process.env.NODE_ENV === 'development'
   let pageRouter
@@ -37,7 +48,7 @@ const useMiddlewares = (app) => {
     // pageRouter = require('./routers/dev-ssr-no-bundle')*/
     // In development: setup the dev server with watch and hot-reload,
     // and create a new renderer on bundle / index template update.
-    readyPromise = require('./build/setup-dev-server')(
+    readyPromise = require('../build/setup-dev-server')(
       app,
       templatePath,
       (bundle, options) => {
@@ -50,7 +61,47 @@ const useMiddlewares = (app) => {
     // pageRouter = require('./routers/ssr-no-bundle')
   }
 
-  const app = new Koa()
+
+  function render (req, res) {
+    const s = Date.now()
+
+    res.setHeader("Content-Type", "text/html")
+    res.setHeader("Server", 'koa-ssr')
+
+    const handleError = err => {
+      if (err.url) {
+        res.redirect(err.url)
+      } else if(err.code === 404) {
+        res.status(404).send('404 | Page Not Found')
+      } else {
+        // Render Error Page or Redirect
+        res.status(500).send('500 | Internal Server Error')
+        console.error(`error during render : ${req.url}`)
+        console.error(err.stack)
+      }
+    }
+
+    const context = {
+      title: 'Vue HN 2.0', // default title
+      url: req.url
+    }
+    renderer.renderToString(context, (err, html) => {
+      if (err) {
+        return handleError(err)
+      }
+      res.send(html)
+      if (isDev) {
+        console.log(`whole request: ${Date.now() - s}ms`)
+      }
+    })
+  }
+
+
+
+  app.get('*', (req, res) => {
+    readyPromise.then(() => render(req, res))
+  })
+
 
   app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
 
