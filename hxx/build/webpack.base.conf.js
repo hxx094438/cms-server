@@ -8,13 +8,11 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-
+const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
-  entry: {
-    app: './src/main.js'
-  },
+  entry: path.join(__dirname,'../src/entry-client.js'),
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
