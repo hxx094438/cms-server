@@ -2,13 +2,16 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-10-28 15:24:14 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-01-11 00:55:48
+ * @Last Modified time: 2019-02-21 00:04:53
  */
 import { join } from 'path'
 import Koa from 'koa'
 import R from 'ramda'
 import chalk from 'chalk'
 import config from './config/index'
+const Router = require('koa-router')
+
+const { createBundleRenderer } = require('vue-server-renderer')
 
 const MIDDLEWARES = ['database', 'general', 'router']
 
@@ -16,6 +19,9 @@ const path = require('path')
 
 const resolve = file => path.resolve(__dirname, file)
 
+const app = new Koa()
+
+console.log('app',app)
 
 const useMiddlewares = (app) => {
   R.map(
@@ -34,15 +40,31 @@ const useMiddlewares = (app) => {
    * 将config注入中间件的ctx
    * */
   // app.context.config = config
-  const app = new Koa()
+
+
+  function createRenderer (bundle, options) {
+    // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
+    return createBundleRenderer(bundle, Object.assign(options, {
+      // for component caching
+      cache: LRU({
+        max: 1000,
+        maxAge: 1000 * 60 * 15
+      }),
+      // this is only needed when vue-server-renderer is npm-linked
+      basedir: resolve('./dist'),
+      // recommended for performance
+      runInNewContext: false
+    }))
+  }
 
   let renderer
   let readyPromise
-  const templatePath = resolve('../src/index.template.html')
-
+  
 
   const isDev = process.env.NODE_ENV === 'development'
-  let pageRouter
+  // let pageRouter
+  const templatePath = resolve('../src/index.template.html')
+
   if (isDev) {
  /*   pageRouter = require('./middleware/dev-ssr')
     // pageRouter = require('./routers/dev-ssr-no-bundle')*/
@@ -57,7 +79,13 @@ const useMiddlewares = (app) => {
     )
 
   } else {
-    pageRouter = require('./routers/ssr')
+    const bundle = require('./dist/vue-ssr-server-bundle.json')
+    const clientManifest = require('./dist/vue-ssr-client-manifest.json')
+    renderer = createRenderer(bundle, {
+    template,
+    clientManifest
+  })
+    // pageRouter = require('./routers/ssr')
     // pageRouter = require('./routers/ssr-no-bundle')
   }
 
@@ -96,16 +124,15 @@ const useMiddlewares = (app) => {
     })
   }
 
-
-
-  app.get('*', (req, res) => {
+  await useMiddlewares(app)
+  let pageRouter = new Router()
+  pageRouter.get('*', (req, res) => {
     readyPromise.then(() => render(req, res))
   })
 
 
-  app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
+  // app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
 
-  await useMiddlewares(app)
 
   // app.use(require('./routes/index.js').routes())
   

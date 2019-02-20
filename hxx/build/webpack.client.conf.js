@@ -34,6 +34,9 @@ const defaultPluins = [
 let devWebpackConfig
 if(isDev) {
   devWebpackConfig = merge(baseWebpackConfig, {
+    entry: {
+      app: './src/entry-client.js'
+    },
     module: {
       rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
     },

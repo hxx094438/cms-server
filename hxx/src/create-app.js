@@ -4,8 +4,8 @@ import Vuex from 'vuex'
 import Meta from 'vue-meta'
 
 import App from './app.vue'
-import createStore from './store/store'
-import createRouter from './config/router'
+import createStore from './store'
+import createRouter from './router'
 // import Notification from './components/notification'
 // import Tabs from './components/tabs'
 

@@ -8,7 +8,7 @@
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "cross-env NODE_ENV=development nodemon ./start.js",
     "build": "node build/build.js",
-    "build:client": "cross-env NODE_ENV=production webpack --config build/webpack.dev.conf.js --progress --hide-modules" ,
+    "build:client": "cross-env NODE_ENV=production webpack --config build/webpack.client.conf.js --progress --hide-modules",
     "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.server.conf.js --progress --hide-modules"
   },
   "dependencies": {
@@ -42,6 +42,7 @@
     "ramda": "^0.26.1",
     "sha1": "^1.1.1",
     "vue": "^2.5.21",
+    "vue-meta": "^1.5.8",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.2",
     "vue-server-renderer": "^2.5.21",
@@ -94,7 +95,9 @@
     "vue-template-compiler": "^2.5.21",
     "webpack": "^3.12.0",
     "webpack-bundle-analyzer": "^2.13.1",
+    "webpack-dev-middleware": "^3.6.0",
     "webpack-dev-server": "^2.11.3",
+    "webpack-hot-middleware": "^2.24.3",
     "webpack-merge": "^4.2.1"
   },
   "engines": {
