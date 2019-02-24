@@ -2,12 +2,13 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-10-28 15:24:14 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-02-21 00:04:53
+ * @Last Modified time: 2019-02-24 22:57:51
  */
 import { join } from 'path'
 import Koa from 'koa'
 import R from 'ramda'
 import chalk from 'chalk'
+import LRU from 'lru-cache'
 import config from './config/index'
 const Router = require('koa-router')
 
@@ -44,9 +45,10 @@ const useMiddlewares = (app) => {
 
   function createRenderer (bundle, options) {
     // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
+    console.log('createRenderer')
     return createBundleRenderer(bundle, Object.assign(options, {
       // for component caching
-      cache: LRU({
+      cache: new LRU({
         max: 1000,
         maxAge: 1000 * 60 * 15
       }),
@@ -60,9 +62,11 @@ const useMiddlewares = (app) => {
   let renderer
   let readyPromise
   
-
+  
   const isDev = process.env.NODE_ENV === 'development'
   // let pageRouter
+  console.log('环境',isDev)
+
   const templatePath = resolve('../src/index.template.html')
 
   if (isDev) {
@@ -74,6 +78,7 @@ const useMiddlewares = (app) => {
       app,
       templatePath,
       (bundle, options) => {
+        // console.log('createRenderer',bundle, options)
         renderer = createRenderer(bundle, options)
       }
     )
@@ -113,6 +118,7 @@ const useMiddlewares = (app) => {
       title: 'Vue HN 2.0', // default title
       url: req.url
     }
+    console.log('renderer.renderToString','renderrenderrender')
     renderer.renderToString(context, (err, html) => {
       if (err) {
         return handleError(err)
@@ -127,6 +133,7 @@ const useMiddlewares = (app) => {
   await useMiddlewares(app)
   let pageRouter = new Router()
   pageRouter.get('*', (req, res) => {
+    console.log('get *****')
     readyPromise.then(() => render(req, res))
   })
 

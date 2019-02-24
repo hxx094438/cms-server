@@ -23,7 +23,7 @@ Vue.mixin({
 })
 
 const { app, router, store } = createApp()
-
+console.log('entry-client')
 // prime the store with server-initialized state.
 // the state is determined during SSR and inlined in the page markup.
 if (window.__INITIAL_STATE__) {

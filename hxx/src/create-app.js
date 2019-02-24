@@ -20,7 +20,7 @@ Vue.use(Meta)
 export default () => {
   const router = createRouter()
   const store = createStore()
-
+  console.log('create app')
   const app = new Vue({
     router,
     store,
