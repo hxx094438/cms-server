@@ -7,7 +7,6 @@ const path = require('path')
 const baseWebpackConfig = require('./webpack.base.conf')
 const ExtractPlugin = require('extract-text-webpack-plugin')
 const VueServerPlugin = require('vue-server-renderer/server-plugin')
-const isDev = process.env.NODE_ENV === 'development'
 
 const plugins = [
   new ExtractPlugin('styles.[contentHash:8].css'),
@@ -28,12 +27,12 @@ module.exports = merge(baseWebpackConfig, {
   },
   externals: Object.keys(require('../package.json').dependencies),
   plugins,
-  module: {
-    rules: utils.styleLoaders({
-      sourceMap: config.build.productionSourceMap,
-      extract: true,
-      usePostCSS: true
-    })
-  },
+  // module: {
+  //   rules: utils.styleLoaders({
+  //     sourceMap: config.build.productionSourceMap,
+  //     extract: true,
+  //     usePostCSS: true
+  //   })
+  // },
 })
 

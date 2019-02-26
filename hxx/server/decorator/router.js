@@ -2,14 +2,18 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-11-24 14:57:29 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2018-12-23 23:02:25
+ * @Last Modified time: 2019-02-26 23:34:00
  */
 
 import KoaRouter from 'koa-router'
-import { resolve } from 'path'
+import path from 'path'
 import glob from 'glob'
 import R from 'ramda'
+const { createBundleRenderer } = require('vue-server-renderer')
+import LRU from 'lru-cache'
 
+const resolve = path.resolve
+const _resolve = file => path.resolve(__dirname, file)
 const symbolPrefix = Symbol('prefix')
 const routeMap = []
 let logTimes = 0
@@ -24,6 +28,70 @@ const changeToArr = R.unless(
   R.is(Array),
   R.of
 )
+
+
+
+
+function createRenderer (bundle, options) {
+  // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
+  console.log('createRenderer')
+  return createBundleRenderer(bundle, Object.assign(options, {
+    // for component caching
+    cache: new LRU({
+      max: 1000,
+      maxAge: 1000 * 60 * 15
+    }),
+    // this is only needed when vue-server-renderer is npm-linked
+    basedir: resolve('./dist'),
+    // recommended for performance
+    runInNewContext: false
+  }))
+}
+
+let renderer
+let readyPromise
+const isDev = process.env.NODE_ENV === 'development'
+
+console.log('环境',isDev)
+
+const templatePath = _resolve('../../src/index.template.html')
+
+
+
+function render (req, res) {
+  const s = Date.now()
+  // koa设置头部的方法可能不一样
+  console.log('render')
+  res.setHeader("Content-Type", "text/html")
+  res.setHeader("Server", 'koa-ssr')
+
+  const handleError = err => {
+    if (err.url) {
+      res.redirect(err.url)
+    } else if(err.code === 404) {
+      res.status(404).send('404 | Page Not Found')
+    } else {
+      // Render Error Page or Redirect
+      res.status(500).send('500 | Internal Server Error')
+      console.error(`error during render : ${req.url}`)
+      console.error(err.stack)
+    }
+  }
+
+  const context = {
+    title: 'Vue HN 2.0', // default title
+    url: req.url
+  }
+  renderer.renderToString(context, (err, html) => {
+    if (err) {
+      return handleError(err)
+    }
+    res.send(html)
+    if (isDev) {
+      console.log(`whole request: ${Date.now() - s}ms`)
+    }
+  })
+}
 
 export class Route {
   
@@ -47,6 +115,38 @@ export class Route {
         router[method](prefix + path, ...callback)
       }
     )(routeMap)
+
+    if (isDev) {
+      /*   pageRouter = require('./middleware/dev-ssr')
+        // pageRouter = require('./routers/dev-ssr-no-bundle')*/
+        // In development: setup the dev server with watch and hot-reload,
+        // and create a new renderer on bundle / index template update.
+        readyPromise = require('../../build/setup-dev-server')(
+          app,
+          templatePath,
+          (bundle, options) => {
+            // console.log('createRenderer',bundle, options)
+            renderer = createRenderer(bundle, options)
+          }
+        )
+      
+      } else {
+        const bundle = require('./dist/vue-ssr-server-bundle.json')
+        const clientManifest = require('./dist/vue-ssr-client-manifest.json')
+        renderer = createRenderer(bundle, {
+        template,
+        clientManifest
+      })
+      }
+    
+
+    router.get('*', (ctx) => {
+      console.log('get *****')
+      readyPromise.then(() => {
+        // console.log('ctx.request',req,'ctx.response',res)
+        render(ctx.req, ctx.res)
+      })
+    })
   
     app.use(router.routes())
     app.use(router.allowedMethods())
