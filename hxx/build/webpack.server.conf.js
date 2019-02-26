@@ -27,12 +27,12 @@ module.exports = merge(baseWebpackConfig, {
   },
   externals: Object.keys(require('../package.json').dependencies),
   plugins,
-  // module: {
-  //   rules: utils.styleLoaders({
-  //     sourceMap: config.build.productionSourceMap,
-  //     extract: true,
-  //     usePostCSS: true
-  //   })
-  // },
+  module: {
+    rules: utils.styleLoaders({
+      sourceMap: config.build.productionSourceMap,
+      extract: true,
+      usePostCSS: true
+    })
+  },
 })
 

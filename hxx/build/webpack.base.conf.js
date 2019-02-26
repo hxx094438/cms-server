@@ -3,6 +3,11 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+const { VueLoaderPlugin } = require('vue-loader')
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+
+// console.log('VueLoaderPlugin',VueLoaderPlugin)
+
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -15,7 +20,7 @@ module.exports = {
   entry: path.join(__dirname,'../src/entry-client.js'),
   output: {
     path: config.build.assetsRoot,
-    filename: '[name].js',
+    filename: '[name].[chunkhash].js',
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
@@ -76,5 +81,20 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty'
-  }
+  },
+  plugins: isProd
+  ? [
+      new VueLoaderPlugin(),
+      new webpack.optimize.UglifyJsPlugin({
+        compress: { warnings: false }
+      }),
+      new webpack.optimize.ModuleConcatenationPlugin(),
+      new ExtractTextPlugin({
+        filename: 'common.[chunkhash].css'
+      })
+    ]
+  : [
+      new VueLoaderPlugin(),
+      new FriendlyErrorsPlugin()
+    ]
 }
