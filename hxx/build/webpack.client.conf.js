@@ -13,10 +13,15 @@ const ExtractPlugin = require('extract-text-webpack-plugin')
 const SWPrecachePlugin = require('sw-precache-webpack-plugin')
 const VueClientPlugin = require('vue-server-renderer/client-plugin')
 // const HTMLPlugin = require('html-webpack-plugin')
+const vueLoaderConfig = require('./vue-loader.conf')
+const { VueLoaderPlugin } = require('vue-loader')
 
-
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
+}
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
+const isProd = process.env.NODE_ENV === 'production'
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -28,9 +33,73 @@ let webpackConfig = merge(baseWebpackConfig, {
     entry: {
       app: './src/entry-client.js'
     },
+    // module: {
+    //   rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
+    // },
+
     module: {
-      rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
+      rules: [
+        {
+          test: /\.vue$/,
+          loader: 'vue-loader',
+          options: vueLoaderConfig
+        },
+        {
+          test: /\.css$/,
+          use: ['style-loader','css-loader']
+        },
+        {
+          test: /\.js$/,
+          loader: 'babel-loader',
+          include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            name: utils.assetsPath('img/[name].[hash:7].[ext]')
+          }
+        },
+        {
+          test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            name: utils.assetsPath('media/[name].[hash:7].[ext]')
+          }
+        },
+        {
+          test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+          }
+        },
+        // {
+        //   test: /\.scss$/,
+        //   loader: ExtractTextPlugin.extract("style", 'css!sass') 
+        // }
+        {
+          test: /\.scss$/,
+          use: isProd
+            ? ExtractTextPlugin.extract({
+                use: [
+                  {
+                    loader: 'css-loader',
+                    options: { minimize: true }
+                  },
+                  'sass-loader'
+                ],
+                fallback: 'vue-style-loader'
+              })
+            : ['vue-style-loader', 'css-loader', 'sass-loader']
+        },
+  
+      ]
     },
+
     // cheap-module-eval-source-map is faster for development
     // devtool: config.dev.devtool,
 
@@ -77,6 +146,8 @@ let webpackConfig = merge(baseWebpackConfig, {
           )
         }
       }),
+      new VueLoaderPlugin(),
+
       new webpack.optimize.CommonsChunkPlugin({
         name: 'manifest'
       }),
