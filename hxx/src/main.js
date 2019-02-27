@@ -44,9 +44,9 @@ Vue.filter('toTag', (arr) => {
 
 // 刷新页面的时候未经过拦截器处理
 Vue.http.interceptors.push((request, next) => {
-    if (window.localStorage.getItem('token')) {
-        request.headers.set('authorization', 'Bearer ' + window.localStorage.getItem('token'))
-    }
+    // if (window.localStorage.getItem('token')) {
+    //     request.headers.set('authorization', 'Bearer ' + window.localStorage.getItem('token'))
+    // }
     next((response) => {
         if(response.url === '/api/login'){
             if (response.status === 200 && response.body === '账号或密码错误') {

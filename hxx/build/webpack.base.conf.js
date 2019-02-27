@@ -2,6 +2,8 @@
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
+const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const vueLoaderConfig = require('./vue-loader.conf')
 const { VueLoaderPlugin } = require('vue-loader')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
@@ -20,7 +22,7 @@ module.exports = {
   entry: path.join(__dirname,'../src/entry-client.js'),
   output: {
     path: config.build.assetsRoot,
-    filename: '[name].[chunkhash].js',
+    filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath

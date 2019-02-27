@@ -13,8 +13,6 @@ import config from './config/index'
 
 const MIDDLEWARES = ['database', 'general', 'router']
 
-
-
 const app = new Koa()
 
 console.log('app',app)
@@ -37,15 +35,6 @@ const useMiddlewares = (app) => {
    * */
   // app.context.config = config
 
-
- 
-  
-  
-  // let pageRouter
-  
-
-
-  
 
   await useMiddlewares(app)  
 

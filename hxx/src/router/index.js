@@ -7,7 +7,8 @@ import Router from 'vue-router'
 // const article = () => import('@/components/front/article')
 // const SearchResult = () => import('@/components/front/SearchResult')
 // const Articles = () => import('@/components/front/Articles')
-import login from '@/components/back/login'
+const login = () => import('@/components/back/login')
+
 // const admin = () => import('@/components/back/admin')
 // const posts = () => import('@/components/back/posts')
 // const editor = () => import('@/components/back/editor')
@@ -65,15 +66,17 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-    document.title = to.meta.title
-    let token = window.localStorage.getItem('token')
-    if (Store.state.user.token && to.name === 'login') {
+    // document.title = to.meta.title
+    // let token = window.localStorage.getItem('token')
+  /*  if (Store.        next()
+state.user.token && to.name === 'login') {
         next({name: 'posts'})
     } else if ((!token || token === null) && to.meta.requireAuth) {
         next({name: 'login'})
     } else {
         next()
-    }
+    }*/
+  next()
 })
 
 export function createRouter () {

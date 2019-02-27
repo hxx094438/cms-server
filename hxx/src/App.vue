@@ -14,7 +14,7 @@
     export default {
         name: 'App',
         mounted () {
-            document.addEventListener('visibilitychange', this.changeTitle, false)
+//            document.addEventListener('visibilitychange', this.changeTitle, false)
         },
         components: {
             DialogBox
@@ -24,11 +24,11 @@
         },
         methods: {
             changeTitle () {            // 切换标签页后，改变title
-                if (document.hidden) {
-                    document.title = 'waiting'
-                } else {
-                    document.title = 'welcome!'
-                }
+//                if (document.hidden) {
+//                    document.title = 'waiting'
+//                } else {
+//                    document.title = 'welcome!'
+//                }
             }
         }
     }

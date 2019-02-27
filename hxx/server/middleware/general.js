@@ -2,10 +2,15 @@ import bodyParser from 'koa-bodyparser'
 import logger from 'koa-logger'
 import onerror from 'koa-onerror'
 import session from 'koa-session'
-
+import staticFiles from 'koa-static'
+import path from 'path'
 
 export const addBodyParser = app => {
   app.use(bodyParser())
+}
+
+export const setStaticFiles = app => {
+  app.use(staticFiles(path.resolve(__dirname, "../../dist")))
 }
 
 export const addLogger = app => {
@@ -13,9 +18,6 @@ export const addLogger = app => {
 }
 
 export const addError = app => {
-
-
-
   onerror(app, {
     json (err) {
       Object.keys(err).reduce((body, key) => {

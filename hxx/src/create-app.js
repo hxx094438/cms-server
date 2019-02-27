@@ -2,10 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import Meta from 'vue-meta'
-
 import App from './app.vue'
-import createStore from './store'
-import createRouter from './router'
+import { createStore } from './store'
+import { createRouter } from './router'
 // import Notification from './components/notification'
 // import Tabs from './components/tabs'
 
