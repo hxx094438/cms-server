@@ -12,6 +12,7 @@
     "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.server.conf.js --progress --hide-modules"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "bunyan": "^1.8.12",
     "cross-env": "^5.2.0",
