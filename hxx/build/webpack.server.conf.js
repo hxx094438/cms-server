@@ -1,22 +1,22 @@
 'use strict'
 const utils = require('./utils')
 const webpack = require('webpack')
-const config = require('../config')
 const merge = require('webpack-merge')
 const path = require('path')
 const baseWebpackConfig = require('./webpack.base.conf')
-const ExtractPlugin = require('extract-text-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const VueServerPlugin = require('vue-server-renderer/server-plugin')
 const nodeExternals = require('webpack-node-externals')
-const vueLoaderConfig = require('./vue-loader.conf')
 const { VueLoaderPlugin } = require('vue-loader')
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
-const isProd = process.env.NODE_ENV === 'production'
+
+const isDev = process.env.NODE_ENV === 'development'
+
 
 const plugins = [
-  new ExtractPlugin('styles.[contentHash:8].css'),
+  new ExtractTextPlugin('styles.[contentHash:8].css'),
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     'process.env.VUE_ENV': '"server"'
@@ -34,7 +34,7 @@ module.exports = merge(baseWebpackConfig, {
     libraryTarget: 'commonjs2',
     filename: 'server-bundle.js',
   },
-  externals: Object.keys(require('../package.json').dependencies),
+  // externals: Object.keys(require('../package.json').dependencies),
   plugins,
   externals: nodeExternals({
     // do not externalize CSS files in case we need to import it from a dep
@@ -46,7 +46,16 @@ module.exports = merge(baseWebpackConfig, {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: vueLoaderConfig
+        options: {
+          compilerOptions: {
+            preserveWhitespace: false,
+            extractCSS: !isDev,
+            cssModules: {
+              localIdentName: isDev ? '[path]-[name]-[hash:base64:5]' : '[hash:base64:5]',
+              camelCase: true
+            },
+          }
+        }
       },
       {
         test: /\.css$/,
@@ -81,13 +90,9 @@ module.exports = merge(baseWebpackConfig, {
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       },
-      // {
-      //   test: /\.scss$/,
-      //   loader: ExtractTextPlugin.extract("style", 'css!sass') 
-      // }
       {
         test: /\.scss$/,
-        use: isProd
+        use: !isDev
           ? ExtractTextPlugin.extract({
               use: [
                 {

@@ -1,48 +1,45 @@
 'use strict'
 const utils = require('./utils')
 const webpack = require('webpack')
-const config = require('../config')
 const merge = require('webpack-merge')
 const path = require('path')
 const baseWebpackConfig = require('./webpack.base.conf')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-const portfinder = require('portfinder')
-const ExtractPlugin = require('extract-text-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const SWPrecachePlugin = require('sw-precache-webpack-plugin')
 const VueClientPlugin = require('vue-server-renderer/client-plugin')
-// const HTMLPlugin = require('html-webpack-plugin')
-const vueLoaderConfig = require('./vue-loader.conf')
 const { VueLoaderPlugin } = require('vue-loader')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
-const HOST = process.env.HOST
-const PORT = process.env.PORT && Number(process.env.PORT)
-const isProd = process.env.NODE_ENV === 'production'
+
 
 const isDev = process.env.NODE_ENV === 'development'
 
-const defaultPluins = [
-
-]
+// const defaultPluins = [
+//
+// ]
 
 let webpackConfig = merge(baseWebpackConfig, {
     entry: {
       app: './src/entry-client.js'
     },
-    // module: {
-    //   rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
-    // },
 
     module: {
       rules: [
         {
           test: /\.vue$/,
           loader: 'vue-loader',
-          options: vueLoaderConfig
+          options: {
+            compilerOptions: {
+              preserveWhitespace: false,
+              extractCSS: !isDev,
+              cssModules: {
+                localIdentName: isDev ? '[path]-[name]-[hash:base64:5]' : '[hash:base64:5]',
+                camelCase: true
+              },
+            }
+          }
         },
         {
           test: /\.css$/,
@@ -77,13 +74,9 @@ let webpackConfig = merge(baseWebpackConfig, {
             name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
           }
         },
-        // {
-        //   test: /\.scss$/,
-        //   loader: ExtractTextPlugin.extract("style", 'css!sass') 
-        // }
         {
           test: /\.scss$/,
-          use: isProd
+          use: !isDev
             ? ExtractTextPlugin.extract({
                 use: [
                   {

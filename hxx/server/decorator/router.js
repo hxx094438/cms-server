@@ -146,6 +146,8 @@ export class Route {
       readyPromise.then(() => {
         // console.log('ctx.request',req,'ctx.response',res)
         render(ctx)
+      }).catch(err => {
+        console.log(err)
       })
     })
   
