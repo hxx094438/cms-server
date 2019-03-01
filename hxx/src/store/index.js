@@ -6,35 +6,64 @@ import mutations from './mutations.js'
 
 Vue.use(Vuex)
 
-export function createStore () {
+export function createStore() {
   return new Vuex.Store({
     state: {
-        user: {},
-        headline: {},
-        isLoading: false,
-        moreArticle: true,
-        loadMore: false,
-        isSaving: false,
-        isSend: false,
-        noMore: false,
-        dialog: {
-            show: false,
-            hasTwoBtn: false,
-            info: 'hey',
-            resolveFn: () => {},
-            rejectFn: () => {}
-        },
-        tags: [],
-        curTag: '',
-        article: {},
-        articles: [],
-        draft: {},
-        drafts: {},
-        pageTotal:'',
-        comments: [],
-        likeArr: []
-       // comment:{},
-       // like:''
+      user: {},
+      headline: {},
+      /**/
+      keys: [],
+      items: [],
+      loading: true,
+      pageSize: 9,
+      /**/
+
+      isLoading:
+        false,
+      moreArticle:
+        true,
+      loadMore:
+        false,
+      isSaving:
+        false,
+      isSend:
+        false,
+      noMore:
+        false,
+      dialog:
+        {
+          show: false,
+          hasTwoBtn:
+            false,
+          info:
+            'hey',
+          resolveFn:
+            () => {
+            },
+          rejectFn:
+            () => {
+            }
+        }
+      ,
+      tags: [],
+      curTag:
+        '',
+      article:
+        {}
+      ,
+      articles: [],
+      draft:
+        {}
+      ,
+      drafts: {}
+      ,
+      pageTotal: '',
+      comments:
+        [],
+      likeArr:
+        []
+      // comment:{},
+      // like:''
     },
     getters,
     actions,

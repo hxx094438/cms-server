@@ -9,8 +9,8 @@ import createApp from './create-app'
 
 // a global mixin that calls `asyncData` when a route component's params change
 Vue.mixin({
-  beforeRouteUpdate (to, from, next) {
-    const { asyncData } = this.$options
+  beforeRouteUpdate(to, from, next) {
+    const {asyncData} = this.$options
     if (asyncData) {
       asyncData({
         store: this.$store,
@@ -22,7 +22,7 @@ Vue.mixin({
   }
 })
 
-const { app, router, store } = createApp()
+const {app, router, store} = createApp()
 console.log('entry-client')
 // prime the store with server-initialized state.
 // the state is determined during SSR and inlined in the page markup.
@@ -50,7 +50,7 @@ router.onReady(() => {
     }
 
     // bar.start()
-    Promise.all(asyncDataHooks.map(hook => hook({ store, route: to })))
+    Promise.all(asyncDataHooks.map(hook => hook({store, route: to})))
       .then(() => {
         // bar.finish()
         next()
