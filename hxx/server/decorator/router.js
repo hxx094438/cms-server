@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-11-24 14:57:29 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-02-26 23:34:00
+ * @Last Modified time: 2019-03-04 01:52:25
  */
 
 import KoaRouter from 'koa-router'
@@ -11,6 +11,8 @@ import glob from 'glob'
 import R from 'ramda'
 const { createBundleRenderer } = require('vue-server-renderer')
 import LRU from 'lru-cache'
+import serve from 'koa-static'
+
 
 const resolve = path.resolve
 const _resolve = file => path.resolve(__dirname, file)
@@ -34,7 +36,7 @@ const changeToArr = R.unless(
 
 function createRenderer (bundle, options) {
   // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
-  console.log('createRenderer')
+  console.log('createRenderer',typeof bundle, options)
   return createBundleRenderer(bundle, Object.assign(options, {
     // for component caching
     cache: new LRU({
@@ -42,9 +44,9 @@ function createRenderer (bundle, options) {
       maxAge: 1000 * 60 * 15
     }),
     // this is only needed when vue-server-renderer is npm-linked
-    basedir: _resolve('../../dist'),
+    // basedir: _resolve('../../dist'),
     // recommended for performance
-    runInNewContext: false
+    // runInNewContext: false
   }))
 }
 
@@ -52,11 +54,9 @@ let renderer
 let readyPromise
 const isDev = process.env.NODE_ENV === 'development'
 
-console.log('环境',isDev)
+console.log('环境', 'isDev:', isDev)
 
 const templatePath = _resolve('../../src/index.template.html')
-
-
 
 function render (ctx) {
   const s = Date.now()
@@ -130,18 +130,18 @@ export class Route {
             renderer = createRenderer(bundle, options)
           }
         )
-      
       } else {
-        const bundle = require('../../dist/vue-ssr-server-bundle.json')
-        const clientManifest = require('../../dist/vue-ssr-client-manifest.json')
-        renderer = createRenderer(bundle, {
-          template,
-          clientManifest
-        })
-      }
-    
+      const bundle = require('../../dist/vue-ssr-server-bundle.json')
+      const clientManifest = require('../../dist/vue-ssr-client-manifest.json')
+      renderer = createRenderer(bundle, {
+        template,
+        clientManifest
+      })
+    }
 
-    router.get('*', (ctx) => {
+    router.get('/dist', serve(resolve('./dist')));
+
+    router.get('/*', (ctx) => {
       console.log('get *****')
       readyPromise.then(() => {
         // console.log('ctx.request',req,'ctx.response',res)

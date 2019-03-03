@@ -8,7 +8,7 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 
 const isDev = process.env.NODE_ENV === 'development'
-
+console.log('isDev',isDev)
 
 const defaultPlugin = !isDev
   ? [
@@ -30,14 +30,18 @@ function resolve (dir) {
 }
 
 module.exports = {
-  context: path.resolve(__dirname, '../'),
+  
+  // context: path.resolve(__dirname, '../'),
   entry: path.join(__dirname,'../src/entry-client.js'),
   output: {
-    path: config.build.assetsRoot,
-    filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    // path: config.build.assetsRoot,
+    // filename: '[name].js',
+    // publicPath: process.env.NODE_ENV === 'production'
+    //   ? config.build.assetsPublicPath
+    //   : config.dev.assetsPublicPath
+    path: path.resolve(__dirname, '../dist'),
+    publicPath: '/dist/',
+    filename: 'client-bundle.js'
   },
 
   module: {

@@ -8,25 +8,17 @@ module.exports = {
   dev: {
 
     // Paths
+    // assetsSubDirectory: 'static',
+    // assetsPublicPath: '/',
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
-    proxyTable: {
-      '/api': {
-        target: 'http://localhost:3002',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': '/api'
-        }
-      }
-    },
-
-    // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
-    port: 8081, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
-    autoOpenBrowser: false,
-    errorOverlay: true,
-    notifyOnErrors: true,
-    poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
+    assetsPublicPath: '/dist/',
+    // // Various Dev Server settings
+    // host: 'localhost', // can be overwritten by process.env.HOST
+    // port: 8081, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    // autoOpenBrowser: false,
+    // errorOverlay: true,
+    // notifyOnErrors: true,
+    // poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
 
     /**
