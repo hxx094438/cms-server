@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-11-24 14:57:29 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-03-04 01:52:25
+ * @Last Modified time: 2019-03-05 00:36:00
  */
 
 import KoaRouter from 'koa-router'
@@ -138,11 +138,21 @@ export class Route {
         clientManifest
       })
     }
+    
+//     const staticPath = './dist'
+//     console.log('pathpath',      path.join( __dirname,  staticPath)
+// )
+//     app.use(serve(
+//       path.join( __dirname,  staticPath)
+//     ))
 
-    router.get('/dist', serve(resolve('./dist')));
 
+    // router.get('/dist', serve(_resolve('./dist')))
     router.get('/*', (ctx) => {
-      console.log('get *****')
+      if((ctx.url).indexOf('/dist') !== -1) {
+        ctx.body = 'cnm'
+      }
+      console.log('get *****',ctx)
       readyPromise.then(() => {
         // console.log('ctx.request',req,'ctx.response',res)
         render(ctx)

@@ -128,7 +128,7 @@ module.exports = function setupDevServer (app, templatePath, cb) {
         serverConfig.output.path,
         'vue-ssr-server-bundle.json'
       )
-      console.log('bundlePath', typeof bundlePath)
+      console.log('bundlePath', mfs.readFileSync(bundlePath, 'utf-8'))
       bundle = JSON.parse(mfs.readFileSync(bundlePath, 'utf-8'))
       update()
     })
