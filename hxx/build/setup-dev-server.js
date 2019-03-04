@@ -30,7 +30,7 @@ module.exports = function setupDevServer (app, templatePath, cb) {
       ready()
       cb(bundle, {
         template,
-        // clientManifest
+        clientManifest
       })
     }
   }
@@ -80,8 +80,8 @@ module.exports = function setupDevServer (app, templatePath, cb) {
           chunks: false
       },
       noInfo: true, // 显示无信息到控制台（仅警告和错误）
-      serverSideRender: false //  关闭服务器端渲染模式。有关详细信息，请参阅服务器端渲染部分
-  })
+      // serverSideRender: false //  关闭服务器端渲染模式。有关详细信息，请参阅服务器端渲染部分
+    })
 
     app.use(devMiddleware)
     // 监听客户端webpack打包完成钩子
@@ -93,12 +93,12 @@ module.exports = function setupDevServer (app, templatePath, cb) {
       console.log('stats.errors.length',stats.errors.length)
       if (stats.errors.length) return
       // 如果没有报错，给clientManifest赋值
-      // console.log('devMiddleware.fileSystem',devMiddleware.fileSystem)
-      // clientManifest = JSON.parse(readFile(
-      //   devMiddleware.fileSystem,
-      //   'vue-ssr-client-manifest.json'
-      // ))
-      // console.log('clientCompilerDone',typeof clientManifest)
+      console.log('devMiddleware.fileSystem',devMiddleware.fileSystem)
+      clientManifest = JSON.parse(readFile(
+        devMiddleware.fileSystem,
+        'vue-ssr-client-manifest.json'
+      ))
+      console.log('clientCompilerDone',typeof clientManifest)
       update()
     })
   
@@ -128,7 +128,7 @@ module.exports = function setupDevServer (app, templatePath, cb) {
         serverConfig.output.path,
         'vue-ssr-server-bundle.json'
       )
-      console.log('bundlePath', mfs.readFileSync(bundlePath, 'utf-8'))
+      // console.log('bundlePath', mfs.readFileSync(bundlePath, 'utf-8'))
       bundle = JSON.parse(mfs.readFileSync(bundlePath, 'utf-8'))
       update()
     })

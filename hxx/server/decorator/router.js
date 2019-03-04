@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-11-24 14:57:29 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-03-05 00:36:00
+ * @Last Modified time: 2019-03-05 01:19:53
  */
 
 import KoaRouter from 'koa-router'
@@ -36,7 +36,7 @@ const changeToArr = R.unless(
 
 function createRenderer (bundle, options) {
   // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
-  console.log('createRenderer',typeof bundle, options)
+  console.log('createRenderer',typeof bundle)
   return createBundleRenderer(bundle, Object.assign(options, {
     // for component caching
     cache: new LRU({
@@ -139,20 +139,15 @@ export class Route {
       })
     }
     
-//     const staticPath = './dist'
-//     console.log('pathpath',      path.join( __dirname,  staticPath)
-// )
-//     app.use(serve(
-//       path.join( __dirname,  staticPath)
-//     ))
-
+    const staticPath = '../../dist'
+    console.log('pathpath',path.join( __dirname,  staticPath))
+    app.use(serve(
+      path.join( __dirname,  staticPath)
+    ))
 
     // router.get('/dist', serve(_resolve('./dist')))
     router.get('/*', (ctx) => {
-      if((ctx.url).indexOf('/dist') !== -1) {
-        ctx.body = 'cnm'
-      }
-      console.log('get *****',ctx)
+      console.log('get *****')
       readyPromise.then(() => {
         // console.log('ctx.request',req,'ctx.response',res)
         render(ctx)
