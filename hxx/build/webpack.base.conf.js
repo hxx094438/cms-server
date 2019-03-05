@@ -41,7 +41,7 @@ module.exports = {
     //   : config.dev.assetsPublicPath
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/dist/',
-    filename: 'client-bundle.js'
+    filename: '[name].js'
   },
 
   module: {

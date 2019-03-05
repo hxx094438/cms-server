@@ -28,24 +28,24 @@ let webpackConfig = merge(baseWebpackConfig, {
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
         filename: 'client-vendor-bundle.js',
-        // minChunks: function (module) {
-        //   // a module is extracted into the vendor chunk if...
-        //   return (
-        //     // it's inside node_modules
-        //     /node_modules/.test(module.context) &&
-        //     // and not a CSS file (due to extract-text-webpack-plugin limitation)
-        //     !/\.css$/.test(module.request)
-        //   )
-        // }
+        minChunks: function (module) {
+          // a module is extracted into the vendor chunk if...
+          return (
+            // it's inside node_modules
+            /node_modules/.test(module.context) &&
+            // and not a CSS file (due to extract-text-webpack-plugin limitation)
+            !/\.css$/.test(module.request)
+          )
+        }
       }),
 
-      // new webpack.optimize.CommonsChunkPlugin({
-      //   name: 'manifest'
-      // }),
-      new VueClientPlugin(),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'manifest'
+      }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
       new webpack.NoEmitOnErrorsPlugin(),
+      new VueClientPlugin(),
       // https://github.com/ampedandwired/html-webpack-plugin
     ]
   })
