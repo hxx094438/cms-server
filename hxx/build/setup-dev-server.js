@@ -53,8 +53,8 @@ module.exports = function setupDevServer (app, templatePath, cb) {
     }
 
     console.log('config.entry.app',config.entry)
-    config.entry.app = ['webpack-hot-middleware/client', config.entry.app]
-    config.output.filename = '[name].js'
+    // config.entry.app = ['webpack-hot-middleware/client', config.entry.app]
+    // config.output.filename = '[name].js'
     config.plugins.push(
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin()
@@ -71,6 +71,7 @@ module.exports = function setupDevServer (app, templatePath, cb) {
     //   noInfo: true
     // })
     
+    console.log('config.output.publicPath',config.output.publicPath)
 
     const devMiddleware = webpackDevMiddleware(clientCompiler, {
       //  绑定中间件的公共路径,使用与webpack相同

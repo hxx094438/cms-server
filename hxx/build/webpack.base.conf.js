@@ -40,7 +40,7 @@ module.exports = {
     //   ? config.build.assetsPublicPath
     //   : config.dev.assetsPublicPath
     path: path.resolve(__dirname, '../dist'),
-    publicPath: '/dist/',
+    publicPath: isDev ? 'localhost:3002/dist/' : '/dist/',
     filename: '[name].js'
   },
 

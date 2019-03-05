@@ -1,6 +1,7 @@
 const devMiddleware  = require('webpack-dev-middleware')
 module.exports = (compiler, opts) => {
     const middleware = devMiddleware(compiler, opts)
+    console.log('opts',opts)
     let nextFlag = false
     const nextFn = () => {
         nextFlag = true
