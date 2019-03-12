@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-11-24 14:57:29 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-03-06 00:54:03
+ * @Last Modified time: 2019-03-13 00:28:16
  */
 
 import KoaRouter from 'koa-router'
@@ -12,7 +12,6 @@ import R from 'ramda'
 const { createBundleRenderer } = require('vue-server-renderer')
 import LRU from 'lru-cache'
 import serve from 'koa-static'
-
 
 const resolve = path.resolve
 const _resolve = file => path.resolve(__dirname, file)
@@ -58,7 +57,22 @@ console.log('环境', 'isDev:', isDev)
 
 const templatePath = _resolve('../../src/index.template.html')
 
-function render (ctx) {
+function renderToStringPromise (context, s) {
+  return new Promise((resolve, reject) => {
+    renderer.renderToString(context, (err, html) => {
+      if (err) {
+        console.log(err)
+      }
+      if (isDev) {
+        console.log(`whole request: ${Date.now() - s}ms`)
+      }
+      resolve(html)
+    })
+  })
+}
+
+
+const render = async(ctx) => {
   const s = Date.now()
   console.log('render')
   ctx.res.setHeader("Content-Type", "text/html")
@@ -82,16 +96,18 @@ function render (ctx) {
     title: 'Vue HN 2.0', // default title
     url: ctx.req.url
   }
-  renderer.renderToString(context, (err, html) => {
-    if (err) {
-      return handleError(err)
-    }
-    console.log('html',typeof html)
-    ctx.body = html
-    if (isDev) {
-      console.log(`whole request: ${Date.now() - s}ms`)
-    }
-  })
+  // renderer.renderToString(context, (err, html) => {
+  //   if (err) {
+  //     return handleError(err)
+  //   }
+  //   console.log('html',typeof html)
+  //   ctx.body = html
+  //   if (isDev) {
+  //     console.log(`whole request: ${Date.now() - s}ms`)
+  //   }
+  // })
+
+  ctx.body = await renderToStringPromise(context, s)
 }
 
 export class Route {

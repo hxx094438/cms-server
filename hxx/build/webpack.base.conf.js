@@ -32,15 +32,9 @@ function resolve (dir) {
 module.exports = {
   
   // context: path.resolve(__dirname, '../'),
-  entry: path.join(__dirname,'../src/entry-client.js'),
   output: {
-    // path: config.build.assetsRoot,
-    // filename: '[name].js',
-    // publicPath: process.env.NODE_ENV === 'production'
-    //   ? config.build.assetsPublicPath
-    //   : config.dev.assetsPublicPath
     path: path.resolve(__dirname, '../dist'),
-    publicPath: isDev ? 'localhost:3002/dist/' : '/dist/',
+    publicPath: '/dist/',
     filename: '[name].js'
   },
 
@@ -63,7 +57,8 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+        exclude: /node_modules/
+        // include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

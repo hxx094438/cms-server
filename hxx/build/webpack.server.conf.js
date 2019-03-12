@@ -19,8 +19,8 @@ const plugins = [
 
 module.exports = merge(baseWebpackConfig, {
   target: 'node',
-  entry: path.join(__dirname, '../src/entry-server.js'),
-  devtool: 'source-map',
+  entry: './src/entry-server.js',
+  devtool: '#source-map',
   output:{
     libraryTarget: 'commonjs2',
     filename: 'server-bundle.js',
