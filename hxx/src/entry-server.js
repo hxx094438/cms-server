@@ -18,7 +18,6 @@ export default context => {
     if (fullPath !== url) {
       return reject({ url: fullPath })
     }
-
     // set router's location
     router.push(url)
 

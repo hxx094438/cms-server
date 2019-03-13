@@ -4,7 +4,6 @@ const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const SWPrecachePlugin = require('sw-precache-webpack-plugin')
 const VueClientPlugin = require('vue-server-renderer/client-plugin')
-
 const isDev = process.env.NODE_ENV === 'development'
 
 let webpackConfig = merge(baseWebpackConfig, {
@@ -82,6 +81,4 @@ if(!isDev) {
   )
 }
 
-module.exports = new Promise((resolve, reject) => {
-  resolve(webpackConfig)
-})
+module.exports = webpackConfig

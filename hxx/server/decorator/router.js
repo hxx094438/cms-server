@@ -49,7 +49,7 @@ function createRenderer (bundle, options) {
   }))
 }
 
-let renderer
+let renderer // createBundleRenderer 函数
 let readyPromise
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -57,26 +57,17 @@ console.log('环境', 'isDev:', isDev)
 
 const templatePath = _resolve('../../src/index.template.html')
 
-function renderToStringPromise (context, s) {
-  return new Promise((resolve, reject) => {
-    renderer.renderToString(context, (err, html) => {
-      if (err) {
-        console.log(err)
-      }
-      if (isDev) {
-        console.log(`whole request: ${Date.now() - s}ms`)
-      }
-      resolve(html)
-    })
-  })
-}
-
-
 const render = async(ctx) => {
   const s = Date.now()
   console.log('render')
   ctx.res.setHeader("Content-Type", "text/html")
   ctx.res.setHeader("Server", 'koa-ssr')
+
+
+  const context = {
+    title: 'Vue HN 2.0', // default title
+    url: ctx.req.url
+  }
 
   const handleError = err => {
     if (err.url) {
@@ -92,22 +83,18 @@ const render = async(ctx) => {
     }
   }
 
-  const context = {
-    title: 'Vue HN 2.0', // default title
-    url: ctx.req.url
-  }
-  // renderer.renderToString(context, (err, html) => {
-  //   if (err) {
-  //     return handleError(err)
-  //   }
-  //   console.log('html',typeof html)
-  //   ctx.body = html
-  //   if (isDev) {
-  //     console.log(`whole request: ${Date.now() - s}ms`)
-  //   }
-  // })
 
-  ctx.body = await renderToStringPromise(context, s)
+  renderer.renderToString(context, (err, html) => {
+    if (err) {
+      return handleError(err)
+    }
+    console.log('html',typeof html)
+    ctx.body = html
+    if (isDev) {
+      console.log(`whole request: ${Date.now() - s}ms`)
+    }
+  })
+
 }
 
 export class Route {
