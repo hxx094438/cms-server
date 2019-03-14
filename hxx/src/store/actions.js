@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import router from '../router'
+import model from '../model/client-model'
 
 
 const beginLoading = (commit, add) => {
@@ -14,8 +15,8 @@ const endLoading = (commit, startTime, toggle) => {
 
 export default {
   login({commit}, payload) {
-    console.log('this',this.$http)
-    return this.$http.post('/login', payload).catch((err) => {
+    console.log('this',payload)
+    return model.login(payload).catch((err) => {
       console.log(err)
     })
   },

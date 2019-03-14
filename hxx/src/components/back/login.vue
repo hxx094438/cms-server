@@ -37,15 +37,14 @@
       ...mapActions(['login']),
       ...mapMutations(['set_user']),
       confirm(name, password) {
-        console.log(name, password,this,this.$http)
-        this.login({name: name, password: password}).then((res) => {
-          console.log(res)
-          if (res.data === '账号或密码错误') {
-            this.info = '账号或密码错误'
-          } else {
+        this.login({name: name, password: password}).then((data) => {
+          console.log('data',data)
+          if (data.code === 0) {
             this.info = '正在登录中...'
-            this.set_user(res.data)
+            this.set_user(data.user)
             this.$router.push({name: 'posts'})
+          } else {
+            this.info = data.msg
           }
         }).catch((err) => {
           console.log(err)

@@ -33,6 +33,7 @@ export default class AdminRouter {
       user,
       match
     } = data
+    console.log('data',data)
     if (match) {
       ctx.session.user = {
         _id: user._id,
@@ -40,20 +41,26 @@ export default class AdminRouter {
         role: user.role,
         username: user.username
       }
-      ctx.status = 200
+      // ctx.status = 200
       ctx.body = {
-        msg:'登录成功',
         success: true,
         data: {
-          name: user.name,
-          username: user.username
+          code : 0,
+          user:{
+            name: user.name,
+            username: user.username,
+          },
+          msg:'登录成功',
         }
       }
     } else {
-      ctx.status = 200
+      // ctx.status = 200
       ctx.body = {
         success: false,
-        msg: '密码错误'
+        data:{
+          code: -11,
+          msg: '账号与密码不匹配'
+        }
       }
     }
   }
