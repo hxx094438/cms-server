@@ -9,7 +9,8 @@ import KoaRouter from 'koa-router'
 import path from 'path'
 import glob from 'glob'
 import R from 'ramda'
-const { createBundleRenderer } = require('vue-server-renderer')
+
+const {createBundleRenderer} = require('vue-server-renderer')
 import LRU from 'lru-cache'
 import serve from 'koa-static'
 
@@ -31,11 +32,9 @@ const changeToArr = R.unless(
 )
 
 
-
-
-function createRenderer (bundle, options) {
+function createRenderer(bundle, options) {
   // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
-  console.log('createRenderer',typeof bundle)
+  console.log('createRenderer', typeof bundle)
   return createBundleRenderer(bundle, Object.assign(options, {
     // for component caching
     cache: new LRU({
@@ -49,7 +48,7 @@ function createRenderer (bundle, options) {
   }))
 }
 
-let renderer // createBundleRenderer 函数
+let renderer // 渲染器实例
 let readyPromise
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -57,7 +56,7 @@ console.log('环境', 'isDev:', isDev)
 
 const templatePath = _resolve('../../src/index.template.html')
 
-const render = async(ctx) => {
+const render = async (ctx) => {
   const s = Date.now()
   console.log('render')
   ctx.res.setHeader("Content-Type", "text/html")
@@ -72,7 +71,7 @@ const render = async(ctx) => {
   const handleError = err => {
     if (err.url) {
       ctx.redirect(err.url)
-    } else if(err.code === 404) {
+    } else if (err.code === 404) {
       ctx.status = 404
       ctx.body = '404 | Page Not Found'
     } else {
@@ -88,7 +87,7 @@ const render = async(ctx) => {
     if (err) {
       return handleError(err)
     }
-    console.log('html',typeof html)
+    console.log('html', typeof html)
     ctx.body = html
     if (isDev) {
       console.log(`whole request: ${Date.now() - s}ms`)
@@ -98,42 +97,40 @@ const render = async(ctx) => {
 }
 
 export class Route {
-  
+
   constructor(app, apiPath) {
     this.app = app
     this.apiPath = apiPath
     this.router = new KoaRouter()
   }
 
-  init = ()=> {
-    const { app, router, apiPath } = this
+  init = () => {
+    const {app, router, apiPath} = this
     // console.log('routeMap',routeMap)
 
     glob.sync(resolve(apiPath, './*.js')).forEach(require)
     // console.log(apiPath,'哈哈哈')
     // console.log('routeMap',routeMap)
     R.forEach(
-      ({ target, method, path, callback }) => {
+      ({target, method, path, callback}) => {
         const prefix = resolvePath(target[symbolPrefix])
-        console.log('挂载router',callback)
+        console.log('挂载router', callback)
         router[method](prefix + path, ...callback)
       }
     )(routeMap)
 
     if (isDev) {
-      /*   pageRouter = require('./middleware/dev-ssr')
-        // pageRouter = require('./routers/dev-ssr-no-bundle')*/
-        // In development: setup the dev server with watch and hot-reload,
-        // and create a new renderer on bundle / index template update.
-        readyPromise = require('../../build/setup-dev-server')(
-          app,
-          templatePath,
-          (bundle, options) => {
-            // console.log('createRenderer',bundle, options)
-            renderer = createRenderer(bundle, options)
-          }
-        )
-      } else {
+      // In development: setup the dev server with watch and hot-reload,
+      // and create a new renderer on bundle / index template update.
+      readyPromise = require('../../build/setup-dev-server')(
+        app,
+        templatePath,
+        (bundle, options) => {
+          // console.log('createRenderer',bundle, options)
+          renderer = createRenderer(bundle, options)
+        }
+      )
+    } else {
       const bundle = require('../../dist/vue-ssr-server-bundle.json')
       const clientManifest = require('../../dist/vue-ssr-client-manifest.json')
       renderer = createRenderer(bundle, {
@@ -141,11 +138,11 @@ export class Route {
         clientManifest
       })
     }
-    
+
     const staticPath = '../../dist'
-    console.log('pathpath',path.join( __dirname,  staticPath))
+    console.log('pathpath', path.join(__dirname, staticPath))
     app.use(serve(
-      path.join( __dirname,  staticPath)
+      path.join(__dirname, staticPath)
     ))
 
     // router.get('/dist', serve(_resolve('./dist')))
@@ -158,7 +155,7 @@ export class Route {
         console.log(err)
       })
     })
-  
+
     app.use(router.routes())
     app.use(router.allowedMethods())
   }
@@ -175,8 +172,8 @@ export const setRouter = method => path => (target, key, descriptor) => {
 }
 
 /**
- * 
- * @param {fn} middleware 
+ *
+ * @param {fn} middleware
  * 将函数转化为数组中间件
  */
 
@@ -241,7 +238,7 @@ export const Required = paramsObj => convert(async (ctx, next) => {
 })
 
 export const Auth = convert(async (ctx, next) => {
-  console.log('auth自动登录',ctx.session)
+  console.log('auth自动登录', ctx.session)
   if (!ctx.session.user) {
     return (
       ctx.body = {
