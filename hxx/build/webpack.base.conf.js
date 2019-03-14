@@ -37,6 +37,7 @@ module.exports = {
     filename: '[name].js'
   },
 
+
   module: {
     rules: [
       {

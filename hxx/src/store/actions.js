@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import router from '../router'
 
+
 const beginLoading = (commit, add) => {
   add ? commit('loadMore_toggle', true) : commit('isLoading_toggle', true)
   return Date.now()
@@ -12,17 +13,9 @@ const endLoading = (commit, startTime, toggle) => {
 }
 
 export default {
-  GET_ITEM_DATA: ({getters, commit, dispatch, state}, {cid}) => {
-    dispatch('START_LOADING')
-    commit('SET_PAGE', {currentPage: getters.currentPage})
-    return getKeys(cid)
-      .then(keys => commit('SET_KEYS', {keys}))
-      .then(keys => commit('SET_CID', {cid}))
-      .then(() => commit('SET_PROGRESS', {progress: 0.7}))
-      .then(() => dispatch('GET_ITEMS'))
-  },
   login({commit}, payload) {
-    return Vue.axios.post('/login', payload).catch((err) => {
+    console.log('this',this.$http)
+    return this.$http.post('/login', payload).catch((err) => {
       console.log(err)
     })
   },

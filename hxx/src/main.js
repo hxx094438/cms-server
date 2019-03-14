@@ -1,7 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import VueResource from 'vue-resource'
+// import VueResource from 'vue-resource'
 import axios from 'axios'
 import App from './App'
 // import router from './router'
@@ -15,9 +15,10 @@ import './assets/css/index.scss'
 
 Vue.config.productionTip = false
 
-Vue.use(VueResource)
+// Vue.use(VueResource)
 
 axios.defaults.withCredentials = true
+Vue.prototype.$http = axios
 
 Vue.filter('toDate', (date) => {
     if (date) {
@@ -45,22 +46,21 @@ Vue.filter('toTag', (arr) => {
     }
 })
 
-Vue.prototype.axios = axios
 
 // 刷新页面的时候未经过拦截器处理
-Vue.http.interceptors.push((request, next) => {
-    // if (window.localStorage.getItem('token')) {
-    //     request.headers.set('authorization', 'Bearer ' + window.localStorage.getItem('token'))
-    // }
-    next((response) => {
-        if(response.url === '/api/login'){
-            if (response.status === 200 && response.body === '账号或密码错误') {
-                store.commit('unset_user')
-            }
-        }
-        return response
-    })
-})
+// Vue.http.interceptors.push((request, next) => {
+//     // if (window.localStorage.getItem('token')) {
+//     //     request.headers.set('authorization', 'Bearer ' + window.localStorage.getItem('token'))
+//     // }
+//     next((response) => {
+//         if(response.url === '/api/login'){
+//             if (response.status === 200 && response.body === '账号或密码错误') {
+//                 store.commit('unset_user')
+//             }
+//         }
+//         return response
+//     })
+// })
 
 export function createApp () {
   // create store and router instances
@@ -85,12 +85,3 @@ export function createApp () {
   // different depending on whether we are in a browser or on the server.
   return { app, router, store }
 }
-
-/* eslint-disable no-new */
-// new Vue({
-//     el: '#app',
-//     store,
-//     router,
-//     components: {App},
-//     template: '<App/>'
-// })

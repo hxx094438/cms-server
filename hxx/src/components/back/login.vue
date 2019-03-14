@@ -29,15 +29,15 @@
       }
     },
 
-    asyncData ({ store }) {
-//      return store.dispatch('FETCH_USER', { id })
-      console.log('login asyncData')
-    },
+//    asyncData ({ store}) {
+//      return store.user
+//    },
 
     methods: {
       ...mapActions(['login']),
       ...mapMutations(['set_user']),
       confirm(name, password) {
+        console.log(name, password,this,this.$http)
         this.login({name: name, password: password}).then((res) => {
           console.log(res)
           if (res.data === '账号或密码错误') {

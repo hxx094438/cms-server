@@ -8,7 +8,8 @@ const isDev = process.env.NODE_ENV === 'development'
 
 let webpackConfig = merge(baseWebpackConfig, {
     entry: {
-      app: './src/entry-client.js'
+      app: './src/entry-client.js',
+      // vendor: ['vue', 'vue-router', 'vuex', 'vuex-router-sync', 'axios']
     },
 
     module: {

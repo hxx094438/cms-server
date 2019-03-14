@@ -27,10 +27,13 @@ module.exports = merge(baseWebpackConfig, {
   },
   // externals: Object.keys(require('../package.json').dependencies),
   plugins,
-  externals: nodeExternals({
+  externals: [
+    nodeExternals({
     // do not externalize CSS files in case we need to import it from a dep
     whitelist: /\.css$/
-  }),
+    }),
+    // 'axios' // 不对axios进行打包
+  ],
 
   module: {
     rules: [
