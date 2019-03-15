@@ -36,4 +36,9 @@ export default {
   login(payload) {
     return handleRequest(request.post('/admin/login', payload))
   },
+
+  getAllArticles(payload) {
+    return handleRequest(request.get('/articles/all', {params: {payload}}))
+  },
+
 }

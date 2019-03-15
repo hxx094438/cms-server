@@ -35,14 +35,12 @@ export default {
     if (payload.value) {
       commit('isLoading_toggle', false)
     }
-    return Vue.http.get('/api/articles/all', {params: {payload}})
-      .then(response => response.json())
+    return model.getAllArticles(payload)
       .then(article => {
         if (payload.page > article.total) {
           commit('moreArticle_toggle', false)
           commit('noMore_toggle', true)
         } else {
-
           commit('set_pageTotal', article.total)
           commit('noMore_toggle', false)
         }
