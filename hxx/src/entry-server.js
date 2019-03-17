@@ -14,7 +14,7 @@ export default context => {
 
     const { url } = context
     const { fullPath } = router.resolve(url).route
-    console.log('fullPath',fullPath,'url',url)
+    // console.log('fullPath',fullPath,'url',url)
     if (fullPath !== url) {
       return reject({ url: fullPath })
     }
@@ -29,14 +29,22 @@ export default context => {
       if (!matchedComponents.length) {
         return reject({ code: 404 })
       }
+      // console.log('matchedComponents:',matchedComponents.map((item) => {
+      //   {}
+      // }))
       // Call fetchData hooks on components matched by the route.
       // A preFetch hook dispatches a store action and returns a Promise,
       // which is resolved when the action is complete and store state has been
       // updated.
-      Promise.all(matchedComponents.map(({ asyncData }) => asyncData && asyncData({
+      Promise.all(matchedComponents.map(({ asyncData }) => {
+        // console.log('asyncData：',asyncData,typeof (asyncData({
+        //   store,
+        //   route: router.currentRoute
+        // }).then))
+        return asyncData && asyncData({
         store,
         route: router.currentRoute
-      }))).then(() => {
+      })})).then(() => {
         isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`)
         // After all preFetch hooks are resolved, our store is now
         // filled with the state needed to render the app.

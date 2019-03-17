@@ -29,31 +29,31 @@ export default {
         console.log(err)
       })
   },
-  getAllArticles({commit}, payload) {
+
+  async getAllArticles ({commit}, payload) {
     commit('moreArticle_toggle', true)
     const startTime = beginLoading(commit, payload.add)
     if (payload.value) {
       commit('isLoading_toggle', false)
     }
-    return model.getAllArticles(payload)
-      .then(article => {
-        if (payload.page > article.total) {
-          commit('moreArticle_toggle', false)
-          commit('noMore_toggle', true)
-        } else {
-          commit('set_pageTotal', article.total)
-          commit('noMore_toggle', false)
-        }
-        if (payload.add) {
-          commit('add_articles', article.articles)
-          endLoading(commit, startTime, 'loadMore_toggle')
-        } else {
-          commit('set_all_articles', article.articles)
-          endLoading(commit, startTime, 'isLoading_toggle')
-        }
-      }).catch((err) => {
-        console.log(err)
-      })
+    // console.log('getAllArticles111',typeof model.getAllArticles(payload).then)
+
+    const article = await model.getAllArticles(payload)
+    console.log('哈哈',article)
+        // if (payload.page > article.total) {
+        //   commit('moreArticle_toggle', false)
+        //   commit('noMore_toggle', true)
+        // } else {
+        //   commit('set_pageTotal', article.total)
+        //   commit('noMore_toggle', false)
+        // } 
+        // if (payload.add) {
+        //   commit('add_articles', article.articles)
+        //   endLoading(commit, startTime, 'loadMore_toggle')
+        // } else {
+        //   commit('set_all_articles', article.articles)
+        //   endLoading(commit, startTime, 'isLoading_toggle')
+        // }
   },
 
   //  article的http请求

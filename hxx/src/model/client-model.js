@@ -2,26 +2,29 @@ import axios from 'axios'
 import { createError } from './util'
 
 const request = axios.create({
-  baseURL: '/api'
+  baseURL: 'http://127.0.0.1:3002/api'
 })
 
 const handleRequest = (request) => {
+  // console.log('request',request)
   return new Promise((resolve, reject) => {
     request.then(resp => {
       const {data , status} = resp
-      console.log('data',data,data.status)
+      // console.log('resp',resp)
+      // console.log('data',data)
       if (status === 200) {
         console.log('resolve',data.data)
-        resolve(data.data)
+        // resolve(data.data)
+        resolve('haha')
+
       } else {
-        return reject(createError(data.status))
+        return reject(createError(status))
       }
     }).catch(err => {
-      const resp = err.response
-      console.log('---------------', resp)
-      if (resp.status === 401) {
-        reject(createError(401, 'need auth'))
-      }
+      console.log('---------------', err)
+      // if (resp.status === 401) {
+      //   reject(createError(401, 'need auth'))
+      // }
     })
   })
 }

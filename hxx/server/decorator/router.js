@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-11-24 14:57:29 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-03-13 00:28:16
+ * @Last Modified time: 2019-03-17 23:10:42
  */
 
 import KoaRouter from 'koa-router'
@@ -87,7 +87,7 @@ const render = async (ctx) => {
     if (err) {
       return handleError(err)
     }
-    console.log('html', typeof html)
+    console.log('html', typeof html,'err:',err)
     ctx.body = html
     if (isDev) {
       console.log(`whole request: ${Date.now() - s}ms`)
@@ -146,7 +146,7 @@ export class Route {
     ))
 
     // router.get('/dist', serve(_resolve('./dist')))
-    router.get('/*', (ctx) => {
+    router.get('/*', async (ctx, next) => {
       console.log('get *****')
       readyPromise.then(() => {
         // console.log('ctx.request',req,'ctx.response',res)
