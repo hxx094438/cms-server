@@ -1,4 +1,5 @@
 import createApp from './create-app'
+import chalk from 'chalk';
 
 const isDev = process.env.NODE_ENV !== 'production'
 
@@ -54,7 +55,21 @@ export default context => {
         // the initial data fetching on the client.
         context.state = store.state
         resolve(app)
-      }).catch(reject)
-    }, reject)
+      }).catch(resolve(app))  
+
+      //为什么不能这么写，和直接resolve(app有什么区别？)
+      // .catch(error => {
+      //   console.log(chalk.red('AsyncData Error Caused URL '), context.url);
+      //   console.log(chalk.red('AsyncData Error Caused '), error);
+      //   // 这里需要处理请求失败的情况，可能是没有权限
+      //   // if(error.code === 401) {
+      //   //   console.log('server-entry auth', error.code)
+      //   //   context.state = store.state;
+      //   //   resolve(app);
+      //   // }
+      //   context.state = store.state;
+      //   resolve(app);
+      // })
+    })
   })
 }

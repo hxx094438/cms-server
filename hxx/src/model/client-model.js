@@ -14,9 +14,7 @@ const handleRequest = (request) => {
       // console.log('data',data)
       if (status === 200) {
         console.log('resolve',data.data)
-        // resolve(data.data)
-        resolve('haha')
-
+        resolve(data.data)
       } else {
         return reject(createError(status))
       }

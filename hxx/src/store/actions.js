@@ -39,7 +39,6 @@ export default {
     // console.log('getAllArticles111',typeof model.getAllArticles(payload).then)
 
     const article = await model.getAllArticles(payload)
-    console.log('哈哈',article)
         // if (payload.page > article.total) {
         //   commit('moreArticle_toggle', false)
         //   commit('noMore_toggle', true)
