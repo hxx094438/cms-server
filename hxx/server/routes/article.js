@@ -18,6 +18,10 @@ import {
 import ArticleService from '../service/articles'
 
 
+/**
+ *  /all
+ *  /
+ */
 @Controller('/api/articles')
 export class ArticleRouter {
   @Post('/send')
@@ -43,11 +47,11 @@ export class ArticleRouter {
 
 
   @Get('/all')
-  @Required({
-    body: ['page', 'value', 'limit']
-  })
+  // @Required({
+  //   body: ['page', 'value', 'limit']
+  // })
   async getAllArticles(ctx, next) {
-    let articles = null
+    let articles
     // console.log('ctx.request.body',ctx.request.body)
     const {page, value, limit} = ctx.request.body
     try {
@@ -58,14 +62,15 @@ export class ArticleRouter {
       })
     } catch (e) {
       console.log(e)
-      throw e
+      throw `getAllArticles Error : ${e}`
     }
     console.log('rep', articles)
-
-    ctx.status = 200
     ctx.body = {
-      data: articles,
-      success: true
+      success: true,
+      code : 0,
+      data: {
+        articles: articles
+      },
     }
   }
 

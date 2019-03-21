@@ -31,9 +31,10 @@ class ArticleService {
     let _articles = {}
     //文章总数
     try {
-      _articles.total = await Article.countDocuments({
+      let count = await Article.countDocuments({
         isPublish: true
       }).exec()
+      _articles.total = Math.ceil(count / limit )
     } catch (e) {
       console.log(e)
       throw e
