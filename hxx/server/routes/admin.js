@@ -44,23 +44,22 @@ export default class AdminRouter {
       // ctx.status = 200
       ctx.body = {
         success: true,
+        code : 0,
+        message:'登录成功',
         data: {
-          code : 0,
           user:{
             name: user.name,
             username: user.username,
           },
-          msg:'登录成功',
         }
       }
     } else {
       // ctx.status = 200
       ctx.body = {
         success: false,
-        data:{
-          code: -11,
-          msg: '账号与密码不匹配'
-        }
+        code: -11,
+        message: '账号与密码不匹配',
+        data:{}
       }
     }
   }

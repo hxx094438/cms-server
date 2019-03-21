@@ -58,12 +58,11 @@ export default {
         // }
   },
 
-  //  article的http请求
   saveArticle({state, commit}, aid) {
     commit('isSaving_toggle', false)
     if (!state.isSend) {
       if (aid) {
-        return Vue.http.patch('/api/article/' + aid, state.article)
+        return model.saveArticlePatch({aid:aid, article: state.article})
           .then(() => {
             commit('isSaving_toggle', true)
             commit('isSend_toggle', true)
@@ -74,7 +73,7 @@ export default {
             console.log(err)
           })
       } else {
-        return Vue.http.post('/api/article', state.article)
+        return model.saveArticlePost(state.article)
           .then(() => {
             commit('isSaving_toggle', true)
             router.push({name: 'posts'})
@@ -93,7 +92,7 @@ export default {
       commit('isLoading_toggle', false)
     }
     document.title = '加载中...'
-    return Vue.http.get('/api/article/' + aid)
+    return model.getArticle(aid)
       .then(response => {
         commit('set_article', response.data)
         commit('set_headline', {content: state.article.title, animation: 'animated rotateIn'})
