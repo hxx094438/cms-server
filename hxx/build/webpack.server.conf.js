@@ -19,21 +19,15 @@ const plugins = [
 
 module.exports = merge(baseWebpackConfig, {
   target: 'node',
-  entry: './src/entry-server.js',
-  devtool: '#source-map',
+  entry: path.join(__dirname, '../src/entry-server.js'),
+  devtool: 'source-map',
   output:{
     libraryTarget: 'commonjs2',
     filename: 'server-bundle.js',
   },
   // externals: Object.keys(require('../package.json').dependencies),
   plugins,
-  externals: [
-    nodeExternals({
-    // do not externalize CSS files in case we need to import it from a dep
-    whitelist: /\.css$/
-    }),
-    // 'axios' // 不对axios进行打包
-  ],
+  externals: Object.keys(require('../package.json').dependencies),
 
   module: {
     rules: [

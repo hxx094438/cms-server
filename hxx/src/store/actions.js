@@ -37,8 +37,11 @@ export default {
       commit('isLoading_toggle', false)
     }
     // console.log('getAllArticles111',typeof model.getAllArticles(payload).then)
-
-    const article = await model.getAllArticles(payload)
+    try {
+      const article = await model.getAllArticles(payload)
+    } catch(e) {
+      console.log('getAllArticles Error',e)
+    }
         // if (payload.page > article.total) {
         //   commit('moreArticle_toggle', false)
         //   commit('noMore_toggle', true)

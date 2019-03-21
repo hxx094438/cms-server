@@ -2,10 +2,12 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-10-28 15:24:14 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-03-18 23:23:42
+ * @Last Modified time: 2019-03-21 00:44:40
  */
 import { join } from 'path'
 import Koa from 'koa'
+const send = require('koa-send');
+const path = require('path');
 import R from 'ramda'
 import chalk from 'chalk'
 import config from './config/index'
@@ -29,13 +31,20 @@ const useMiddlewares = (app) => {
   )(MIDDLEWARES)
 }
 
+
 ;(async function () {
   /**
    * 将config注入中间件的ctx
    * */
   // app.context.config = config
 
-
+  app.use(async (ctx, next) => {
+    if (ctx.path === '/favicon.ico') {
+      await send(ctx, '/favicon.ico', {root: path.join(__dirname, '../')});
+    } else {
+      await next();
+    }
+  });
   await useMiddlewares(app)  
 
 
