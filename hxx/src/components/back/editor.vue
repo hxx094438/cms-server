@@ -126,7 +126,14 @@
     },
     methods: {
       ...mapMutations(['set_article', 'update_post_content', 'update_post_title', 'update_post_tags', 'isSaving_toggle', 'isSend_toggle', 'set_dialog']),
-      ...mapActions(['saveArticle', 'getArticle', 'saveDraft'])
+      ...mapActions(['SAVE_ARTICLE', 'getArticle', 'saveDraft']),
+      saveArticle() {
+        this.SAVE_ARTICLE({aid : this.$route.query.aid}).then(() => {
+          this.$router.push({name: 'posts'})
+        })
+      }
+      
+
     },
     components: {
       TagInput

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import router from '../router'
+// import router from '../router'
 import model from '../model/client-model'
 
 
@@ -14,7 +14,7 @@ const endLoading = (commit, startTime, toggle) => {
 }
 
 export default {
-  login({commit}, payload) {
+  LOGIN({commit}, payload) {
     console.log('this',payload)
     return model.login(payload).catch((err) => {
       console.log(err)
@@ -30,59 +30,44 @@ export default {
       })
   },
 
-  async getAllArticles ({commit}, payload) {
+  GET_ALL_ARTICLES ({commit}, payload) {
     commit('moreArticle_toggle', true)
     const startTime = beginLoading(commit, payload.add)
     if (payload.value) {
       commit('isLoading_toggle', false)
     }
-    // console.log('getAllArticles111',typeof model.getAllArticles(payload).then)
-    try {
-      const article = await model.getAllArticles(payload)
-    } catch(e) {
-      console.log('getAllArticles Error',e)
-    }
-        // if (payload.page > article.total) {
-        //   commit('moreArticle_toggle', false)
-        //   commit('noMore_toggle', true)
-        // } else {
-        //   commit('set_pageTotal', article.total)
-        //   commit('noMore_toggle', false)
-        // } 
-        // if (payload.add) {
-        //   commit('add_articles', article.articles)
-        //   endLoading(commit, startTime, 'loadMore_toggle')
-        // } else {
-        //   commit('set_all_articles', article.articles)
-        //   endLoading(commit, startTime, 'isLoading_toggle')
-        // }
+    return model.getAllArticles(payload).then( res => {
+      const {total , articles} = res
+      if (payload.page > total) {
+          commit('moreArticle_toggle', false)
+          commit('noMore_toggle', true)
+        } else {
+          commit('set_pageTotal', total)
+          commit('noMore_toggle', false)
+        } 
+        if (payload.add) {
+          commit('add_articles', articles)
+          endLoading(commit, startTime, 'loadMore_toggle')
+        } else {
+          commit('set_all_articles', articles)
+          endLoading(commit, startTime, 'isLoading_toggle')
+        }
+    })
+    
+        
   },
 
-  saveArticle({state, commit}, aid) {
+  SAVE_ARTICLE({state, commit}, payload) {
     commit('isSaving_toggle', false)
     if (!state.isSend) {
-      if (aid) {
-        return model.saveArticlePatch({aid:aid, article: state.article})
+        return model.saveArticle({article: state.article, aid: payload.aid})
           .then(() => {
             commit('isSaving_toggle', true)
             commit('isSend_toggle', true)
-            router.push({name: 'posts'})
-          }, () => {
-            alert('保存失败')
           }).catch((err) => {
             console.log(err)
           })
-      } else {
-        return model.saveArticlePost(state.article)
-          .then(() => {
-            commit('isSaving_toggle', true)
-            router.push({name: 'posts'})
-          }, () => {
-            alert('保存失败2')
-          }).catch((err) => {
-            console.log(err)
-          })
-      }
+      
     }
   },
 

@@ -24,12 +24,14 @@
     },
 
     asyncData ({ store }) {
-      return store.dispatch('getAllArticles', {page: 1, limit: 4})
+      return store.dispatch('GET_ALL_ARTICLES', {page: 1, limit: 4})
 //      return store.dispatch('getAllArticles', {page: this.page, limit: 4})
     },
 
     methods: {
-      ...mapActions(['getAllArticles']),
+      ...mapActions({
+        getAllArticles: 'GET_ALL_ARTICLES'
+      }),
       nextPage() {
         if (this.page < this.pageTotal) {
           this.page++

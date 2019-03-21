@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:15 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2018-12-28 01:38:55
+ * @Last Modified time: 2019-03-22 01:13:19
  */
 
 
@@ -21,7 +21,7 @@ class ArticleService {
   /**
    *
    * @param {opt} param0
-   *
+   * @return {total:Number,articles:Array}
    */
   async _getAllArticles({
     value,  //tags

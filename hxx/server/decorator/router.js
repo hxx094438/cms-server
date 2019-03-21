@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-11-24 14:57:29 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-03-18 23:37:06
+ * @Last Modified time: 2019-03-21 22:46:59
  */
 
 import KoaRouter from 'koa-router'
@@ -116,7 +116,7 @@ export const Log = convert(async (ctx, next) => {
  */
 export const Required = paramsObj => convert(async (ctx, next) => {
   let errs = []
-  // console.log('ctx',ctx.request)
+  console.log('ctx',ctx.request)
   R.forEachObjIndexed(
     (val, key) => {
       errs = errs.concat(

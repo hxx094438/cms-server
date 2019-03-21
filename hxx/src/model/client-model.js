@@ -58,11 +58,15 @@ export default {
 
 
   saveArticlePatch(payload) {
-    return handleRequest(request.patch(`/article/${payload.aid}`, payload.article))
   },
 
-  saveArticlePost(article) {
-    return handleRequest(request.post(`/article/`, article))
+  saveArticle(payload) {
+    console.log('payload',payload)
+    if(payload.aid) {
+      return handleRequest(request.patch(`/articles/save/${payload.aid}`, payload))
+    } else {
+      return handleRequest(request.post(`/articles/save`, payload))
+    }
   }
 
 

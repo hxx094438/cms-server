@@ -34,7 +34,9 @@
 //    },
 
     methods: {
-      ...mapActions(['login']),
+      ...mapActions({
+        login: 'LOGIN'
+      }),
       ...mapMutations(['set_user']),
       confirm(name, password) {
         this.login({name: name, password: password}).then(res => {

@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-03-17 22:48:02
+ * @Last Modified time: 2019-03-22 01:41:48
  */
 
 
@@ -24,12 +24,13 @@ import ArticleService from '../service/articles'
  */
 @Controller('/api/articles')
 export class ArticleRouter {
-  @Post('/send')
+  @Post('/save')
   @Required({
     body: ['article']
   })
-  @Auth
+  // @Auth
   async sendArticle(ctx, next) {
+    console.log('ctx.request.body',ctx.request.body)
     const { article} = ctx.request.body
     try {
       await ArticleService._sendArticle(article)
@@ -37,11 +38,10 @@ export class ArticleRouter {
       console.log(e)
       throw e
     }
-
-    ctx.status = 200
     ctx.body = {
-      msg: '保存成功',
-      success: true
+      message: '保存成功',
+      success: true,
+      code: 0
     }
   }
 
@@ -51,11 +51,12 @@ export class ArticleRouter {
   //   body: ['page', 'value', 'limit']
   // })
   async getAllArticles(ctx, next) {
-    let articles
-    // console.log('ctx.request.body',ctx.request.body)
-    const {page, value, limit} = ctx.request.body
+    console.log('ctx.request',ctx.params,ctx.url)
+    const {page, value, limit} = ctx.params
+    console.log('ctx.request.body',ctx.request.body,page, value, limit)
+    let data
     try {
-      articles = await ArticleService._getAllArticles({
+      data = await ArticleService._getAllArticles({
         value: value,
         limit: limit - 0 || 4,
         skip: limit * (page - 1),
@@ -64,13 +65,11 @@ export class ArticleRouter {
       console.log(e)
       throw `getAllArticles Error : ${e}`
     }
-    console.log('rep', articles)
+    console.log('rep', data)
     ctx.body = {
       success: true,
       code : 0,
-      data: {
-        articles: articles
-      },
+      data: data,
     }
   }
 
