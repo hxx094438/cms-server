@@ -32,7 +32,9 @@ export default {
 
   GET_ALL_ARTICLES ({commit}, payload) {
     commit('moreArticle_toggle', true)
-    const startTime = beginLoading(commit, payload.add)
+    // const startTime = beginLoading(commit, payload.add)
+    console.log('GET_ALL_ARTICLES  payload',payload)
+
     if (payload.value) {
       commit('isLoading_toggle', false)
     }
@@ -50,7 +52,7 @@ export default {
           endLoading(commit, startTime, 'loadMore_toggle')
         } else {
           commit('set_all_articles', articles)
-          endLoading(commit, startTime, 'isLoading_toggle')
+          // endLoading(commit, startTime, 'isLoading_toggle')
         }
     })
     
