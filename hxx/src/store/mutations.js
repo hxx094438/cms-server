@@ -54,7 +54,7 @@ export default {
         state.article = article
     },
     set_all_articles: (state, articles) => {
-        state.articles = articles
+      state.articles = articles
         // localStorage.setItem('articles',window.JSON.stringify(articles))
     },
     get_all_articles: (state, articles ) => {

@@ -24,7 +24,10 @@
     },
 
     asyncData ({ store }) {
-      return store.dispatch('GET_ALL_ARTICLES', {page: 1, limit: 4})
+      let params = {
+        page: 1, limit: 4
+      }
+      return store.dispatch('GET_ALL_ARTICLES', params)
 //      return store.dispatch('getAllArticles', {page: this.page, limit: 4})
     },
 

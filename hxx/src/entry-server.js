@@ -45,7 +45,9 @@ export default context => {
         return asyncData && asyncData({
         store,
         route: router.currentRoute
-      })})).then(() => {
+      })
+    
+    })).then(() => {
         isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`)
         // After all preFetch hooks are resolved, our store is now
         // filled with the state needed to render the app.
@@ -56,21 +58,21 @@ export default context => {
         context.state = store.state
         resolve(app)
       })
-      .catch(resolve(app))  
+      // .catch(resolve(app))  
 
       // // 为什么不能这么写，和直接resolve(app有什么区别？)
-      // .catch(error => {
-      //   console.log(chalk.red('AsyncData Error Caused URL '), context.url);
-      //   console.log(chalk.red('AsyncData Error Caused '), error);
-      //   // 这里需要处理请求失败的情况，可能是没有权限
-      //   // if(error.code === 401) {
-      //   //   console.log('server-entry auth', error.code)
-      //   //   context.state = store.state;
-      //   //   resolve(app);
-      //   // }
-      //   context.state = store.state;
-      //   resolve(app);
-      // })
+      .catch(error => {
+        console.log(chalk.red('AsyncData Error Caused URL '), context.url);
+        console.log(chalk.red('AsyncData Error Caused '), error);
+        // 这里需要处理请求失败的情况，可能是没有权限
+        // if(error.code === 401) {
+        //   console.log('server-entry auth', error.code)
+        //   context.state = store.state;
+        //   resolve(app);
+        // }
+        context.state = store.state;
+        resolve(app);
+      })
     })
   })
 }

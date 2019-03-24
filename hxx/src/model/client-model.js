@@ -12,9 +12,9 @@ const handleRequest = (request) => {
       const {data , status} = resp
       // console.log('resp',resp)
       // console.log('data',data)
-      if (status === 200) {
-        console.log('resolve',data)
-        resolve(data)
+      if (data.code === 0) {
+        console.log('handleRequest',typeof data.data)
+        resolve(data.data)
       } else {
         return reject(createError(data.code,data.message))
       }
@@ -49,7 +49,10 @@ export default {
 
 
   getAllArticles(payload) {
-    return handleRequest(request.get('/articles/all', {params: {payload}}))
+    console.log('dispatch aciton article -----')
+    return handleRequest(request.get('/articles/all', {
+      params: payload
+    }))
   },
 
   getArticle(aid) {

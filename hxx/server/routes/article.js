@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-03-22 01:41:48
+ * @Last Modified time: 2019-03-24 22:35:47
  */
 
 
@@ -65,7 +65,7 @@ export class ArticleRouter {
       console.log(e)
       throw `getAllArticles Error : ${e}`
     }
-    console.log('rep', data)
+    console.log('articleRouterRep', typeof data)
     ctx.body = {
       success: true,
       code : 0,

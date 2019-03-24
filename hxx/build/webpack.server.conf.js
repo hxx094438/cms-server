@@ -17,7 +17,9 @@ const plugins = [
   new VueServerPlugin()
 ]
 
-module.exports = merge(baseWebpackConfig, {
+let config
+
+config = merge(baseWebpackConfig, {
   target: 'node',
   entry: path.join(__dirname, '../src/entry-server.js'),
   devtool: 'source-map',
@@ -39,4 +41,6 @@ module.exports = merge(baseWebpackConfig, {
     ]
   },
 })
+
+module.exports = config;
 

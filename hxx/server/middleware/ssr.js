@@ -59,7 +59,7 @@ const render = async (ctx) => {
     }
   }
 
-
+  console.log('renderToString')
   renderer.renderToString(context, (err, html) => {
     if (err) {
       return handleError(err)
@@ -105,6 +105,7 @@ router.get('/*', async (ctx, next) => {
   console.log('get ssr page  -------------')
   readyPromise.then(() => {
     // console.log('ctx.request',req,'ctx.response',res)
+    console.log('readyPromise')
     render(ctx)
   }).catch(err => {
     console.log(err)

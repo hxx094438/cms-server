@@ -30,30 +30,30 @@ export default {
       })
   },
 
-  GET_ALL_ARTICLES ({commit}, payload) {
+  GET_ALL_ARTICLES ({commit}, params) {
     commit('moreArticle_toggle', true)
     // const startTime = beginLoading(commit, payload.add)
-    console.log('GET_ALL_ARTICLES  payload',payload)
-
-    if (payload.value) {
+    if (params.value) {
       commit('isLoading_toggle', false)
     }
-    return model.getAllArticles(payload).then( res => {
+    return model.getAllArticles(params).then( res => {
+      console.log('action', typeof res)
       const {total , articles} = res
-      if (payload.page > total) {
+      // console.log('total',total,'article',articles)
+      if (params.page > total) {
           commit('moreArticle_toggle', false)
           commit('noMore_toggle', true)
-        } else {
-          commit('set_pageTotal', total)
-          commit('noMore_toggle', false)
-        } 
-        if (payload.add) {
-          commit('add_articles', articles)
-          endLoading(commit, startTime, 'loadMore_toggle')
-        } else {
-          commit('set_all_articles', articles)
-          // endLoading(commit, startTime, 'isLoading_toggle')
-        }
+      } else {
+        commit('set_pageTotal', total)
+        commit('noMore_toggle', false)
+      } 
+      if (params.add) {
+        commit('add_articles', articles)
+        endLoading(commit, startTime, 'loadMore_toggle')
+      } else {
+        commit('set_all_articles', articles)
+        // endLoading(commit, startTime, 'isLoading_toggle')
+      }
     })
     
         
