@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-10-28 15:24:14 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-03-21 00:44:40
+ * @Last Modified time: 2019-03-25 00:18:12
  */
 import { join } from 'path'
 import Koa from 'koa'
@@ -13,7 +13,8 @@ import chalk from 'chalk'
 import config from './config/index'
 
 
-const MIDDLEWARES = ['database', 'general', 'router','ssr']
+// const MIDDLEWARES = ['database', 'general', 'router','ssr']
+const MIDDLEWARES = ['database', 'general', 'router']
 
 const app = new Koa()
 

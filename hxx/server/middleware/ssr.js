@@ -58,7 +58,6 @@ const render = async (ctx) => {
       console.error(err.stack)
     }
   }
-
   console.log('renderToString')
   renderer.renderToString(context, (err, html) => {
     if (err) {
@@ -70,7 +69,6 @@ const render = async (ctx) => {
       console.log(`whole request: ${Date.now() - s}ms`)
     }
   })
-
 }
 
 export default (app) => {
