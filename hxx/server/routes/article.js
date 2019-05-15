@@ -11,6 +11,7 @@ import {
   Get,
   Post,
   Patch,
+  Delete,
   Required,
   Auth
 } from '../decorator/router'
@@ -51,8 +52,8 @@ export class ArticleRouter {
   //   body: ['page', 'value', 'limit']
   // })
   async getAllArticles(ctx, next) {
-    console.log('ctx.request',ctx.params,ctx.url)
-    const {page, value, limit} = ctx.params
+    console.log('ctx.request',ctx.query,ctx.url)
+    const {page, value, limit} = ctx.query
     console.log('ctx.request.body',ctx.request.body,page, value, limit)
     let data
     try {
@@ -93,6 +94,26 @@ export class ArticleRouter {
       data: article
     }
   }
+
+  @Delete('/:aid')
+  async deleteArticle(ctx, next) {
+    try {
+      await ArticleService._deleteArticle({
+        aid: aid
+      })
+      // 之前文章的评论是单独的一个集合，现在考虑将评论直接加在文章集合里
+    } catch(e) {
+      console.log(e)
+      throw(e)
+    }
+
+    ctx.body = {
+      success: true,
+      code : 0,
+      data: {},
+    }
+  }
+
 
   @Patch('/:aid')
   async updateArticle(ctx, next) {

@@ -34,7 +34,7 @@ class ArticleService {
       let count = await Article.countDocuments({
         isPublish: true
       }).exec()
-      _articles.total = Math.ceil(count / limit )
+      _articles.total = Math.ceil(count / limit ) // 总页数
     } catch (e) {
       console.log(e)
       throw e
@@ -85,6 +85,14 @@ class ArticleService {
     try {
       return await Article.update({aid: aid}, article)
     } catch (e) {
+      console.log(e)
+    }
+  }
+
+  async _deleteArticle ({article, aid}) {
+    try {
+      return await Article.remove({aid:aid})
+    } catch(e) {
       console.log(e)
     }
   }
