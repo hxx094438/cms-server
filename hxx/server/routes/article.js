@@ -20,8 +20,8 @@ import ArticleService from '../service/articles'
 
 
 /**
- *  /all
- *  /
+ *  
+ *  
  */
 @Controller('/api/articles')
 export class ArticleRouter {
@@ -98,6 +98,7 @@ export class ArticleRouter {
   @Delete('/:aid')
   async deleteArticle(ctx, next) {
     try {
+      console.log('aid',aid)
       await ArticleService._deleteArticle({
         aid: aid
       })

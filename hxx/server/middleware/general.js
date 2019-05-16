@@ -29,6 +29,28 @@ export const addError = app => {
   })
 }
 
+export const allowOrigin = app => {
+  app.use(async (ctx,next) => {
+    //ctx.request.header.origin 请求头的origin
+    //ctx.origin 本服务器的域名
+    if (ctx.request.header.origin !== ctx.origin) { 
+      // && whiteList.includes(ctx.request.header.origin) 
+      // 可设置白名单数组whiteList    ctx.set('Access-Control-Allow-Origin', ctx.request.header.origin);
+      ctx.set('Access-Control-Allow-Origin', 'http://localhost:3000')
+      ctx.set('Access-Control-Allow-Credentials', true);
+    }
+    
+    if (ctx.method === 'OPTIONS') {
+      ctx.set('Access-Control-Allow-Methods', 'PUT,DELETE,POST,GET,PATCH')
+      ctx.set('Access-Control-Max-Age', 3600 * 24);
+      ctx.body = '';
+     }
+     
+    await next()
+   
+  })
+}
+
 export const addSession = app => {
   app.keys = ['imooc-trailer']
 
