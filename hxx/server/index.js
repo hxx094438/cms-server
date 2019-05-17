@@ -47,11 +47,7 @@ const useMiddlewares = (app) => {
     }
   });
   await useMiddlewares(app)  
-
-
   // app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
-
-
   // app.use(require('./routes/index.js').routes())
   
   app.listen(config.app.port, () => {

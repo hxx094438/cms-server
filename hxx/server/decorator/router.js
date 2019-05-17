@@ -51,7 +51,7 @@ export class Route {
     R.forEach(
       ({target, method, path, callback}) => {
         const prefix = resolvePath(target[symbolPrefix])
-        console.log('挂载router', callback)
+        console.log('挂载router', prefix + path,callback)
         router[method](prefix + path, ...callback)
       }
     )(routeMap)

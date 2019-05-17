@@ -39,7 +39,10 @@ const initialize = () => {
 
 }
 
-mongoose.connect('mongodb://127.0.0.1/hxx')
+mongoose.connect('mongodb://127.0.0.1/hxx',{
+  useCreateIndex: true,
+  useNewUrlParser: true
+})
 // mongoose.connect('mongodb://mongo-database:27017/hxx')
 
 const db = mongoose.connection

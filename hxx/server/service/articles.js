@@ -91,7 +91,8 @@ class ArticleService {
 
   async _deleteArticle ({article, aid}) {
     try {
-      return await Article.remove({aid:aid})
+      console.log('del',aid,typeof aid)
+      return await Article.deleteOne({aid:aid})
     } catch(e) {
       console.log(e)
     }

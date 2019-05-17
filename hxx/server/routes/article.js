@@ -97,17 +97,18 @@ export class ArticleRouter {
 
   @Delete('/:aid')
   async deleteArticle(ctx, next) {
+    const {aid} = ctx.params
     try {
       console.log('aid',aid)
-      await ArticleService._deleteArticle({
+      let article = await ArticleService._deleteArticle({
         aid: aid
       })
+      console.log('article',article)
       // 之前文章的评论是单独的一个集合，现在考虑将评论直接加在文章集合里
     } catch(e) {
       console.log(e)
       throw(e)
     }
-
     ctx.body = {
       success: true,
       code : 0,
