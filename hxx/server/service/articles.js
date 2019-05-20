@@ -71,9 +71,11 @@ class ArticleService {
     let article = null
     try{
       article = await Article.findOne({
-        aid: aid
+        isPublish: true
       })
         .exec()
+        console.log('article',article,aid)
+
     } catch (e) {
       console.log(e)
       throw e

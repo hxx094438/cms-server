@@ -91,6 +91,7 @@ export class ArticleRouter {
     ctx.status = 200
     ctx.body = {
       success: true,
+      code : 0,
       data: article
     }
   }
