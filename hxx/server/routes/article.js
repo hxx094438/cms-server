@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-03-24 22:35:47
+ * @Last Modified time: 2019-05-21 19:50:07
  */
 
 
@@ -53,7 +53,7 @@ export class ArticleRouter {
   // })
   async getAllArticles(ctx, next) {
     console.log('ctx.request',ctx.query,ctx.url)
-    const {page, value, limit} = ctx.query
+    const {page, value, limit, isPublish} = ctx.query
     console.log('ctx.request.body',ctx.request.body,page, value, limit)
     let data
     try {
@@ -61,6 +61,7 @@ export class ArticleRouter {
         value: value,
         limit: limit - 0 || 4,
         skip: limit * (page - 1),
+        isPublish: isPublish
       })
     } catch (e) {
       console.log(e)
@@ -118,15 +119,17 @@ export class ArticleRouter {
   }
 
 
-  @Patch('/:aid')
+  @Patch('/save/:aid')
   async updateArticle(ctx, next) {
-    const { article} = ctx.request.body
+    const { article,isPublish} = ctx.request.body
+    console.log(' article,isPublish', article,isPublish)
     const {aid} = ctx.params
     let result = null
     try {
       result = await ArticleService._updateArticle({
         aid : aid,
-        article:article
+        article:article,
+        isPublish: isPublish
       })
     } catch (e) {
       console.log(e)

@@ -42,7 +42,7 @@ export const allowOrigin = app => {
     
     if (ctx.method === 'OPTIONS') {
       ctx.set('Access-Control-Allow-Methods', 'PUT,DELETE,POST,GET,PATCH')
-      ctx.set('Access-Control-Max-Age', 3600 * 24);
+      ctx.set('Access-Control-Max-Age', 3600 * 24) //在24小时内，浏览器无须为同一请求再次发起预检请求
       ctx.body = '';
      }
      
@@ -52,7 +52,7 @@ export const allowOrigin = app => {
 }
 
 export const addSession = app => {
-  app.keys = ['imooc-trailer']
+  app.keys = ['hxx-cms']
 
   const CONFIG = {
     key: 'koa:sess', /** (string) cookie key (default is koa:sess) */
