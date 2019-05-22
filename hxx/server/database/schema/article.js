@@ -11,6 +11,7 @@ const ArticleSchema = new Schema(
     content: String,
     tags: [String],
     date: Date,
+    lastDate: Date,
     isPublish: Boolean,
     comment_n: Number,
     ArticleLike: Number

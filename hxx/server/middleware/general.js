@@ -33,11 +33,13 @@ export const allowOrigin = app => {
   app.use(async (ctx,next) => {
     //ctx.request.header.origin 请求头的origin
     //ctx.origin 本服务器的域名
+    console.log('1123',ctx.request.header.origin,ctx.origin)
     if (ctx.request.header.origin !== ctx.origin) { 
       // && whiteList.includes(ctx.request.header.origin) 
       // 可设置白名单数组whiteList    ctx.set('Access-Control-Allow-Origin', ctx.request.header.origin);
       ctx.set('Access-Control-Allow-Origin', 'http://localhost:3000')
-      ctx.set('Access-Control-Allow-Credentials', true);
+      ctx.set('Access-Control-Allow-Credentials', true)
+      ctx.set('Access-Control-Allow-Headers',"Origin, X-Requested-With, Content-Type, Accept") 
     }
     
     if (ctx.method === 'OPTIONS') {
@@ -45,9 +47,7 @@ export const allowOrigin = app => {
       ctx.set('Access-Control-Max-Age', 3600 * 24) //在24小时内，浏览器无须为同一请求再次发起预检请求
       ctx.body = '';
      }
-     
     await next()
-   
   })
 }
 

@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-05-21 19:50:07
+ * @Last Modified time: 2019-05-22 16:46:02
  */
 
 
@@ -31,10 +31,13 @@ export class ArticleRouter {
   })
   // @Auth
   async sendArticle(ctx, next) {
-    console.log('ctx.request.body',ctx.request.body)
-    const { article} = ctx.request.body
+    // console.log('ctx.request.body',ctx.request.body)
+    const { article, isPublish} = ctx.request.body
+    article.isPublish = isPublish
     try {
-      await ArticleService._sendArticle(article)
+      await ArticleService._sendArticle({
+        article: article,
+      })
     } catch (e) {
       console.log(e)
       throw e
@@ -118,16 +121,16 @@ export class ArticleRouter {
     }
   }
 
-
   @Patch('/save/:aid')
   async updateArticle(ctx, next) {
     const { article,isPublish} = ctx.request.body
     console.log(' article,isPublish', article,isPublish)
     const {aid} = ctx.params
+    console.log('ai1232131231231d-------',aid)
     let result = null
     try {
       result = await ArticleService._updateArticle({
-        aid : aid,
+        aid : +aid,
         article:article,
         isPublish: isPublish
       })
@@ -135,7 +138,6 @@ export class ArticleRouter {
       console.log(e)
     }
     const {n ,nModified, ok} = result
-
     console.log('result',result)
     if(ok) {
       ctx.status = 200

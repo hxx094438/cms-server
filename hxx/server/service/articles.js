@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:15 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-05-21 16:21:05
+ * @Last Modified time: 2019-05-22 15:05:17
  */
 
 
@@ -12,8 +12,17 @@ import Article from '../database/schema/article'
 
 class ArticleService {
 
-  async _sendArticle (article) {
-    console.log('article',article)
+  async _sendArticle ({
+    article: article,
+  }) {
+    // console.log('article',article)
+    article = {
+      ...article,
+      date: Date(),
+      comment_n: 0,
+      ArticleLike: 0
+    }
+    
     await new Article(article).save()
   }
 
@@ -93,7 +102,16 @@ class ArticleService {
 
   async _updateArticle ({article , aid}) {
     try {
-      return await Article.update({aid: aid}, article)
+      console.log('update',aid,typeof aid)
+      await Article.findOne({aid: aid}, (err, res) => {
+        console.log('查询结果',res)
+      })
+      console.log('FIND---------------',)
+      article = {
+        ...article,
+        lastDate: Date()
+      }
+      return await Article.updateOne({aid: aid}, article)
     } catch (e) {
       console.log(e)
     }
@@ -101,7 +119,6 @@ class ArticleService {
 
   async _deleteArticle ({article, aid}) {
     try {
-      console.log('del',aid,typeof aid)
       return await Article.deleteOne({aid:aid})
     } catch(e) {
       console.log(e)
