@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-05-27 19:42:33
+ * @Last Modified time: 2019-05-28 16:35:06
  */
 
 
@@ -50,6 +50,14 @@ export class ArticleRouter {
   }
 
 
+  /**
+   *
+   *
+   * @param {*} ctx
+   * @param {*} next
+   * @memberof ArticleRouter
+   * @resp    {total : Number,articles : Array}
+   */
   @Get('/all')
   // @Required({
   //   body: ['page', 'value', 'limit']
@@ -70,7 +78,7 @@ export class ArticleRouter {
       console.log(e)
       throw `getAllArticles Error : ${e}`
     }
-    console.log('articleRouterRep', typeof data)
+    console.log('articleRouterRep',  data)
     ctx.body = {
       success: true,
       code : 0,
@@ -144,17 +152,17 @@ export class ArticleRouter {
       if(nModified && n) {
         ctx.body = {
           success: true,
-          msg:'更新成功'
+          message:'更新成功'
         }
       } else if (!nModified && n) {
         ctx.body = {
           success: true,
-          msg:'内容无变化'
+          message:'内容无变化'
         }
       } else {
         ctx.body = {
           success: true,
-          msg:'没有找到对应的文章'
+          message:'没有找到对应的文章'
         }
       }
     } else {
@@ -182,14 +190,14 @@ export class ArticleRouter {
       ctx.status = 200
       ctx.body = {
         success: true,
-        msg:'点赞成功'
+        message:'点赞成功'
       }
     } else {
       ctx.status = 200
       ctx.body = {
         code : 1,
         success: true,
-        msg:'找不到对应的文章，点赞失败'
+        message:'找不到对应的文章，点赞失败'
       }
     }
     /*if(ok) {

@@ -89,7 +89,7 @@ export default class AdminRouter {
         ctx.status = 200
         ctx.body = {
           success: true,
-          msg:'修改成功'
+          message:'修改成功'
         }
       } catch (e) {
         console.log(e)
@@ -100,11 +100,8 @@ export default class AdminRouter {
       ctx.status = 200
       ctx.body = {
         success: false,
-        msg: '密码错误'
+        message: '密码错误'
       }
     }
-
   }
-
-
 }
