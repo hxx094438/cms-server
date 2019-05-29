@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-05-28 16:35:06
+ * @Last Modified time: 2019-05-28 19:46:24
  */
 
 
@@ -189,6 +189,7 @@ export class ArticleRouter {
     if(result) {
       ctx.status = 200
       ctx.body = {
+        code: 0,
         success: true,
         message:'点赞成功'
       }
@@ -196,7 +197,7 @@ export class ArticleRouter {
       ctx.status = 200
       ctx.body = {
         code : 1,
-        success: true,
+        success: false,
         message:'找不到对应的文章，点赞失败'
       }
     }
