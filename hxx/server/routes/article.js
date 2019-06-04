@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-05-28 19:46:24
+ * @Last Modified time: 2019-06-04 20:47:01
  */
 
 
@@ -170,6 +170,29 @@ export class ArticleRouter {
       ctx.body = {}
     }
   }
+
+
+  @Post('/comment')
+  async ArticleComment (ctx, next ) {
+    const {
+      aid,
+      imgName,
+      name,
+      content,
+      address,
+      articleId,
+      curPath
+    } = ctx.request.body
+    
+    try {
+      await ArticleService._ArticleComment({
+        
+      })
+    }
+
+  }
+
+
 
   @Patch('/like/:aid')
   async ArticleLike(ctx, next) {
