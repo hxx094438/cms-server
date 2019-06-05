@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-06-04 20:47:01
+ * @Last Modified time: 2019-06-05 17:25:23
  */
 
 
@@ -32,7 +32,10 @@ export class ArticleRouter {
   // @Auth
   async sendArticle(ctx, next) {
     // console.log('ctx.request.body',ctx.request.body)
-    const { article, isPublish} = ctx.request.body
+    const {
+      article,
+      isPublish
+    } = ctx.request.body
     article.isPublish = isPublish
     try {
       await ArticleService._sendArticle({
@@ -63,9 +66,14 @@ export class ArticleRouter {
   //   body: ['page', 'value', 'limit']
   // })
   async getAllArticles(ctx, next) {
-    console.log('ctx.request',ctx.query,ctx.url)
-    const {page, value, limit, isPublish} = ctx.query
-    console.log('ctx.request.body',ctx.request.body,page, value, limit)
+    console.log('ctx.request', ctx.query, ctx.url)
+    const {
+      page,
+      value,
+      limit,
+      isPublish
+    } = ctx.query
+    console.log('ctx.request.body', ctx.request.body, page, value, limit)
     let data
     try {
       data = await ArticleService._getAllArticles({
@@ -78,10 +86,10 @@ export class ArticleRouter {
       console.log(e)
       throw `getAllArticles Error : ${e}`
     }
-    console.log('articleRouterRep',  data)
+    console.log('articleRouterRep', data)
     ctx.body = {
       success: true,
-      code : 0,
+      code: 0,
       data: data,
     }
   }
@@ -90,10 +98,12 @@ export class ArticleRouter {
   @Get('/:aid')
   async getArticle(ctx, next) {
     let article = null
-    const { aid } = ctx.params
+    const {
+      aid
+    } = ctx.params
     try {
       article = await ArticleService._getArticle({
-        aid : aid
+        aid: aid
       })
     } catch (e) {
       console.log(e)
@@ -103,66 +113,77 @@ export class ArticleRouter {
     ctx.status = 200
     ctx.body = {
       success: true,
-      code : 0,
+      code: 0,
       data: article
     }
   }
 
   @Delete('/:aid')
   async deleteArticle(ctx, next) {
-    const {aid} = ctx.params
+    const {
+      aid
+    } = ctx.params
     try {
-      console.log('aid',aid)
+      console.log('aid', aid)
       let article = await ArticleService._deleteArticle({
         aid: aid
       })
-      console.log('article',article)
+      console.log('article', article)
       // 之前文章的评论是单独的一个集合，现在考虑将评论直接加在文章集合里
-    } catch(e) {
+    } catch (e) {
       console.log(e)
-      throw(e)
+      throw (e)
     }
     ctx.body = {
       success: true,
-      code : 0,
+      code: 0,
       data: {},
     }
   }
 
   @Patch('/save/:aid')
   async updateArticle(ctx, next) {
-    const { article,isPublish} = ctx.request.body
-    console.log(' article,isPublish', article,isPublish)
-    const {aid} = ctx.params
-    console.log('ai1232131231231d-------',aid)
+    const {
+      article,
+      isPublish
+    } = ctx.request.body
+    console.log(' article,isPublish', article, isPublish)
+    const {
+      aid
+    } = ctx.params
+    console.log('ai1232131231231d-------', aid)
     let result = null
     try {
       result = await ArticleService._updateArticle({
-        aid : +aid,
-        article:article,
+        aid: +aid,
+        article: article,
         isPublish: isPublish
       })
     } catch (e) {
       console.log(e)
     }
-    const {n ,nModified, ok} = result
-    console.log('result',result)
-    if(ok) {
+    const {
+      n,
+      nModified,
+      ok
+    } = result
+    console.log('result', result)
+    if (ok) {
       ctx.status = 200
-      if(nModified && n) {
+      if (nModified && n) {
         ctx.body = {
           success: true,
-          message:'更新成功'
+          message: '更新成功'
         }
       } else if (!nModified && n) {
         ctx.body = {
           success: true,
-          message:'内容无变化'
+          message: '内容无变化'
         }
       } else {
         ctx.body = {
           success: true,
-          message:'没有找到对应的文章'
+          message: '没有找到对应的文章'
         }
       }
     } else {
@@ -171,57 +192,36 @@ export class ArticleRouter {
     }
   }
 
-
-  @Post('/comment')
-  async ArticleComment (ctx, next ) {
-    const {
-      aid,
-      imgName,
-      name,
-      content,
-      address,
-      articleId,
-      curPath
-    } = ctx.request.body
-    
-    try {
-      await ArticleService._ArticleComment({
-        
-      })
-    }
-
-  }
-
-
-
   @Patch('/like/:aid')
   async ArticleLike(ctx, next) {
-    const {aid} = ctx.params
+    const {
+      aid
+    } = ctx.params
     let result = null
     try {
       result = await ArticleService._ArticleLike({
-        aid : aid,
+        aid: aid,
       })
     } catch (e) {
       console.log(e)
     }
     // const {n ,nModified, ok} = result
 
-    console.log('result',result)
+    console.log('result', result)
 
-    if(result) {
+    if (result) {
       ctx.status = 200
       ctx.body = {
         code: 0,
         success: true,
-        message:'点赞成功'
+        message: '点赞成功'
       }
     } else {
       ctx.status = 200
       ctx.body = {
-        code : 1,
+        code: 1,
         success: false,
-        message:'找不到对应的文章，点赞失败'
+        message: '找不到对应的文章，点赞失败'
       }
     }
     /*if(ok) {
