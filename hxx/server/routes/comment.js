@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2019-06-05 17:07:32 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-06-10 23:32:26
+ * @Last Modified time: 2019-06-12 22:27:33
  */
 
 
@@ -33,7 +33,6 @@ export class CommentRouter {
       articleId,
       curPath
     } = ctx.request.body
-    console.log('请求金来')
     try {
       await CommentService._sendComment({
         imgName: imgName,
@@ -53,10 +52,27 @@ export class CommentRouter {
       success: true,
       code: 0,
     }
-    
   }
 
+  @Get('/all')
+  async getAllComments(ctx, next) {
+    let comments
+    const { articleId, sort } = ctx.query
+    try {
+      comments = await CommentService._getAllComments({
+        articleId: articleId,
+        sort: sort
+      })
+      
+    } catch (e) {
+      console.log(e)
+    }
 
-
-
+    ctx.status = 200
+    ctx.body = {
+      success: true,
+      code : 0,
+      data: comments
+    }
+  }
 }

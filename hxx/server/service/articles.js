@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:15 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-06-10 22:25:07
+ * @Last Modified time: 2019-06-12 21:54:40
  */
 
 
@@ -91,8 +91,6 @@ class ArticleService {
         isPublish: true
       })
         .exec()
-        console.log('article',article,aid)
-
     } catch (e) {
       console.log(e)
       throw e
@@ -132,10 +130,6 @@ class ArticleService {
       console.log(e)
     }
   }
-
-
-
-
 }
 
 module.exports = new ArticleService()
