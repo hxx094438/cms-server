@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-06-05 17:25:23
+ * @Last Modified time: 2019-06-19 18:44:45
  */
 
 
@@ -192,29 +192,31 @@ export class ArticleRouter {
     }
   }
 
-  @Patch('/like/:aid')
+  @Patch('/like')
   async ArticleLike(ctx, next) {
     const {
-      aid
-    } = ctx.params
+      aid,
+      action
+    } = ctx.request.body
     let result = null
     try {
       result = await ArticleService._ArticleLike({
         aid: aid,
+        action: action
       })
     } catch (e) {
       console.log(e)
     }
     // const {n ,nModified, ok} = result
 
-    console.log('result', result)
+    let message = action === 'add' ? `点赞成功` : `取消点赞`
 
     if (result) {
       ctx.status = 200
       ctx.body = {
         code: 0,
         success: true,
-        message: '点赞成功'
+        message: message
       }
     } else {
       ctx.status = 200

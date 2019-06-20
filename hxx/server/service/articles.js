@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:15 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-06-12 21:54:40
+ * @Last Modified time: 2019-06-19 18:37:34
  */
 
 
@@ -123,9 +123,13 @@ class ArticleService {
     }
   }
 
-  async _ArticleLike ({article , aid}) {
+  async _ArticleLike ({action , aid}) {
     try {
-      return await Article.findOneAndUpdate({aid: aid}, {$inc: {ArticleLike: 1}}, {new: true})
+      if( action === 'add') {
+        return await Article.findOneAndUpdate({aid: aid}, {$inc: {ArticleLike: 1}}, {new: true})
+      } else if (action === 'reduce') {
+        return await Article.findOneAndUpdate({aid: aid}, {$inc: {ArticleLike: -1}}, {new: true})
+      }
     } catch (e) {
       console.log(e)
     }
