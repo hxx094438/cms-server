@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2019-06-05 17:07:32 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-06-12 22:27:33
+ * @Last Modified time: 2019-06-21 19:14:41
  */
 
 
@@ -57,13 +57,15 @@ export class CommentRouter {
   @Get('/all')
   async getAllComments(ctx, next) {
     let comments
-    const { articleId, sort } = ctx.query
+    const {
+      articleId,
+      sort
+    } = ctx.query
     try {
       comments = await CommentService._getAllComments({
         articleId: articleId,
         sort: sort
       })
-      
     } catch (e) {
       console.log(e)
     }
@@ -71,8 +73,50 @@ export class CommentRouter {
     ctx.status = 200
     ctx.body = {
       success: true,
-      code : 0,
+      code: 0,
       data: comments
     }
+  }
+
+  @Patch('/like')
+  async updateCommentLike(ctx, next) {
+    let result
+    const {
+      id,
+      option
+    } = ctx.request.body
+    try {
+      result = await CommentService._updateCommentLike({
+        id,
+        option
+      })
+    } catch (e) {
+      console.log(e)
+    }
+    console.log('result', result)
+    
+    if (result) {
+      ctx.status = 200
+      ctx.body = {
+        success: true,
+        message: '更新成功'
+      }
+       
+      // else if (!nModified && n) {
+      //   ctx.body = {
+      //     success: true,
+      //     message: '内容无变化'
+      //   }
+      // } else {
+      //   ctx.body = {
+      //     success: true,
+      //     message: '没有找到对应的评论'
+      //   }
+      // }
+    } else {
+      ctx.status = 401
+      ctx.bodu = {}
+    }
+    
   }
 }

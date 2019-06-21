@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-06-19 18:44:45
+ * @Last Modified time: 2019-06-21 17:18:56
  */
 
 
@@ -172,16 +172,19 @@ export class ArticleRouter {
       ctx.status = 200
       if (nModified && n) {
         ctx.body = {
+          code: 0,
           success: true,
           message: '更新成功'
         }
       } else if (!nModified && n) {
         ctx.body = {
+          code: 1,
           success: true,
           message: '内容无变化'
         }
       } else {
         ctx.body = {
+          code: 1,
           success: true,
           message: '没有找到对应的文章'
         }
