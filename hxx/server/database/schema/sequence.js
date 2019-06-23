@@ -20,10 +20,17 @@ SequenceSchema.statics = {
     return this.collection.findAndModify(query, sort, doc, options, callback);
   },
 
-  increment:function (schemaName, callback) {
-    console.log('this',this.collection)
-    return this.collection.findAndModify({_id: schemaName}, [],
-    { $inc: { next: 1 } }, {"new":true, upsert:true}, callback);
+  increment: function (schemaName, callback) {
+    return this.collection.findAndModify({
+      _id: schemaName
+    }, [], {
+      $inc: {
+        next: 1
+      }
+    }, {
+      "new": true,
+      upsert: true
+    }, callback);
   }
 }
 
@@ -31,4 +38,3 @@ SequenceSchema.statics = {
 
 
 module.exports = mongoose.model('Sequence', SequenceSchema)
-

@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2019-06-05 17:07:32 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-06-21 19:14:41
+ * @Last Modified time: 2019-06-23 21:39:18
  */
 
 
@@ -27,17 +27,15 @@ export class CommentRouter {
     const {
       aid,
       imgName,
-      name,
       content,
-      address,
       articleId,
-      curPath
+      curPath,
+      author
     } = ctx.request.body
     try {
       await CommentService._sendComment({
         imgName: imgName,
-        name: name,
-        address: address,
+        author: author,
         content: content,
         articleId: articleId,
         date: Date(),

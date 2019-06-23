@@ -24,7 +24,7 @@ const ArticleSchema = new Schema(
 ArticleSchema.pre('save', function (next) {
   const self = this;
   if (self.isNew) {
-    Sequence.increment('Article', function (err, result) {
+    Sequence.increment('Article', (err, result) => {
       if (err)
         throw err
       self.aid = result.value.next
