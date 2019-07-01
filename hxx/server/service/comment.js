@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2019-06-10 22:16:02 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-06-21 19:15:18
+ * @Last Modified time: 2019-07-01 23:27:59
  */
 
 import Comment from '../database/schema/comment'
@@ -50,6 +50,8 @@ class CommentService {
       } else {
         _comments = await Comment.find({
           articleId: articleId
+        }).sort({
+          date: -1
         }).exec()
       }
 

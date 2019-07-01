@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2019-06-05 17:07:32 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-06-23 21:39:18
+ * @Last Modified time: 2019-07-01 23:17:48
  */
 
 
@@ -30,7 +30,13 @@ export class CommentRouter {
       content,
       articleId,
       curPath,
-      author
+      author,
+      replyId,
+      state,
+      country,
+      city,
+      agent,
+      ip
     } = ctx.request.body
     try {
       await CommentService._sendComment({
@@ -39,7 +45,13 @@ export class CommentRouter {
         content: content,
         articleId: articleId,
         date: Date(),
-        like: 0
+        like: 0,
+        replyId: replyId,
+        state: state,
+        country:country,
+        city:city,
+        agent:agent,
+        ip:ip
       })
     } catch (err) {
       console.log(err)
