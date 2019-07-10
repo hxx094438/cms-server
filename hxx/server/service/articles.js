@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:15 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-07-10 22:49:25
+ * @Last Modified time: 2019-07-10 23:18:31
  */
 
 
@@ -51,7 +51,7 @@ class ArticleService {
       let count = await Article.countDocuments({
         isPublish: isPublish
       }).exec()
-      _articles.total = Math.ceil(count / limit ) // 总页数
+      _articles.total = count // 文章总数
     } catch (e) {
       console.log(e)
       throw e

@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-07-10 22:49:41
+ * @Last Modified time: 2019-07-10 23:42:46
  */
 
 
@@ -73,12 +73,13 @@ export class ArticleRouter {
       limit,
       isPublish
     } = ctx.query
+    console.log('ctx.request.body', ctx.request.body, page, value, limit)
     let data
     try {
       data = await ArticleService._getAllArticles({
         tags: value,
-        limit: limit - 0 || 4,
-        skip: limit * (page - 1),
+        limit: +limit,
+        skip: +limit * (page - 1), //需要跳过的N个查询结果
         isPublish: isPublish
       })
     } catch (e) {
