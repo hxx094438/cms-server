@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-06-21 17:18:56
+ * @Last Modified time: 2019-07-10 22:49:41
  */
 
 
@@ -73,11 +73,10 @@ export class ArticleRouter {
       limit,
       isPublish
     } = ctx.query
-    console.log('ctx.request.body', ctx.request.body, page, value, limit)
     let data
     try {
       data = await ArticleService._getAllArticles({
-        value: value,
+        tags: value,
         limit: limit - 0 || 4,
         skip: limit * (page - 1),
         isPublish: isPublish
@@ -86,11 +85,26 @@ export class ArticleRouter {
       console.log(e)
       throw `getAllArticles Error : ${e}`
     }
-    console.log('articleRouterRep', data)
     ctx.body = {
       success: true,
       code: 0,
       data: data,
+    }
+  }
+
+  @Get('/tags')
+  async getTags(ctx, next) {
+    let tags = null
+    try {
+      tags = await ArticleService._getTags()
+    } catch (e) {
+      console.log(e)
+    }
+    ctx.status = 200
+    ctx.body = {
+      success: true,
+      code: 0,
+      data: tags
     }
   }
 

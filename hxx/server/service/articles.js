@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:15 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-06-19 18:37:34
+ * @Last Modified time: 2019-07-10 22:49:25
  */
 
 
@@ -56,7 +56,6 @@ class ArticleService {
       console.log(e)
       throw e
     }
-
     if (tags && tags !== '全部') {
       try {
         _articles.articles = await Article.find({
@@ -82,6 +81,25 @@ class ArticleService {
       }
     }
     return _articles
+  }
+
+  async _getTags() {
+    let tags = null
+    try{
+      tags = await Article.findOne({
+        isPublish: true
+      })
+      .distinct('tags', (err, doc) => {
+        if(err) {
+          console.log(err)
+        } else if (doc) {
+          tags = doc
+        }
+      })
+    } catch (e) {
+      throw e
+    }
+    return tags
   }
 
   async _getArticle ({aid}) {
