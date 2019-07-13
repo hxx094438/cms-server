@@ -12,7 +12,7 @@ const CommentSchema = new Schema(
       like: Number,
       id: Number,
       replyId: Number,
-      ip: Number,
+      ip: String,
       agent: String,
       city: String,
       country: String,
