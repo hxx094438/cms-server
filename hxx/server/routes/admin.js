@@ -14,8 +14,6 @@ import {
 import sha1 from 'sha1'
 import rand from 'csprng'
 import UserService from '../service/admin'
-
-
 @Controller('/api/admin')
 export default class AdminRouter {
   @Post('/login')
