@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-07-10 23:42:46
+ * @Last Modified time: 2019-08-23 18:50:13
  */
 
 
@@ -160,19 +160,22 @@ export class ArticleRouter {
   async updateArticle(ctx, next) {
     const {
       article,
-      isPublish
+      isPublish,
+      state
     } = ctx.request.body
-    console.log(' article,isPublish', article, isPublish)
+    console.log(' article,isPublish', article, isPublish,state)
     const {
       aid
     } = ctx.params
     console.log('ai1232131231231d-------', aid)
     let result = null
+    if(isPublish) article.isPublish = isPublish
+    if(state) article.state = state
+
     try {
       result = await ArticleService._updateArticle({
         aid: +aid,
         article: article,
-        isPublish: isPublish
       })
     } catch (e) {
       console.log(e)
