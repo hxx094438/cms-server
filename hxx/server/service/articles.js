@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:15 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-07-10 23:18:31
+ * @Last Modified time: 2019-08-26 19:18:58
  */
 
 
@@ -40,66 +40,64 @@ class ArticleService {
    * @memberof ArticleService
    */
   async _getAllArticles({
-    tags,  
+    // tags,  
     limit, 
     skip,  
-    isPublish
+    isPublish,
+    tags,
+    type,
+    state
   }) {
     let _articles = {}
     //文章总数
+    let params = {}
+    if( typeof(isPublish) === 'boolean') params.isPublish = isPublish
+    if(tags) params.tags = tags
+    if(type) params.type = type
+    if(state) params.state = state
     try {
-      let count = await Article.countDocuments({
-        isPublish: isPublish
-      }).exec()
+      let count = await Article.countDocuments(params).exec()
       _articles.total = count // 文章总数
     } catch (e) {
       console.log(e)
       throw e
     }
-    if (tags && tags !== '全部') {
-      try {
-        _articles.articles = await Article.find({
-          tags: tags,
-          isPublish: isPublish
-        }).sort({
-          date: -1
-        }).limit(limit).skip(skip).exec()
-      } catch (e) {
-        console.log(e)
-        throw e
-      }
-    } else {
-      try{
-        _articles.articles = await Article.find({
-          isPublish: isPublish
-        }).sort({
-          date: -1
-        }).limit(limit).skip(skip).exec()
-      } catch (e) {
-        console.log(e)
-        throw e
-      }
+    try {
+      _articles.articles = await Article.find(params).sort({
+        date: -1
+      }).limit(limit).skip(skip).exec()
+    } catch (e) {
+      console.log(e)
+      throw e
     }
     return _articles
   }
 
-  async _getTags() {
-    let tags = null
+  async _getTags({
+    isPublish,
+    tag,
+    type,
+    state
+  }) {
+    let res = null
+    let params = {}
+    if( typeof(isPublish) === 'boolean') params.isPublish = isPublish
+    if(tag) params.tags = tag
+    if(type) params.type = type
+    if(state) params.state = state
     try{
-      tags = await Article.findOne({
-        isPublish: true
-      })
+      res = await Article.findOne({})
       .distinct('tags', (err, doc) => {
         if(err) {
           console.log(err)
         } else if (doc) {
-          tags = doc
+          res = doc
         }
       })
     } catch (e) {
       throw e
     }
-    return tags
+    return res
   }
 
   async _getArticle ({aid}) {
@@ -118,15 +116,16 @@ class ArticleService {
 
   async _updateArticle ({article , aid}) {
     try {
-      console.log('update',aid,typeof aid)
+      // console.log('update',aid,typeof aid)
       await Article.findOne({aid: aid}, (err, res) => {
-        console.log('查询结果',res)
+        // console.log('查询结果',res)
       })
-      console.log('FIND---------------',)
+      console.log('FIND---------------',article)
       article = {
         ...article,
         lastDate: Date()
       }
+      
       return await Article.updateOne({aid: aid}, article)
     } catch (e) {
       console.log(e)

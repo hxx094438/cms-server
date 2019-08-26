@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-08-23 18:50:13
+ * @Last Modified time: 2019-08-26 19:30:48
  */
 
 
@@ -67,20 +67,25 @@ export class ArticleRouter {
   // })
   async getAllArticles(ctx, next) {
     console.log('ctx.request', ctx.query, ctx.url)
-    const {
+    let {
       page,
       value,
       limit,
-      isPublish
+      isPublish,
+      tags,
+      type,
+      state
     } = ctx.query
-    console.log('ctx.request.body', ctx.request.body, page, value, limit)
     let data
+    if(tags && !Array.isArray(tags)) tags = Array.from(tags)
     try {
       data = await ArticleService._getAllArticles({
-        tags: value,
+        tags: value || tags , // todo:这个value是前端项目传的？
         limit: +limit,
         skip: +limit * (page - 1), //需要跳过的N个查询结果
-        isPublish: isPublish
+        isPublish: isPublish,
+        type: type || undefined,
+        state: state || undefined
       })
     } catch (e) {
       console.log(e)
@@ -95,9 +100,9 @@ export class ArticleRouter {
 
   @Get('/tags')
   async getTags(ctx, next) {
-    let tags = null
+    let result = null
     try {
-      tags = await ArticleService._getTags()
+      result = await ArticleService._getTags(ctx.query)
     } catch (e) {
       console.log(e)
     }
@@ -105,7 +110,7 @@ export class ArticleRouter {
     ctx.body = {
       success: true,
       code: 0,
-      data: tags
+      data: result
     }
   }
 
@@ -169,7 +174,7 @@ export class ArticleRouter {
     } = ctx.params
     console.log('ai1232131231231d-------', aid)
     let result = null
-    if(isPublish) article.isPublish = isPublish
+    if(typeof(isPublish)) article.isPublish = isPublish
     if(state) article.state = state
 
     try {

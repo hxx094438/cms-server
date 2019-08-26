@@ -10,6 +10,7 @@ const ArticleSchema = new Schema(
     title: String,
     content: String,
     tags: [String],
+    // category: String,
     date: Date,
     lastDate: Date,
     isPublish: Boolean,
