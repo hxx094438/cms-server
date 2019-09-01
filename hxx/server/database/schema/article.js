@@ -13,10 +13,12 @@ const ArticleSchema = new Schema(
     // category: String,
     date: Date,
     lastDate: Date,
+    keyword: String,
+    descript: String,
     isPublish: Boolean,
     comment_n: Number,
     ArticleLike: Number,
-    type: String,  // 1: code   2: 想法  3： 音乐
+    type: Number,  // 1: code   2: 想法  3： 音乐
     state: Number, // 1：发布  0：未发布
   },
   {versionKey: false}

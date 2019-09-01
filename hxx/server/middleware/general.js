@@ -33,7 +33,7 @@ export const allowOrigin = app => {
   app.use(async (ctx,next) => {
     //ctx.request.header.origin 请求头的origin
     //ctx.origin 本服务器的域名
-    const whiteList = ['http://localhost:3000','http://localhost:8080']
+    const whiteList = ['http://localhost:3000','http://localhost:8080','http://localhost:8081']
     console.log('1123',ctx.request.header.origin,ctx.origin)
     if (ctx.request.header.origin !== ctx.origin && whiteList.includes(ctx.request.header.origin)) { 
       // && whiteList.includes(ctx.request.header.origin) 

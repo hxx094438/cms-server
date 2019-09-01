@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-08-26 19:30:48
+ * @Last Modified time: 2019-09-01 23:52:49
  */
 
 
@@ -26,17 +26,13 @@ import ArticleService from '../service/articles'
 @Controller('/api/articles')
 export class ArticleRouter {
   @Post('/save')
-  @Required({
-    body: ['article']
-  })
+  // @Required({
+  //   body: ['article']
+  // })
   // @Auth
   async sendArticle(ctx, next) {
     // console.log('ctx.request.body',ctx.request.body)
-    const {
-      article,
-      isPublish
-    } = ctx.request.body
-    article.isPublish = isPublish
+    const article = ctx.request.body
     try {
       await ArticleService._sendArticle({
         article: article,
@@ -163,25 +159,10 @@ export class ArticleRouter {
 
   @Patch('/save/:aid')
   async updateArticle(ctx, next) {
-    const {
-      article,
-      isPublish,
-      state
-    } = ctx.request.body
-    console.log(' article,isPublish', article, isPublish,state)
-    const {
-      aid
-    } = ctx.params
-    console.log('ai1232131231231d-------', aid)
+    const article = ctx.request.body
     let result = null
-    if(typeof(isPublish)) article.isPublish = isPublish
-    if(state) article.state = state
-
     try {
-      result = await ArticleService._updateArticle({
-        aid: +aid,
-        article: article,
-      })
+      result = await ArticleService._updateArticle(article)
     } catch (e) {
       console.log(e)
     }

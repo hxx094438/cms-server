@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:15 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-08-26 19:18:58
+ * @Last Modified time: 2019-09-02 00:01:04
  */
 
 
@@ -103,9 +103,7 @@ class ArticleService {
   async _getArticle ({aid}) {
     let article = null
     try{
-      article = await Article.findOne({
-        isPublish: true
-      })
+      article = await Article.findOne({aid: aid})
         .exec()
     } catch (e) {
       console.log(e)
@@ -114,19 +112,19 @@ class ArticleService {
     return article
   }
 
-  async _updateArticle ({article , aid}) {
+  async _updateArticle (article) {
     try {
       // console.log('update',aid,typeof aid)
-      await Article.findOne({aid: aid}, (err, res) => {
-        // console.log('查询结果',res)
-      })
-      console.log('FIND---------------',article)
+      // await Article.findOne({aid: article.aid}, (err, res) => {
+      //   // console.log('查询结果',res)
+      // })
+      // console.log('FIND---------------',article)
       article = {
         ...article,
         lastDate: Date()
       }
       
-      return await Article.updateOne({aid: aid}, article)
+      return await Article.updateOne({aid: article.aid}, article)
     } catch (e) {
       console.log(e)
     }
