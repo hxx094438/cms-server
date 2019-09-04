@@ -18,6 +18,7 @@ const ArticleSchema = new Schema(
     isPublish: Boolean,
     comment_n: Number,
     ArticleLike: Number,
+    thumb: String, //缩略图地址
     type: Number,  // 1: code   2: 想法  3： 音乐
     state: Number, // 1：发布  0：未发布
   },
