@@ -2,12 +2,13 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:15 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-09-02 00:01:04
+ * @Last Modified time: 2019-09-05 22:01:26
  */
 
 
 
 import Article from '../database/schema/article'
+import { dealObjectValue } from '../util/index'
 
 
 class ArticleService {
@@ -50,13 +51,20 @@ class ArticleService {
   }) {
     let _articles = {}
     //文章总数
-    let params = {}
-    if( typeof(isPublish) === 'boolean') params.isPublish = isPublish
-    if(tags) params.tags = tags
-    if(type) params.type = type
-    if(state) params.state = state
+
+    let params = {
+      isPublish: isPublish,
+      tags: tags,
+      type: type,
+      state: state
+    }
+    console.log('params1',params)
+
+    params = dealObjectValue(params)
+    console.log('params',params)
     try {
       let count = await Article.countDocuments(params).exec()
+      console.log('count',count)
       _articles.total = count // 文章总数
     } catch (e) {
       console.log(e)

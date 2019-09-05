@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-09-01 23:52:49
+ * @Last Modified time: 2019-09-05 21:58:38
  */
 
 
@@ -17,7 +17,6 @@ import {
 } from '../decorator/router'
 
 import ArticleService from '../service/articles'
-
 
 /**
  *  
@@ -74,14 +73,17 @@ export class ArticleRouter {
     } = ctx.query
     let data
     if(tags && !Array.isArray(tags)) tags = Array.from(tags)
+    isPublish = typeof(isPublish) === 'string' ? +isPublish : isPublish
+    state = typeof(state) === 'string' ? +state : state
+
     try {
       data = await ArticleService._getAllArticles({
         tags: value || tags , // todo:这个value是前端项目传的？
         limit: +limit,
         skip: +limit * (page - 1), //需要跳过的N个查询结果
         isPublish: isPublish,
-        type: type || undefined,
-        state: state || undefined
+        type: type ,
+        state: state, 
       })
     } catch (e) {
       console.log(e)

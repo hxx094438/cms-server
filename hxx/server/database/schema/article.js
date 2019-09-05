@@ -15,7 +15,7 @@ const ArticleSchema = new Schema(
     lastDate: Date,
     keyword: String,
     descript: String,
-    isPublish: Boolean,
+    isPublish: Number,
     comment_n: Number,
     ArticleLike: Number,
     thumb: String, //缩略图地址
