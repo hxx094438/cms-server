@@ -5,7 +5,7 @@
   "author": "hxx094438 <287668256@qq.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "cross-env NODE_ENV=development nodemon --inspect ./start.js",
     "start": "cross-env NODE_ENV=development nodemon ./start.js",
     "build": "node build/build.js",
     "build:client": "cross-env NODE_ENV=production webpack --config build/webpack.client.conf.js --progress --hide-modules",

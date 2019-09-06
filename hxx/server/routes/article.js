@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-09-05 21:58:38
+ * @Last Modified time: 2019-09-06 16:11:02
  */
 
 
@@ -30,7 +30,6 @@ export class ArticleRouter {
   // })
   // @Auth
   async sendArticle(ctx, next) {
-    // console.log('ctx.request.body',ctx.request.body)
     const article = ctx.request.body
     try {
       await ArticleService._sendArticle({
@@ -72,10 +71,9 @@ export class ArticleRouter {
       state
     } = ctx.query
     let data
-    if(tags && !Array.isArray(tags)) tags = Array.from(tags)
-    isPublish = typeof(isPublish) === 'string' ? +isPublish : isPublish
-    state = typeof(state) === 'string' ? +state : state
-
+    if(tags && !Array.isArray(tags)) tags = tags.split(',')
+    isPublish = isPublish && typeof(isPublish) === 'string' ? +isPublish : isPublish
+    state = state && typeof(state) === 'string' ? +state : state
     try {
       data = await ArticleService._getAllArticles({
         tags: value || tags , // todo:这个value是前端项目传的？
