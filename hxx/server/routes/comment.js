@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2019-06-05 17:07:32 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-07-01 23:17:48
+ * @Last Modified time: 2019-09-07 17:48:43
  */
 
 
@@ -10,6 +10,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Patch,
   Delete,
   Required,
@@ -85,6 +86,43 @@ export class CommentRouter {
       success: true,
       code: 0,
       data: comments
+    }
+  }
+
+
+  @Put('/:id')
+  async putComment(ctx, next) {
+    const comment = ctx.request.body
+    let result
+    try {
+      result = await CommentService._putComment(comment)
+      console.log('comment', result)
+    } catch (e) {
+      console.log(e)
+      throw (e)
+    }
+    ctx.body = {
+      success: true,
+      code: 0,
+      data: {},
+    }
+  }
+
+  @Delete('/:id')
+  async deleteComment(ctx, next) {
+    const {
+      id
+    } = ctx.params
+    try {
+      await CommentService._deleteComment(id)
+    } catch (e) {
+      console.log(e)
+      throw (e)
+    }
+    ctx.body = {
+      success: true,
+      code: 0,
+      data: {},
     }
   }
 

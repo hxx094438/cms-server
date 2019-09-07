@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:15 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-09-05 22:01:26
+ * @Last Modified time: 2019-09-07 17:47:14
  */
 
 
@@ -138,7 +138,7 @@ class ArticleService {
     }
   }
 
-  async _deleteArticle ({article, aid}) {
+  async _deleteArticle ({aid}) {
     try {
       return await Article.deleteOne({aid:aid})
     } catch(e) {
