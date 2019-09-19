@@ -16,7 +16,6 @@ class UserService {
     if (user) {
       match = await user.comparePassword(password, user)
     }
-
     return {
       match,
       user
@@ -61,7 +60,7 @@ class UserService {
     return result
   }
 
-
+  // 注册...
   async seed() {
     let user = await this.findOne()
     let result = null
