@@ -9,10 +9,8 @@ import User from '../database/schema/user'
 
 class UserService {
   async checkPassword (name, password) {
-    console.log('passwo',password,name)
     let match = false
     let user = await this.findOne(name)
-    // console.log('checkuser',user)
     if (user) {
       match = await user.comparePassword(password, user)
     }

@@ -118,7 +118,6 @@ export const Log = convert(async (ctx, next) => {
  */
 export const Required = paramsObj => convert(async (ctx, next) => {
   let errs = []
-  console.log('ctx',ctx.request)
   R.forEachObjIndexed(
     (val, key) => {
       errs = errs.concat(

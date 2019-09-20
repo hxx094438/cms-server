@@ -13,6 +13,7 @@ import {
 } from '../decorator/router'
 import sha1 from 'sha1'
 import rand from 'csprng'
+import jwt from 'jsonwebtoken'
 import key from '../config/key'
 import UserService from '../service/admin'
 const cert = key.jwt.cert
@@ -36,7 +37,6 @@ export default class AdminRouter {
       user,
       match
     } = data
-    console.log('data',data)
     if (match) {
       const token = creatToken({
         name: name,
