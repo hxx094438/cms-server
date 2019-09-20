@@ -15,7 +15,6 @@ const UserSchema = new Schema(
   {
     name: String,
     password: String,
-    weak_pwd: Boolean,
     salt: String,            // 使用csprng随机生成的盐
     nickname: String,
     mobilephone: Number,

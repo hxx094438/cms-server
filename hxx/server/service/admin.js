@@ -61,19 +61,22 @@ class UserService {
     return result
   }
 
-
-  async seed() {
-    let user = await this.findOne()
+  /**
+   *初始化账号
+   *
+   * @param {*} opts {password, name}}
+   * @returns
+   * @memberof UserService
+   */
+  async seed(opts) {
+    let user = await User.findOne({})
     let result = null
-
     if(user === null ) {
       const salt = rand(160, 36)
-      console.log('mima','admin' + salt)
-      user = new User({
-        name: 'admin',
-        password: sha1('admin' + salt),
+      opts.password = sha1(opts.password + salt),
+      user = new User(Object.assign({
         salt: salt,
-      })
+      },opts))
       try {
         result = user.save()
       } catch (e) {
