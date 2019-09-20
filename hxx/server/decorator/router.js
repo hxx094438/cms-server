@@ -2,23 +2,25 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-11-24 14:57:29 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-03-21 22:46:59
+ * @Last Modified time: 2019-09-20 00:28:05
  */
 
 import KoaRouter from 'koa-router'
 import path from 'path'
 import glob from 'glob'
 import R from 'ramda'
-
+import jwt from 'jsonwebtoken'
+import key from '../config/key'
 const {createBundleRenderer} = require('vue-server-renderer')
 import LRU from 'lru-cache'
 import serve from 'koa-static'
-
 const resolve = path.resolve
 const _resolve = file => path.resolve(__dirname, file)
 const symbolPrefix = Symbol('prefix')
 const routeMap = []
 let logTimes = 0
+
+
 
 // const normalizePath = path => path.startsWith('/') ? path : `/${path}`
 const resolvePath = R.unless(
@@ -140,15 +142,24 @@ export const Required = paramsObj => convert(async (ctx, next) => {
 })
 
 export const Auth = convert(async (ctx, next) => {
-  console.log('auth自动登录', ctx.session)
-  if (!ctx.session.user) {
+  if(!ctx.req.authorization) {
     return (
       ctx.body = {
         success: false,
-        errCode: 401,
-        errMsg: '登陆信息已失效, 请重新登陆'
+        code: 401,
+        message: '登陆信息已失效, 请重新登陆'
       }
     )
+  } else {
+    const token = ctx.headers.authorization.split(' ')[1]
+    const cert = key.jwt.cert
+    jwt.verify(token, cert, (err) => {
+      ctx.body = {
+        success: false,
+        code: 401,
+        message: '登陆信息已失效, 请重新登陆'
+      }
+    })
   }
   await next()
 })

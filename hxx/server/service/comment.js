@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2019-06-10 22:16:02 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-07-01 23:27:59
+ * @Last Modified time: 2019-09-07 17:47:36
  */
 
 import Comment from '../database/schema/comment'
@@ -61,7 +61,28 @@ class CommentService {
     return _comments
   }
 
+  async _putComment (comment) {
+    try {
+      comment = {
+        ...comment,
+        lastDate: Date()
+      }
+      
+      return await Comment.updateOne({id: comment.id}, comment)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
+  async _deleteComment (id) {
+    try {
+      return await Comment.deleteOne({id:id})
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
+  
   async _updateCommentLike({
     id,
     option

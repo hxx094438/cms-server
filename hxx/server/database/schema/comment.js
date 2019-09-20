@@ -9,6 +9,7 @@ const CommentSchema = new Schema(
       content: String,
       articleId: Number,
       date: Date,
+      lastDate: Date,
       like: Number,
       id: Number,
       replyId: Number,
@@ -16,7 +17,7 @@ const CommentSchema = new Schema(
       agent: String,
       city: String,
       country: String,
-      state: Number, // 状态，暂时还没想好用处，先留着
+      state: Number, // 是否允许展示
       author: {
         name: String,
         email: String,

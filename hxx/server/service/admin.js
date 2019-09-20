@@ -16,7 +16,6 @@ class UserService {
     if (user) {
       match = await user.comparePassword(password, user)
     }
-
     return {
       match,
       user

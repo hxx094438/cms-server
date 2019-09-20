@@ -13,8 +13,13 @@ import {
 } from '../decorator/router'
 import sha1 from 'sha1'
 import rand from 'csprng'
+import key from '../config/key'
 import UserService from '../service/admin'
-@Controller('/api/admin')
+const cert = key.jwt.cert
+const creatToken = (data) => {
+  return jwt.sign(data, cert, { expiresIn: '7d' })
+}
+@Controller('/api')
 export default class AdminRouter {
   @Post('/login')
   @Required({
@@ -33,18 +38,16 @@ export default class AdminRouter {
     } = data
     console.log('data',data)
     if (match) {
-      ctx.session.user = {
-        _id: user._id,
-        name: user.name,
-        role: user.role,
-        username: user.username
-      }
-      // ctx.status = 200
+      const token = creatToken({
+        name: name,
+        password: password
+      })
       ctx.body = {
         success: true,
         code : 0,
         message:'登录成功',
         data: {
+          token: token,
           user:{
             name: user.name,
             username: user.username,
@@ -52,12 +55,11 @@ export default class AdminRouter {
         }
       }
     } else {
-      // ctx.status = 200
       ctx.body = {
         success: false,
         code: -11,
         message: '账号与密码不匹配',
-        data:{}
+        data: {}
       }
     }
   }
