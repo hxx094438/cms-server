@@ -34,13 +34,12 @@ export const allowOrigin = app => {
     //ctx.request.header.origin 请求头的origin
     //ctx.origin 本服务器的域名
     const whiteList = ['http://localhost:3000','http://localhost:8080','http://localhost:8081']
-    console.log('1123',ctx.request.header.origin,ctx.origin)
     if (ctx.request.header.origin !== ctx.origin && whiteList.includes(ctx.request.header.origin)) { 
       // && whiteList.includes(ctx.request.header.origin) 
       // 可设置白名单数组whiteList    ctx.set('Access-Control-Allow-Origin', ctx.request.header.origin);
       ctx.set('Access-Control-Allow-Origin', ctx.request.header.origin)
       ctx.set('Access-Control-Allow-Credentials', true)
-      ctx.set('Access-Control-Allow-Headers',"Origin, X-Requested-With, Content-Type, Accept") 
+      ctx.set('Access-Control-Allow-Headers',"Origin, X-Requested-With, Content-Type, Accept, Authorization") 
     }
     
     if (ctx.method === 'OPTIONS') {
@@ -52,21 +51,21 @@ export const allowOrigin = app => {
   })
 }
 
-export const addSession = app => {
-  app.keys = ['hxx-cms']
+// export const addSession = app => {
+//   app.keys = ['hxx-cms']
 
-  const CONFIG = {
-    key: 'koa:sess', /** (string) cookie key (default is koa:sess) */
-    /** (number || 'session') maxAge in ms (default is 1 days) */
-    /** 'session' will result in a cookie that expires when session/browser is closed */
-    /** Warning: If a session cookie is stolen, this cookie will never expire */
-    maxAge: 86400000,
-    overwrite: true, /** (boolean) can overwrite or not (default true) */
-    httpOnly: false, /** (boolean) httpOnly or not (default true) */
-    signed: true, /** (boolean) signed or not (default true) */
-    rolling: false, /** (boolean) Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. default is false **/
-    renew: false, /** (boolean) renew session when session is nearly expired, so we can always keep user logged in. (default is false)*/
+//   const CONFIG = {
+//     key: 'koa:sess', /** (string) cookie key (default is koa:sess) */
+//     /** (number || 'session') maxAge in ms (default is 1 days) */
+//     /** 'session' will result in a cookie that expires when session/browser is closed */
+//     /** Warning: If a session cookie is stolen, this cookie will never expire */
+//     maxAge: 86400000,
+//     overwrite: true, /** (boolean) can overwrite or not (default true) */
+//     httpOnly: false, /** (boolean) httpOnly or not (default true) */
+//     signed: true, /** (boolean) signed or not (default true) */
+//     rolling: false, /** (boolean) Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. default is false **/
+//     renew: false, /** (boolean) renew session when session is nearly expired, so we can always keep user logged in. (default is false)*/
 
-  }
-  app.use(session(CONFIG, app))
-}
+//   }
+//   app.use(session(CONFIG, app))
+// }
