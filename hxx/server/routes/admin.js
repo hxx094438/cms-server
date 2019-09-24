@@ -42,6 +42,7 @@ export default class AdminRouter {
         name: name,
         password: password
       })
+      
       ctx.body = {
         success: true,
         code : 0,

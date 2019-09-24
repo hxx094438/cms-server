@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-09-06 16:11:02
+ * @Last Modified time: 2019-09-24 23:14:16
  */
 
 
@@ -28,7 +28,6 @@ export class ArticleRouter {
   // @Required({
   //   body: ['article']
   // })
-  // @Auth
   async sendArticle(ctx, next) {
     const article = ctx.request.body
     try {
@@ -59,7 +58,9 @@ export class ArticleRouter {
   // @Required({
   //   body: ['page', 'value', 'limit']
   // })
+  @Auth
   async getAllArticles(ctx, next) {
+    
     console.log('ctx.request', ctx.query, ctx.url)
     let {
       page,
