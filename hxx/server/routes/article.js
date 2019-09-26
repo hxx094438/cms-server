@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:20 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-09-24 23:14:16
+ * @Last Modified time: 2019-09-26 20:24:47
  */
 
 
@@ -61,7 +61,10 @@ export class ArticleRouter {
   @Auth
   async getAllArticles(ctx, next) {
     
-    console.log('ctx.request', ctx.query, ctx.url)
+    console.log('ctx.request', ctx.query, ctx.params ,ctx.url)
+    
+    // let query = JSON.parse(ctx.query)
+    // console.log(query,ctx.query)
     let {
       page,
       value,
@@ -73,6 +76,7 @@ export class ArticleRouter {
     } = ctx.query
     let data
     if(tags && !Array.isArray(tags)) tags = tags.split(',')
+    
     isPublish = isPublish && typeof(isPublish) === 'string' ? +isPublish : isPublish
     state = state && typeof(state) === 'string' ? +state : state
     try {

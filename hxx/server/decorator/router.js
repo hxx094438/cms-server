@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-11-24 14:57:29 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-09-25 00:16:55
+ * @Last Modified time: 2019-09-26 18:02:34
  */
 
 import KoaRouter from 'koa-router'
@@ -141,28 +141,33 @@ export const Required = paramsObj => convert(async (ctx, next) => {
 })
 
 export const Auth = convert(async (ctx, next) => {
-  console.log('ctxctxctxctx',ctx)
-  if(!ctx.req.headers.authorization) {
-    console.log('进来')
-    return (
-      ctx.body = {
+  console.log('ctxctxctxctx',ctx.req.headers.origin)
+  if(!ctx.req.headers.origin) {
+    console.log('不验证身份')
+    await next()
+  } else {
+    if(!ctx.req.headers.authorization) {
+      return (
+        ctx.body = {
+          success: false,
+          code: 401,
+          message: '登陆信息已失效, 请重新登陆'
+        }
+      )
+    } else {
+      const token = JSON.parse(ctx.headers.authorization.split(' ')[1])
+      const cert = key.jwt.cert
+      let error
+      jwt.verify(token, cert, (err) => {
+        error = err 
+      })
+      if(error) return ctx.body = {
         success: false,
         code: 401,
         message: '登陆信息已失效, 请重新登陆'
       }
-    )
-  } else {
-    const token = JSON.parse(ctx.headers.authorization.split(' ')[1])
-    const cert = key.jwt.cert
-    let error
-    jwt.verify(token, cert, (err) => {
-      error = err 
-    })
-    if(error) return ctx.body = {
-      success: false,
-      code: 401,
-      message: '登陆信息已失效, 请重新登陆'
     }
+    await next()
   }
-  await next()
+  
 })

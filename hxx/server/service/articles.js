@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:15 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-09-07 17:47:14
+ * @Last Modified time: 2019-09-26 18:25:37
  */
 
 
@@ -51,13 +51,13 @@ class ArticleService {
   }) {
     let _articles = {}
     //文章总数
-
     let params = {
       isPublish: isPublish,
       tags: tags,
       type: type,
       state: state
     }
+    
     console.log('params1',params)
 
     params = dealObjectValue(params)
