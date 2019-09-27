@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2019-06-05 17:07:32 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-09-07 17:48:43
+ * @Last Modified time: 2019-09-27 18:21:30
  */
 
 
@@ -71,7 +71,7 @@ export class CommentRouter {
     const {
       articleId,
       sort
-    } = ctx.query
+    } = ctx._query
     try {
       comments = await CommentService._getAllComments({
         articleId: articleId,

@@ -29,6 +29,8 @@ export const addError = app => {
   })
 }
 
+
+
 export const allowOrigin = app => {
   app.use(async (ctx,next) => {
     //ctx.request.header.origin 请求头的origin
@@ -51,6 +53,15 @@ export const allowOrigin = app => {
   })
 }
 
+
+export const handleGetParams = app => {
+  app.use(async (ctx, next) => {
+    if(ctx.method === "GET") {
+      ctx._query = Object.keys(ctx.query).length && JSON.parse(ctx.query[0])
+    }
+    await next()
+  })
+}
 // export const addSession = app => {
 //   app.keys = ['hxx-cms']
 
