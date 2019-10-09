@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-11-24 14:57:29 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-09-26 18:02:34
+ * @Last Modified time: 2019-09-29 18:46:03
  */
 
 import KoaRouter from 'koa-router'
@@ -141,9 +141,8 @@ export const Required = paramsObj => convert(async (ctx, next) => {
 })
 
 export const Auth = convert(async (ctx, next) => {
-  console.log('ctxctxctxctx',ctx.req.headers.origin)
   if(!ctx.req.headers.origin) {
-    console.log('不验证身份')
+    // 服务端的本地请求不带origin( ssr项目asyncData的请求 )
     await next()
   } else {
     if(!ctx.req.headers.authorization) {

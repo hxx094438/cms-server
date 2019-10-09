@@ -2,7 +2,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-10-28 15:51:57 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-09-20 15:19:42
+ * @Last Modified time: 2019-10-09 17:31:57
  */
 
 const path = require('path')
@@ -24,8 +24,8 @@ export default {
     mongoConfig: { // 数据库配置
         url: 'mongodb://127.0.0.1:27017/hxx',
         opts: {
-            name: 'admin',
-            password: '123456'
+            name: 'hxx',
+            password: '111111'
         }
     },
 
