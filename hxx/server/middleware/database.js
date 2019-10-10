@@ -3,7 +3,7 @@
  * @Author: huangxiaoxun 
  * @Date: 2018-12-28 01:03:46 
  * @Last Modified by: huangxiaoxun
- * @Last Modified time: 2019-10-09 19:16:32
+ * @Last Modified time: 2019-10-10 12:26:00
  */
 
 import { join } from 'path'
@@ -22,16 +22,8 @@ export const database = app => {
   if (config.env === 'development') {
     mongoose.set('debug', true)
   }
-  // const opts = {
-  //   keepAlive: true,
-  //   keepAliveInitialDelay: 300000,
-  //   socketTimeoutMS: 30000,
-  //   poolSize: 50,
-  //   reconnectTries: Number.MAX_VALUE,
-  //   reconnectInterval: 500,
-  //   autoReconnect: true,
-  // }
-  mongoose.connect(mongoConfig.url, { useNewUrlParser: true, autoReconnect: true })
+
+  mongoose.connect(mongoConfig.url, { useNewUrlParser: true })
   mongoose.connection.on('disconnected', () => {
     mongoose.connect(mongoConfig.url)
   })
