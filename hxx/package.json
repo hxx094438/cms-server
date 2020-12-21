@@ -82,7 +82,7 @@
     "koa-webpack-hot-middleware": "^1.0.3",
     "koa-webpack-middleware": "^1.0.7",
     "memory-fs": "^0.4.1",
-    "node-notifier": "^5.3.0",
+    "node-notifier": "^8.0.1",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.7",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
