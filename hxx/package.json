@@ -38,7 +38,7 @@
     "lru-cache": "^5.1.1",
     "marked": "^0.3.19",
     "mongoose": "^5.4.2",
-    "nodemailer": "^4.7.0",
+    "nodemailer": "^6.4.16",
     "on-finished": "^2.3.0",
     "particles": "^0.3.1",
     "path": "^0.12.7",
